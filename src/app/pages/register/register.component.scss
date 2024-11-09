@@ -1,0 +1,151 @@
+$primary-color: #e53935;
+$secondary-color: #666666;
+$border-color: #cccccc;
+$border-radius: 8px;
+$input-padding: 10px;
+$input-border-radius: 8px;
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.section-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    background-color: #ffffff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: $border-radius;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1200px; // Giới hạn chiều rộng container
+}
+
+.row {
+    display: flex;
+    width: 100%;
+}
+
+.image-section {
+    background-color: #e0f7fa;
+    padding: 40px;
+    text-align: center;
+
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: $border-radius;
+    }
+}
+
+.form-section {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 450px; 
+
+    h2 {
+        margin: 0 0 15px;
+        font-size: 28px;
+        font-weight: bold;
+        color: $primary-color;
+    }
+
+    p {
+        margin: 0 0 20px;
+        color: $secondary-color;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    input {
+        width: 100%;
+        padding: $input-padding;
+        margin-bottom: 16px;
+        border: 1px solid $border-color;
+        border-radius: $input-border-radius;
+        transition: all 0.3s ease-in-out;
+        font-size: 16px;
+        color: #333;
+
+        &:focus {
+            outline: none;
+            border: 1px solid $primary-color;
+            box-shadow: 0 0 8px rgba($primary-color, 0.2); // Ánh sáng nhẹ khi focus
+        }
+
+        &::placeholder {
+            color: #aaa; // Màu cho placeholder
+        }
+    }
+
+    button {
+        width: 100%;
+        padding: $input-padding;
+        background-color: $primary-color;
+        color: #ffffff;
+        border: none;
+        border-radius: $input-border-radius;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: darken($primary-color, 5%);
+        }
+
+        &:active {
+            background-color: darken($primary-color, 10%);
+        }
+    }
+
+    .login-link {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        gap: 4px;
+        margin-top: 20px;
+        color: $secondary-color;
+
+        a {
+            color: $primary-color;
+            text-decoration: none;
+            font-weight: bold;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .image-section,
+    .form-section {
+        padding: 20px;
+    }
+
+    .form-section {
+        width: 100%;
+        max-width: 100%;
+    }
+}

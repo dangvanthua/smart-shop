@@ -1,0 +1,69 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 d-md-none mb-3 text-end">
+            <button class="btn btn-outline-secondary" id="menu-toggle"
+                #menuToggle (click)="toggleSidebar()">
+                <ng-icon name="bootstrapMenuButton"></ng-icon> Danh Mục
+            </button>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-md-2 sidebar" #sidebar
+            [ngClass]="{ 'show': isSidebarVisible }">
+            <div class="menu d-flex align-items-baseline">
+                <ng-icon name="bootstrapMenuButton"></ng-icon>
+                <h5>Danh Mục</h5>
+            </div>
+            <a class="active" href="#" (click)="toggleSidebar()">Máy Ảnh &amp;
+                Máy Quay Phim</a>
+            <a href="#" (click)="toggleSidebar()">Máy ảnh - Máy quay phim</a>
+            <a href="#" (click)="toggleSidebar()">Camera giám sát &amp; Camera
+                hệ thống</a>
+            <a href="#" (click)="toggleSidebar()">Thẻ nhớ</a>
+            <a href="#" (click)="toggleSidebar()">Ống kính</a>
+            <a href="#" (click)="toggleSidebar()">Phụ kiện máy ảnh</a>
+            <a href="#" (click)="toggleSidebar()">Thêm</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 content">
+            <div
+                class="sort-options d-flex justify-content-between align-items-center mb-4">
+                <div class="btn-filters">
+                    <button class="btn-filter-item">Sắp xếp theo</button>
+                    <button class="btn-filter-item">Phổ Biến</button>
+                    <button class="btn-filter-item">Mới Nhất</button>
+                    <button class="btn-filter-item">Bán Chạy</button>
+                    <button class="btn-filter-item">Giá</button>
+                </div>
+                <div class="pagination-controls d-flex align-items-center">
+                    <span class="mx-2">1/9</span>
+                    <div class="btn-group">
+                        <button class="btn-paginate">&lt;</button>
+                        <button class="btn-paginate">&gt;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="product-card">
+                        <img class="img-fluid"
+                            alt="Xiaomi Micro SD 1TB 512gb 256GB 128GB"
+                            src="https://storage.googleapis.com/a1aa/image/rNe5nqgL41TmOyxu7eJmsueZ1ZdsQdNY1Sz6dnSffuDDfCj7E.jpg" />
+                        <div class="badge bg-warning text-dark">Yêu thích</div>
+                        <div class="body-card">
+                            <h6 class="mt-2">Xiaomi Micro SD 1TB 512gb 256GB
+                                128GB</h6>
+                            <div class="price">₫56.000</div>
+                            <div class="discount">-16%</div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> 4.3 Đã bán 6,9k
+                            </div>
+                            <div class="location">Nước ngoài</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

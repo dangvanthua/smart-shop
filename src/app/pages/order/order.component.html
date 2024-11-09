@@ -1,0 +1,202 @@
+<section class="section-order">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-breadcrumb">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a>Home</a></li>
+                            <li class="breadcrumb-item"><a>Library</a></li>
+                            <li class="breadcrumb-item active"
+                                aria-current="page">Data</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-info row mt-3">
+            <div class="col-md-12">
+                <h3>Thông tin nguời nhận</h3>
+
+                <form class="form-user">
+                    <div class="form-group">
+                        <label for="fullName" class="custom-label">Họ và
+                            tên</label>
+                        <input type="text" class="custom-input" id="fullName"
+                            placeholder="Nhập họ và tên của bạn">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="custom-label">Số điện
+                            thoại</label>
+                        <input type="tel" class="custom-input" id="phone"
+                            placeholder="Nhập số điện thoại của bạn">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city" class="custom-label">Thành phố /
+                            Tỉnh</label>
+                        <select class="custom-select" id="city">
+                            <option value disabled selected>Chọn thành
+                                phố/tỉnh</option>
+                            <option value="hanoi">Hà Nội</option>
+                            <option value="hochiminh">Hồ Chí Minh</option>
+                            <option value="danang">Đà Nẵng</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="district" class="custom-label">Quận /
+                            Huyện</label>
+                        <select class="custom-select" id="district">
+                            <option value disabled selected>Chọn
+                                quận/huyện</option>
+                            <option value="hoankiem">Hoàn Kiếm</option>
+                            <option value="thanhxuan">Thanh Xuân</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ward" class="custom-label">Phường /
+                            Xã</label>
+                        <select class="custom-select" id="ward">
+                            <option value disabled selected>Chọn
+                                phường/xã</option>
+                            <option value="hoankiem">Hoàn Kiếm</option>
+                            <option value="thanhxuan">Thanh Xuân</option>
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="col-md-12 mt-5">
+                <h3>Đơn hàng của bạn</h3>
+
+                <div class="product-info">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="d-flex align-items-center gx-3">
+                                    <img
+                                        src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lov126zmyy4u68@resize_w80_nl.webp"
+                                        alt="Product item order"
+                                        class="product-img">
+                                    <h5>Đồng hồ Galaxy Watch 5</h5>
+                                </td>
+                                <td>5,500,000 VND</td>
+                                <td>
+                                    <span class="quantity">1</span>
+                                </td>
+                                <td>5,500,000 VND</td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex align-items-center gx-3">
+                                    <img
+                                        src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lov126zmyy4u68@resize_w80_nl.webp"
+                                        alt="Product item order"
+                                        class="product-img">
+                                    <h5>Đồng hồ Galaxy Watch 5</h5>
+                                </td>
+                                <td>5,500,000 VND</td>
+                                <td>
+                                    <span class="quantity">1</span>
+                                </td>
+                                <td>5,500,000 VND</td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex align-items-center gx-3">
+                                    <img
+                                        src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lov126zmyy4u68@resize_w80_nl.webp"
+                                        alt="Product item order"
+                                        class="product-img">
+                                    <h5>Đồng hồ Galaxy Watch 5</h5>
+                                </td>
+                                <td>5,500,000 VND</td>
+                                <td>
+                                    <span class="quantity">1</span>
+                                </td>
+                                <td>5,500,000 VND</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-method row mt-4">
+            <div class="col-md-8">
+                <h3>Tổng số tiền</h3>
+                <div class="order-summary">
+                    <div class="summary-item">
+                        <span>Tổng phụ</span>
+                        <span class="amount">16,500,000 VND</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Phí vận chuyển</span>
+                        <select class="custom-select shipping-method">
+                            <option value="0" selected>Chọn phương thức giao
+                                hàng</option>
+                            <option value="50000">Giao hàng nhanh (50,000
+                                VND)</option>
+                            <option value="30000">Giao hàng tiêu chuẩn (30,000
+                                VND)</option>
+                        </select>
+                    </div>
+                    <div class="summary-item">
+                        <span>Giảm giá</span>
+                        <input type="text" class="custom-input coupon-code"
+                            placeholder="Nhập mã giảm giá">
+                    </div>
+                    <div class="summary-item total">
+                        <span>Tổng thanh toán</span>
+                        <span class="amount">16,500,000 VND</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <h3>Phương thức thanh toán</h3>
+                <div class="payment-method">
+                    <div class="payment-option">
+                        <input type="radio" id="cod" name="payment" value="cod"
+                            checked>
+                        <label for="cod">Thanh toán khi nhận hàng (COD)</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="vnpay" name="payment"
+                            value="vnpay">
+                        <img src="/assets/images/vnpay.png" alt="VN Pay icon"
+                            class="payment-icon">
+                        <label for="vnpay">VN Pay</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="paypal" name="payment"
+                            value="paypal">
+                        <img src="/assets/images/paypal.png" alt="VN Pay icon"
+                            class="payment-icon">
+                        <label for="paypal">PayPal</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="momo" name="payment"
+                            value="momo">
+                        <img src="/assets/images/momo.png" alt="VN Pay icon"
+                            class="payment-icon">
+                        <label for="momo">Momo</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary order-btn">Đặt
+                    hàng</button>
+            </div>
+        </div>
+    </div>
+</section>

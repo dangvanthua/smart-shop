@@ -1,0 +1,50 @@
+<section class="section-login">
+
+    <div class="logo-header">
+        <a class="logo-link">
+            <!-- <img src="path/to/logo.png" alt="Smart Shop Logo" /> -->
+            <span>Smart Shop</span>
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="introduction">
+            <h2>Smart Shop</h2>
+            <p>Điểm đến lý tưởng của bạn để tìm kiếm những sản phẩm điện tử,
+                thời trang và đồ gia dụng mới nhất. Khám phá những ưu đãi không
+                thể tuyệt vời hơn, những sản phẩm chất lượng cao và trải nghiệm
+                mua sắm dễ dàng.</p>
+        </div>
+
+        <div class="form-section">
+            <h3>Smart Shop</h3>
+            <form (ngSubmit)="onSubmit()">
+                <input placeholder="Email or Phone Number" type="text"
+                    formControlName="contact" />
+                <input placeholder="Password" type="password"
+                    formControlName="password" />
+                <button type="submit">Login</button>
+                <div class="login-socials">
+                    <button class="social-btn" type="button">
+                        <ng-icon class="google"
+                            name="bootstrapGoogle"></ng-icon>
+                        <span>Google</span>
+                    </button>
+                    <button class="social-btn" type="button">
+                        <ng-icon class="facebook"
+                            name="bootstrapFacebook"></ng-icon>
+                        <span>Facebook</span>
+                    </button>
+                </div>
+            </form>
+            <div class="additional-links">
+                <div class="forgot-link">
+                    <a href="#">Forgot password?</a>
+                </div>
+                <div class="no-account-link">
+                    <a href="#">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

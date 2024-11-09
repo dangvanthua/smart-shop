@@ -1,0 +1,33 @@
+<section class="section-register">
+    <div class="container">
+        <div class="row">
+            <!-- Image Section -->
+            <div class="col-md-6 image-section">
+                <img i18n-alt alt="Registration page image" height="400"
+                    src="assets/images/background_register.jpg"
+                    width="400" />
+            </div>
+            <!-- Form Section -->
+            <div class="col-md-6 form-section">
+                <h2 i18n>Register Account</h2>
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <input placeholder="Full Name" type="text"
+                        formControlName="name" i18n-placeholder />
+                    <input placeholder="Email" type="email"
+                        formControlName="email" i18n-placeholder />
+                    <input placeholder="Phone Number" type="text"
+                        formControlName="phone" i18n-placeholder />
+                    <input placeholder="Password" type="password"
+                        formControlName="password" i18n-placeholder />
+                    <input placeholder="Date of Birth" type="date"
+                        formControlName="dob" />
+                    <button type="submit" i18n>Register</button>
+                </form>
+                <div class="login-link">
+                    <span i18n>Already have an account?</span>
+                    <a href="#" i18n>Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
