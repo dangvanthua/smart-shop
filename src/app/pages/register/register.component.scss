@@ -91,6 +91,14 @@ $input-border-radius: 8px;
         }
     }
 
+    small {
+        color: $primary-color;
+        font-size: 10px;
+        margin-top: -12px;
+        margin-bottom: 8px;
+        display: block;
+    }
+
     button {
         width: 100%;
         padding: $input-padding;

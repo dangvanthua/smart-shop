@@ -1,17 +1,59 @@
 import { Component } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapGoogle, bootstrapFacebook } from '@ng-icons/bootstrap-icons';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AuthRequest } from '../../dto/request/auth-request.model';
+import { AuthService } from '../../services/auth.service';
+import { TokenService } from '../../services/token.service';
+import { ApiResponse } from '../../dto/response/api-response.model';
+import { AuthResponse } from '../../dto/response/auth-response.model';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NgIconComponent],
+  imports: [
+    NgIconComponent,
+    ReactiveFormsModule,
+    CommonModule],
   viewProviders: [provideIcons({ bootstrapGoogle, bootstrapFacebook })],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  onSubmit() { }
+
+  loginForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private authSerivce: AuthService,
+    private tokenService: TokenService
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
+
+  onSubmit() {
+    if (this.loginForm.valid) {
+      const email = this.loginForm.value.email;
+      const password = this.loginForm.value.password;
+      const authRequest: AuthRequest = { email, password };
+      this.authSerivce.login(authRequest).subscribe({
+        next: (response: ApiResponse<AuthResponse>) => {
+          if (response.code === 1000) {
+            if (response.result?.is_authenticated && response.result.access_token) {
+              const accessToken = response.result?.access_token;
+              this.tokenService.saveToken(accessToken);
+            }
+          }
+        }
+      });
+    } else {
+      this.loginForm.markAllAsTouched();
+    }
+  }
 }
 
 

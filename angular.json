@@ -4,13 +4,6 @@
   "newProjectRoot": "projects",
   "projects": {
     "smart-shop": {
-      "i18n": {
-        "sourceLocale": "en-US",
-        "locales": {
-          "vi": "src/locale/messages.vi.xlf",
-          "ja": "src/locale/messages.ja.xlf"
-        }
-      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -24,7 +17,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "localize": ["vi"],
             "outputPath": "dist/smart-shop",
             "index": "src/index.html",
             "browser": "src/main.ts",

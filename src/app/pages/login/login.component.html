@@ -18,11 +18,29 @@
 
         <div class="form-section">
             <h3>Smart Shop</h3>
-            <form (ngSubmit)="onSubmit()">
-                <input placeholder="Email or Phone Number" type="text"
-                    formControlName="contact" />
-                <input placeholder="Password" type="password"
-                    formControlName="password" />
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <input placeholder="Email" type="email"
+                        formControlName="email" />
+                    <div class="error"
+                        *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+                        <small
+                            *ngIf="loginForm.get('email')?.errors?.['required']">
+                            Vui lòng nhập Email.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input placeholder="Password" type="password"
+                        formControlName="password" />
+                    <div class="error"
+                        *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+                        <small
+                            *ngIf="loginForm.get('password')?.errors?.['required']">
+                            Vui lòng nhập mật khẩu.
+                        </small>
+                    </div>
+                </div>
                 <button type="submit">Login</button>
                 <div class="login-socials">
                     <button class="social-btn" type="button">
