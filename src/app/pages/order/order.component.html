@@ -19,7 +19,7 @@
             <div class="col-md-12">
                 <h3>Thông tin nguời nhận</h3>
 
-                <form class="form-user">
+                <form class="form-user" [formGroup]="form">
                     <div class="form-group">
                         <label for="fullName" class="custom-label">Họ và
                             tên</label>
@@ -37,34 +37,46 @@
                     <div class="form-group">
                         <label for="city" class="custom-label">Thành phố /
                             Tỉnh</label>
-                        <select class="custom-select" id="city">
+                        <select id="city" formControlName="city"
+                            class="custom-select">
                             <option value disabled selected>Chọn thành
                                 phố/tỉnh</option>
-                            <option value="hanoi">Hà Nội</option>
-                            <option value="hochiminh">Hồ Chí Minh</option>
-                            <option value="danang">Đà Nẵng</option>
+                            @for (city of cities; track $index) {
+                            <option [value]="city.id">
+                                {{ city.full_name }}
+                            </option>
+                            }
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="district" class="custom-label">Quận /
                             Huyện</label>
-                        <select class="custom-select" id="district">
+                        <select class="custom-select" formControlName="district"
+                            id="district">
                             <option value disabled selected>Chọn
                                 quận/huyện</option>
-                            <option value="hoankiem">Hoàn Kiếm</option>
-                            <option value="thanhxuan">Thanh Xuân</option>
+                            @for (district of districts; track $index) {
+                            <option [value]="district.id">
+                                {{ district.full_name }}
+                            </option>
+                            }
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="ward" class="custom-label">Phường /
                             Xã</label>
-                        <select class="custom-select" id="ward">
+                        <select class="custom-select" formControlName="ward"
+                            id="ward">
                             <option value disabled selected>Chọn
                                 phường/xã</option>
-                            <option value="hoankiem">Hoàn Kiếm</option>
-                            <option value="thanhxuan">Thanh Xuân</option>
+
+                            @for (ward of wards; track $index) {
+                            <option [value]="ward.id">
+                                {{ ward.full_name }}
+                            </option>
+                            }
                         </select>
                     </div>
 
