@@ -1,33 +1,73 @@
-<header class="header">
-    <div class="header-top">
-        <div class="header-links">
-
-            <a href="#">Đăng ký bán hàng</a>
-            <span>|</span>
-            <a href="#">Kết nối</a>
-            <span class="social-icons">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-instagram"></i></a>
-            </span>
-        </div>
-        <div class="header-actions">
-            <a href="#"><i class="fa fa-bell"></i> Thông Báo</a>
-            <a href="#"><i class="fa fa-globe"></i> Tiếng Việt</a>
-            <a href="#">Đăng Ký</a>
-            <a href="#">Đăng Nhập</a>
+<header class="header-container">
+    <div class="top-bar d-flex align-items-center justify-content-between py-2">
+        <span>Đăng ký bán hàng cùng SmartShop để có những
+            ưu đãi hấp dẫn</span>
+        <div class="top-right d-flex align-items-center">
+            <a href="#">Vị trí cửa hàng</a>
+            <a href="#">Theo dõi đơn hàng</a>
+            <a href="#" class="d-flex align-items-center">
+                <img src="assets/images/vietnam.png" alt="Vietnam Flag"
+                    class="flag-icon">
+                <span>Vietnamese</span>
+            </a>
+            <a href="#">Việt Nam (VND ₫)</a>
         </div>
     </div>
 
-    <div class="header-main">
+    <div class="main-header">
         <div class="logo">
-            <img src="smartshop-logo.png" alt="SmartShop Logo">
+            <span class="shop-name">Smart Shop</span>
         </div>
+
         <div class="search-bar">
-            <input type="text" placeholder="Shopee bao ship 0Đ - Đăng ký ngay!">
-            <button><i class="fa fa-search"></i></button>
+            <select class="category-select">
+                <option>Tất cả danh mục</option>
+            </select>
+            <input type="text" placeholder="Tìm kiếm sản phẩm...">
+            <button class="btn search-btn">Tìm</button>
         </div>
-        <div class="cart-icon">
-            <i class="fa fa-shopping-cart"></i>
+
+        <div class="user-actions">
+            <a href="#" class="account">
+                <ng-icon class="account-icon" name="bootstrapPerson"></ng-icon>
+                <span>Log in</span>
+            </a>
+
+            <a href="#" class="cart">
+                <ng-icon class="cart-icon" name="bootstrapCart"></ng-icon>
+                <span>3</span>
+            </a>
         </div>
     </div>
+
+    <nav class="navigation" appStickyNavigation>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="nav-menu">
+                    <ng-icon class="menu-icon"
+                        name="bootstrapMenuApp"></ng-icon>
+                    <span>Danh mục sản phẩm</span>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <ul>
+                    <li>
+                        <a href="#" class="nav-link">Trang chủ</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">Danh mục</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">Bài viết</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">Hỗ trợ</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">Đăng ký bán hàng</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>

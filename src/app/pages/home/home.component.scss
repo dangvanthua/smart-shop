@@ -1,54 +1,75 @@
+// variables.scss
+$primary-color: #6200ea;
+$secondary-color: #f8f9fa;
+$text-color: #333;
+$text-light: #888;
+$link-color: #007bff;
+
+$font-size-base: 1rem;
+$font-size-small: 0.875rem;
+$font-size-large: 1.25rem;
+$font-size-xl: 2rem;
+
+$border-radius: 5px;
+$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+$padding-small: 8px;
+$padding-medium: 16px;
+$padding-large: 40px;
+
+$transition-base: 0.3s ease;
+
 .hero-section {
-    background-color: #f8f9fa;
+    background-color: $secondary-color;
     background-image: url("/assets/images/background-hero.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top center;
     box-sizing: border-box;
-    color: #333;
+    color: $text-color;
 
     .product-info {
         position: relative;
-        z-index: 2; 
+        z-index: 2;
 
         .product-title {
-            font-size: 2.5rem;
+            font-size: $font-size-xl;
             font-weight: 700;
-            color: #333;
+            color: $text-color;
         }
 
         .product-subtitle {
-            font-size: 1rem;
-            color: #888;
-            margin-bottom: 20px;
+            font-size: $font-size-base;
+            color: $text-light;
+            margin-bottom: $padding-medium;
         }
 
         .product-price {
-            font-size: 1.25rem;
+            font-size: $font-size-large;
             font-weight: 500;
 
             span {
                 &.price-amount {
-                    font-size: 2rem;
-                    color: #333;
+                    font-size: $font-size-xl;
+                    color: $text-color;
                 }
             }
         }
 
         .start-buying {
-            background-color: #ffc107;
-            color: #333;
+            background-color: $primary-color;
+            color: #fff;
             font-weight: 600;
-            padding: 10px 20px;
+            padding: $padding-small $padding-medium;
             border: none;
-            border-radius: 5px;
-            margin-top: 15px;
+            border-radius: $border-radius;
+            margin-top: $padding-small;
         }
 
         .carousel-indicators {
             display: flex;
-            gap: 5px;
-            margin-top: 10px;
+            gap: $padding-small;
+            margin-top: $padding-small;
 
             .indicator {
                 width: 10px;
@@ -57,7 +78,7 @@
                 border-radius: 50%;
 
                 &.active {
-                    background-color: #ffc107;
+                    background-color: $primary-color;
                 }
             }
         }
@@ -65,32 +86,32 @@
 }
 
 .deals-section {
-    padding: 40px 0;
+    padding: $padding-large 0;
     background-color: #fff;
 
     .deal-item {
-        background-color: #f8f9fa;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: $secondary-color;
+        padding: $padding-small;
+        border-radius: $border-radius;
+        box-shadow: $box-shadow;
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: $padding-medium;
 
         img {
             max-width: 80px;
         }
 
         .deal-title {
-            font-size: 0.875rem;
+            font-size: $font-size-small;
             font-weight: 700;
-            color: #333;
+            color: $text-color;
             margin-bottom: 4px;
             line-height: 1.5;
         }
 
         .shop-now {
-            color: #ffc107;
+            color: $primary-color;
             font-weight: 600;
             text-decoration: none;
 
@@ -105,20 +126,20 @@
 .products-hot {
     .home-title {
         text-align: center;
-        border-bottom: 3px solid #ffc107;
+        border-bottom: 3px solid $primary-color;
 
         .section-title {
-            font-size: 24px; 
+            font-size: $font-size-large;
             font-weight: 600;
-            color: #333;
-            margin-bottom: 24px; 
+            color: $text-color;
+            margin-bottom: $padding-medium;
             text-transform: capitalize;
         }
     }
 
     .card {
         border: none;
-        transition: transform 0.3s ease;
+        transition: transform $transition-base;
 
         &:hover {
             transform: scale(1.05);
@@ -133,28 +154,28 @@
         }
 
         .card-body {
-            padding: 16px; 
+            padding: $padding-medium;
 
             .product-name {
-                font-size: 14px; 
+                font-size: $font-size-small;
                 font-weight: 500;
-                color: #333;
-                margin-bottom: 8px; 
+                color: $text-color;
+                margin-bottom: $padding-small;
                 line-height: 1.2;
             }
 
             .product-price {
-                font-size: 16px; 
+                font-size: $font-size-base;
                 font-weight: 700;
-                color: #333;
+                color: $text-color;
             }
         }
     }
 
     .btn-load {
         width: 35%;
-        padding: 8px 16px;
-        font-size: 14px;
+        padding: $padding-small $padding-medium;
+        font-size: $font-size-small;
         font-weight: 500;
         outline: none;
         border: none;
@@ -166,37 +187,37 @@
 
 .favourite-list {
     .home-title {
-        border-bottom: 3px solid #ffc107;
+        border-bottom: 3px solid $primary-color;
 
         .section-title {
-            font-size: 24px;
+            font-size: $font-size-large;
             font-weight: 600;
-            color: #333;
-            margin-bottom: 24px;
+            color: $text-color;
+            margin-bottom: $padding-medium;
             text-transform: capitalize;
         }
     }
 
     .nav-tabs {
         .nav-link {
-            color: #555;
+            color: $text-light;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: color $transition-base;
 
             &.active {
-                color: #007bff;
-                border-color: #007bff #007bff #fff;
+                color: $link-color;
+                border-color: $link-color $link-color #fff;
             }
 
             &:hover {
-                color: #007bff;
+                color: $link-color;
             }
         }
     }
 
     .card {
         border: none;
-        transition: transform 0.3s ease;
+        transition: transform $transition-base;
 
         &:hover {
             transform: scale(1.05);
@@ -211,28 +232,28 @@
         }
 
         .card-body {
-            padding: 16px;
+            padding: $padding-medium;
 
             .product-name {
-                font-size: 14px;
+                font-size: $font-size-small;
                 font-weight: 500;
-                color: #333;
-                margin-bottom: 8px;
+                color: $text-color;
+                margin-bottom: $padding-small;
                 line-height: 1.2;
             }
 
             .product-price {
-                font-size: 16px;
+                font-size: $font-size-base;
                 font-weight: 700;
-                color: #333;
+                color: $text-color;
             }
         }
     }
 
     .btn-load {
         width: 35%;
-        padding: 8px 16px;
-        font-size: 14px;
+        padding: $padding-small $padding-medium;
+        font-size: $font-size-small;
         font-weight: 500;
         outline: none;
         border: none;
