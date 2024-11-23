@@ -9,7 +9,7 @@ import { OrderComponent } from './pages/order/order.component';
   selector: 'app-root',
   standalone: true,
   imports: [
-    RegisterComponent,
+    OrderComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
