@@ -10,8 +10,8 @@ import { HomeComponent } from './pages/home/home.component';
   selector: 'app-root',
   standalone: true,
   imports: [
-    ProductComponent
-  ],
+    OrderComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
