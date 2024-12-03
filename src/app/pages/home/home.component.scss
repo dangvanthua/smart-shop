@@ -125,12 +125,11 @@ $transition-base: 0.3s ease;
 
 .products-hot {
     .home-title {
-        text-align: center;
         border-bottom: 3px solid $primary-color;
 
         .section-title {
             font-size: $font-size-large;
-            font-weight: 600;
+            font-weight: 700;
             color: $text-color;
             margin-bottom: $padding-medium;
             text-transform: capitalize;
