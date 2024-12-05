@@ -5,14 +5,17 @@ import { ProductService } from '../../services/product.service';
 import { ProductListResponse } from '../../dto/response/products-response.model';
 import { ApiResponse } from '../../dto/response/api-response.model';
 import { ProductResponse } from '../../dto/response/product-response.model';
-import { CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CategoryResponse } from '../../dto/response/category-response.model';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    CommonModule
   ],
   providers: [CurrencyPipe],
   templateUrl: './home.component.html',
@@ -20,17 +23,25 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class HomeComponent {
 
+  categories: CategoryResponse[] = [];
+  category!: CategoryResponse;
+  productCategories: ProductResponse[] = [];
   products: ProductResponse[] = [];
-  page: number = 0;
+  pageCategory: number = 0;
+  pageFeature: number = 0;
   size: number = 12;
-  totalPages: number = 0;
+  totalProductCategoryPages: number = 0;
+  totalProductPages: number = 0;
+  selectedCategoryIndex: number = 0;
 
 
   constructor(
+    private categoryService: CategoryService,
     private productService: ProductService,
     private currencyPipe: CurrencyPipe) {}
 
   ngOnInit(): void {
+    this.loadCategories();
     this.loadProducts();
   }
 
@@ -38,12 +49,38 @@ export class HomeComponent {
     return this.currencyPipe.transform(price, 'VND', 'symbol', '1.0-0')!;
   }
 
+  loadCategories(): void {
+    this.categoryService.getAllCategories().subscribe({
+      next: (response: ApiResponse<CategoryResponse[]>) => {
+        if(response.code === 1000 && response.result) {
+          this.categories = response.result;
+          this.selectCategory(this.selectedCategoryIndex, this.categories[0]);
+        }
+      }
+    })
+  }
+
+  selectCategory(index: number, category: CategoryResponse): void {
+    this.selectedCategoryIndex = index;
+    this.category = category;
+    const categoryId = category.id;
+    this.productService.getProductByCategory(categoryId, this.pageCategory, this.size).subscribe({
+      next: (response: ApiResponse<ProductListResponse>) => {
+        if(response.code === 1000 && response.result) {
+          console.log(response.result.product_responses);
+          this.productCategories = response.result.product_responses;
+          this.totalProductCategoryPages = response.result.total_pages;
+        }
+      }
+    });
+  }
+
   loadProducts(): void {
-    this.productService.getHotProducts(this.page, this.size).subscribe({
+    this.productService.getFeatureProducts(this.pageFeature, this.size).subscribe({
       next: (response: ApiResponse<ProductListResponse>) => {
         if(response.code === 1000 && response.result) {
           this.products = [...this.products, ...response.result.product_responses];
-          this.totalPages = response.result.total_pages;
+          this.totalProductPages = response.result.total_pages;
         }
       },
       error: (err) => {
@@ -52,9 +89,16 @@ export class HomeComponent {
     });
   }
 
-  loadMore(): void {
-    if(this.page < this.totalPages - 1) {
-      this.page++;
+  loadMoreCategoryProduct(): void {
+    if(this.pageCategory < this.totalProductPages - 1) {
+      this.pageCategory++;
+      this.selectCategory(this.selectedCategoryIndex, this.category);
+    }
+  }
+
+  loadMoreFeatureProduct(): void {
+    if(this.pageFeature < this.totalProductPages - 1) {
+      this.pageFeature++;
       this.loadProducts();
     }
   }

@@ -14,10 +14,18 @@ export class ProductService {
 
     constructor(private http: HttpClient) {}
 
-    getHotProducts(page: number = 0, size: number = 12): Observable<ApiResponse<ProductListResponse>> {
+    getProductByCategory(categoryId: number, page: number = 0, size: number = 12): Observable<ApiResponse<ProductListResponse>> {
         const params = new HttpParams()
         .set('page', page.toString())
-        .set('limit', size.toString());
+        .set('size', size.toString());
+
+        return this.http.get<ApiResponse<ProductListResponse>>(`${this.PRODUCT_API}/${categoryId}`, {params});
+    }
+
+    getFeatureProducts(page: number = 0, size: number = 12): Observable<ApiResponse<ProductListResponse>> {
+        const params = new HttpParams()
+        .set('page', page.toString())
+        .set('size', size.toString());
 
         return this.http.get<ApiResponse<ProductListResponse>>(`${this.PRODUCT_API}`, {params});
     }

@@ -88,217 +88,56 @@
     </section>
 
     <section class="favourite-list container my-5">
-
         <div class="row">
             <div class="col-12 mb-4 home-title">
-                <h2 class="section-title">Favorites list</h2>
+                <h2 class="section-title">Khám phá theo loại</h2>
             </div>
         </div>
-
-        <ul class="nav nav-tabs justify-content-center mb-4" id="categoryTabs"
-            role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="category1-tab"
-                    data-bs-toggle="tab" data-bs-target="#category1"
-                    type="button" role="tab" aria-controls="category1"
-                    aria-selected="true">Điện Tử</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="category2-tab" data-bs-toggle="tab"
-                    data-bs-target="#category2" type="button" role="tab"
-                    aria-controls="category2"
-                    aria-selected="false">Thời Trang</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="category2-tab" data-bs-toggle="tab"
-                    data-bs-target="#category2" type="button" role="tab"
-                    aria-controls="category2"
-                    aria-selected="false">Đồ Gia Dụng</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="category2-tab" data-bs-toggle="tab"
-                    data-bs-target="#category2" type="button" role="tab"
-                    aria-controls="category2"
-                    aria-selected="false">Thể Thao & Du Lịch</button>
+    
+        <ul class="nav nav-tabs justify-content-center mb-4" id="categoryTabs" role="tablist">
+            <li class="nav-item" role="presentation" *ngFor="let category of categories?.slice(0, 5); let i = index">
+                <button class="nav-link" [class.active]="i === selectedCategoryIndex" 
+                        [id]="'category' + i + '-tab'" 
+                        [attr.data-bs-target]="'#category' + i" 
+                        type="button" 
+                        role="tab" 
+                        [attr.aria-controls]="'category' + i" 
+                        [attr.aria-selected]="i === selectedCategoryIndex"
+                        (click)="selectCategory(i, category)">
+                    {{ category.name }}
+                </button>
             </li>
         </ul>
-
+    
         <div class="tab-content" id="categoryTabsContent">
-            <div class="tab-pane fade show active" id="category1"
-                role="tabpanel" aria-labelledby="category1-tab">
+            <div *ngFor="let category of categories?.slice(0, 5); let i = index" 
+                 class="tab-pane fade" 
+                 [class.show]="i === selectedCategoryIndex" 
+                 [class.active]="i === selectedCategoryIndex"
+                 [id]="'category' + i" 
+                 role="tabpanel" 
+                 [attr.aria-labelledby]="'category' + i + '-tab'">
                 <div class="row">
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
+                    <div *ngFor="let product of productCategories" class="col-sm-6 col-md-4 col-lg-2 mb-4">
                         <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
+                            <img [src]="product.thumbnail == null ? 'assets/images/img-hero.png' : product.thumbnail" class="hot-image" alt="Product hot image">
                             <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="category2" role="tabpanel"
-                aria-labelledby="category2-tab">
-                <div class="row">
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
-                        <div class="card">
-                            <img src="assets/images/img-hero.png"
-                                class="hot-image"
-                                alt="Product hot image">
-                            <div class="card-body">
-                                <h4 class="product-name">Tablet White EliteBook
-                                    Revolve
-                                    810 G2</h4>
-                                <p class="product-price">$1,299.00</p>
+                                <h4 class="product-name">{{ product.name }}</h4>
+                                <p class="product-price">{{ formatCurrency(product.price) }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+    
         <div class="row">
             <div class="col-12 text-center">
                 <button class="btn-load">Xem thêm</button>
             </div>
         </div>
     </section>
+    
 
     <section class="products-hot container my-5">
         <div class="row">
@@ -310,7 +149,7 @@
             @for (product of products; track $index) {
                 <div class="col-sm-6 col-md-4 col-lg-2 mb-4">
                     <div class="card">
-                        <img [src]="product.thumbnail" class="hot-image"
+                        <img [src]="product.thumbnail == null ? 'assets/images/img-hero.png' : product.thumbnail" class="hot-image"
                             alt="Product hot image">
                         <div class="card-body">
                             <h4 class="product-name">{{product.name}}</h4>
@@ -323,7 +162,9 @@
 
         <div class="row">
             <div class="col-12 text-center">
-                <button class="btn-load" (click)="loadMore()">Xem thêm</button>
+                @if (pageFeature !== (totalProductPages - 1)) {
+                    <button class="btn-load" (click)="loadMoreFeatureProduct()">Xem thêm</button>
+                }
             </div>
         </div>
     </section>
