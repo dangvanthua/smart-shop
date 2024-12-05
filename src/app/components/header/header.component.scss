@@ -169,12 +169,21 @@ $header-height: 50px;
             display: flex;
             align-items: baseline;
             gap: 6px;
+            outline: none;
+            border: none;
+            background: #fff;
             cursor: pointer;
 
             span {
                 font-size: 14px;
                 font-weight: 600;
             }
+        }
+
+        .heading-sidebar {
+            font-size: 16px;
+            font-weight: 600;
+            color: $color-text;
         }
 
         .category-link {

@@ -43,11 +43,20 @@
     <nav class="navigation" appStickyNavigation>
         <div class="row">
             <div class="col-lg-4">
-                <div class="nav-menu">
+                <button class="nav-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     <ng-icon class="menu-icon"
                         name="bootstrapMenuApp"></ng-icon>
                     <span>Danh mục sản phẩm</span>
-                </div>
+                </button>
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                    <div class="offcanvas-header">
+                      <h5 class="offcanvas-title heading-sidebar" id="offcanvasExampleLabel">Danh mục sản phẩm</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                      
+                    </div>
+                  </div>
             </div>
             <div class="col-lg-8">
                 <ul>

@@ -67,7 +67,6 @@ export class HomeComponent {
     this.productService.getProductByCategory(categoryId, this.pageCategory, this.size).subscribe({
       next: (response: ApiResponse<ProductListResponse>) => {
         if(response.code === 1000 && response.result) {
-          console.log(response.result.product_responses);
           this.productCategories = response.result.product_responses;
           this.totalProductCategoryPages = response.result.total_pages;
         }
