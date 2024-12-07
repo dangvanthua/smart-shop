@@ -17,26 +17,14 @@
                     <div id="productCarousel" class="carousel slide"
                         data-ride="carousel">
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="assets/images/background_register.jpg"
-                                    class="d-block w-100"
-                                    alt="Main Product Image">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/images/background_register.jpg"
-                                    class="d-block w-100"
-                                    alt="Secondary Image 1">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/images/background_register.jpg"
-                                    class="d-block w-100"
-                                    alt="Secondary Image 2">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/images/background_register.jpg"
-                                    class="d-block w-100"
-                                    alt="Secondary Image 3">
-                            </div>
+                            @for (image of productDetail?.images; track $index) {
+                                <div class="carousel-item" 
+                                    [ngClass]="{'active' : image.is_thumbnail === true}">
+                                    <img [src]="image.image_url"
+                                        class="d-block w-100 carousel-img"
+                                        alt="Main Product Image">
+                                </div>
+                            }
                         </div>
                         <button class="carousel-control-prev" type="button"
                             data-bs-target="#productCarousel"
@@ -55,30 +43,14 @@
                     </div>
 
                     <div class="d-flex justify-content-center mt-3">
-                        <div class="thumbnail" data-bs-target="#productCarousel"
-                            data-bs-slide-to="0">
-                            <img src="assets/images/background_register.jpg"
-                                class="img-thumbnail"
-                                alt="Thumbnail 1">
-                        </div>
-                        <div class="thumbnail" data-bs-target="#productCarousel"
-                            data-bs-slide-to="1">
-                            <img src="assets/images/background_register.jpg"
-                                class="img-thumbnail"
-                                alt="Thumbnail 2">
-                        </div>
-                        <div class="thumbnail" data-bs-target="#productCarousel"
-                            data-bs-slide-to="2">
-                            <img src="assets/images/background_register.jpg"
-                                class="img-thumbnail"
-                                alt="Thumbnail 3">
-                        </div>
-                        <div class="thumbnail" data-bs-target="#productCarousel"
-                            data-bs-slide-to="3">
-                            <img src="assets/images/background_register.jpg"
-                                class="img-thumbnail"
-                                alt="Thumbnail 4">
-                        </div>
+                        @for (image of productDetail?.images; track $index) {
+                            <div class="thumbnail" data-bs-target="#productCarousel"
+                            [attr.data-bs-slide-to]="$index">
+                                <img [src]="image.image_url"
+                                    class="img-thumbnail thumbnail-img"
+                                    [alt]="image.image_url">
+                            </div>
+                        }
                     </div>
                 </div>
 

@@ -11,6 +11,18 @@ $sub-color: #fed6d6;
     padding: 68px 12px;
     border-radius: 9px;
 
+    .carousel-img {
+        object-fit: cover; 
+        height: 400px;    
+        background-repeat: no-repeat;
+    }
+      
+    .thumbnail-img {
+        object-fit: cover; 
+        width: 100%;         
+        max-width: 120px;
+    }
+
     .product-details {
         display: flex;
         flex-direction: column;

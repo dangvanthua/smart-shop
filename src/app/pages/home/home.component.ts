@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from '../../components/header/header.component';
-import { FooterComponent } from '../../components/footer/footer.component';
 import { ProductService } from '../../services/product.service';
 import { ProductListResponse } from '../../dto/response/products-response.model';
 import { ApiResponse } from '../../dto/response/api-response.model';
@@ -8,15 +6,20 @@ import { ProductResponse } from '../../dto/response/product-response.model';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CategoryResponse } from '../../dto/response/category-response.model';
 import { CategoryService } from '../../services/category.service';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { bootstrapCart } from '@ng-icons/bootstrap-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    HeaderComponent,
-    FooterComponent,
+    NgIconComponent,
     CommonModule
   ],
+  viewProviders: [provideIcons({
+    bootstrapCart,
+  })],
   providers: [CurrencyPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -38,6 +41,7 @@ export class HomeComponent {
   constructor(
     private categoryService: CategoryService,
     private productService: ProductService,
+    private router: Router,
     private currencyPipe: CurrencyPipe) {}
 
   ngOnInit(): void {
@@ -62,12 +66,18 @@ export class HomeComponent {
 
   selectCategory(index: number, category: CategoryResponse): void {
     this.selectedCategoryIndex = index;
+    let isNewChange = false;
+    if(this.category && (this.category.id !== category.id)) isNewChange = true;
     this.category = category;
-    const categoryId = category.id;
-    this.productService.getProductByCategory(categoryId, this.pageCategory, this.size).subscribe({
+    this.productService.getProductByCategory(category.id, this.pageCategory, this.size).subscribe({
       next: (response: ApiResponse<ProductListResponse>) => {
         if(response.code === 1000 && response.result) {
-          this.productCategories = response.result.product_responses;
+          if(isNewChange) {
+            this.productCategories = response.result.product_responses;
+          }else {
+            this.productCategories = [...this.productCategories, ...response.result.product_responses];
+          }
+
           this.totalProductCategoryPages = response.result.total_pages;
         }
       }
@@ -89,7 +99,7 @@ export class HomeComponent {
   }
 
   loadMoreCategoryProduct(): void {
-    if(this.pageCategory < this.totalProductPages - 1) {
+    if(this.pageCategory < this.totalProductCategoryPages - 1) {
       this.pageCategory++;
       this.selectCategory(this.selectedCategoryIndex, this.category);
     }
@@ -100,5 +110,9 @@ export class HomeComponent {
       this.pageFeature++;
       this.loadProducts();
     }
+  }
+
+  goToProductDetail(productId: number): void {
+    this.router.navigate(['/product-detail', productId]);
   }
 }

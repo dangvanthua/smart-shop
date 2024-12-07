@@ -17,6 +17,7 @@ $header-height: 50px;
 .header-container {
     font-family: $font-family;
     position: relative;
+    width: 100%;
 
     .top-bar {
         display: flex;
@@ -70,7 +71,9 @@ $header-height: 50px;
         .search-bar {
             display: flex;
             align-items: center;
-            margin: 0 20px;
+            margin-left: 40px;
+            width: 100%;
+            max-width: 650px;
 
             .category-select {
                 padding: $padding-small;
@@ -82,7 +85,8 @@ $header-height: 50px;
 
             input[type="text"] {
                 padding: $padding-small;
-                width: 380px;
+                width: 100%;
+                max-width: 400px;
                 height: 40px; 
                 font-size: $font-size-regular;
                 border: 1px solid $color-border;
@@ -184,6 +188,27 @@ $header-height: 50px;
             font-size: 16px;
             font-weight: 600;
             color: $color-text;
+        }
+
+        .menu-categories {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-right: 32px;
+
+            .category-item {
+                padding: 12px 8px;
+                border-bottom: 1px solid #b7b7b7;
+                width: 100%;
+                cursor: pointer;
+               
+                a {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: $color-navigation;
+                    text-decoration: none;
+                }
+            }
         }
 
         .category-link {

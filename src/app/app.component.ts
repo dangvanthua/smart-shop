@@ -4,14 +4,18 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
 import { ProductComponent } from './pages/product/product.component';
 import { OrderComponent } from './pages/order/order.component';
 import { HomeComponent } from './pages/home/home.component';
+import { HeaderComponent } from "./components/header/header.component";
+import { FooterComponent } from "./components/footer/footer.component";
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    OrderComponent,
-    HomeComponent
+    RouterModule,
+    HeaderComponent,
+    FooterComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

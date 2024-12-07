@@ -168,6 +168,11 @@ $transition-base: 0.3s ease;
                 font-weight: 700;
                 color: $text-color;
             }
+
+            .cart-icon {
+                font-size: 18px;
+                color: $primary-color;
+            } 
         }
     }
 
@@ -215,7 +220,6 @@ $transition-base: 0.3s ease;
     }
 
     .card {
-        border: none;
         transition: transform $transition-base;
 
         &:hover {
@@ -246,6 +250,10 @@ $transition-base: 0.3s ease;
                 font-weight: 700;
                 color: $text-color;
             }
+            .cart-icon {
+                font-size: 18px;
+                color: $primary-color;
+            } 
         }
     }
 

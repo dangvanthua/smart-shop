@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { ApiResponse } from "../dto/response/api-response.model";
 import { ProductListResponse } from "../dto/response/products-response.model";
+import { ProductDetailResponse } from "../dto/response/product-detail.model";
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,7 @@ export class ProductService {
         .set('page', page.toString())
         .set('size', size.toString());
 
-        return this.http.get<ApiResponse<ProductListResponse>>(`${this.PRODUCT_API}/${categoryId}`, {params});
+        return this.http.get<ApiResponse<ProductListResponse>>(`${this.PRODUCT_API}/${categoryId}/category`, {params});
     }
 
     getFeatureProducts(page: number = 0, size: number = 12): Observable<ApiResponse<ProductListResponse>> {
@@ -28,5 +29,9 @@ export class ProductService {
         .set('size', size.toString());
 
         return this.http.get<ApiResponse<ProductListResponse>>(`${this.PRODUCT_API}`, {params});
+    }
+
+    getDetailProduct(productId: number): Observable<ApiResponse<ProductDetailResponse>> {
+        return this.http.get<ApiResponse<ProductDetailResponse>>(`${this.PRODUCT_API}/${productId}/detail`);
     }
 }

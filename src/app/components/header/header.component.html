@@ -43,7 +43,7 @@
     <nav class="navigation" appStickyNavigation>
         <div class="row">
             <div class="col-lg-4">
-                <button class="nav-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <button (click)="loadCategories()" class="nav-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     <ng-icon class="menu-icon"
                         name="bootstrapMenuApp"></ng-icon>
                     <span>Danh mục sản phẩm</span>
@@ -54,7 +54,13 @@
                       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                      
+                      <ul class="menu-categories">
+                        @for (category of categories; track $index) {
+                            <li class="category-item">
+                                <a href="">{{category.name}}</a>
+                            </li>
+                        }
+                      </ul>
                     </div>
                   </div>
             </div>
@@ -62,9 +68,6 @@
                 <ul>
                     <li>
                         <a href="#" class="nav-link">Trang chủ</a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link">Danh mục</a>
                     </li>
                     <li>
                         <a href="#" class="nav-link">Bài viết</a>
