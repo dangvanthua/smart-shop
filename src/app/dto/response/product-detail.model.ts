@@ -1,5 +1,4 @@
 import { ProductImageResponse } from "./product-image.model";
-import { ProductVariantResponse } from "./product-varriant.model";
 import { SellerInfoResponse } from "./seller-response.model";
 
 export interface ProductDetailResponse {
@@ -11,5 +10,4 @@ export interface ProductDetailResponse {
     is_active: boolean;
     images: ProductImageResponse[];
     seller_info: SellerInfoResponse;
-    product_variants: ProductVariantResponse[];
   }

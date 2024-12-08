@@ -55,88 +55,33 @@
                 </div>
 
                 <div class="col-lg-6 col-md-8 p-3">
-                    <div class="product-details">
-                        <h2 class="heading-secondary">Vòng Đeo Tay Thông Minh
-                            Xiaomi
-                            Miband 8 / Miband 9 Theo Dõi
-                            Sức Khỏe, Bản Quốc Tế - Hàng Chính Hãng</h2>
-                        <p class="detail-price"><strong>$XX.XX</strong></p>
+                    <div *ngIf="productDetail">
+                      <div class="product-details">
+                        <h2 class="heading-secondary">{{ productDetail.name }}</h2>
+                        <p class="detail-price"><strong>{{ formatCurrency( productDetail.price) }}</strong></p>
+                  
                         <div class="row">
-                            <div class="col-3">
-                                <span class="description-detail">Vận
-                                    chuyển</span>
+                          <div class="col-3">
+                            <span class="description-detail">Số lượng</span>
+                          </div>
+                          <div class="col-9">
+                            <div class="quantity-control">
+                              <button class="decrement" (click)="changeQuantity(-1)">-</button>
+                              <input type="number" [(ngModel)]="quantity" />
+                              <button class="increment" (click)="changeQuantity(1)">+</button>
+                              <span class="availability">{{ productDetail.stock_quantity }} sản phẩm có sẵn</span>
                             </div>
-                            <div class="col-9">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <p>Vận chuyển tới</p>
-                                    </div>
-                                    <div class="col-8">
-                                        <span>Phuong 13, Quan Go Vap</span>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-4">
-                                        <p>Phí vận chuyển</p>
-                                    </div>
-                                    <div class="col-8">
-                                        <span>0đ</span>
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-3">
-                                <span class="description-detail">Model</span>
-                            </div>
-                            <div class="col-9">
-                                <div class="attribute-list">
-                                    <div class="attribute-item">
-                                        <img src alt>
-                                        <span>Trang</span>
-                                    </div>
-
-                                    <div class="attribute-item">
-                                        <img src alt>
-                                        <span>Den</span>
-                                    </div>
-
-                                    <div class="attribute-item">
-                                        <img src alt>
-                                        <span>Hong</span>
-                                    </div>
-
-                                    <div class="attribute-item">
-                                        <img src alt>
-                                        <span>Xanh</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-5">
-                            <div class="col-3">
-                                <span class="description-detail">Số lượng</span>
-                            </div>
-                            <div class="col-9">
-                                <div class="quantity-control">
-                                    <button class="decrement">-</button>
-                                    <input type="text" name="quantity-product">
-                                    <button class="increment">+</button>
-                                    <span class="availability">50 sản phẩm có
-                                        sẵn</span>
-                                </div>
-                            </div>
-                        </div>
+                  
                         <div class="btn-purchase-action mt-4">
-                            <button class="btn-cart">
-                                <ng-icon name="bootstrapCartPlus"></ng-icon>
-                                <span>Thêm vào giỏ hàng</span>
-                            </button>
-                            <button class="btn-buy">Mua ngay</button>
+                          <button class="btn-cart">
+                            <ng-icon name="bootstrapCartPlus"></ng-icon>
+                            <span>Thêm vào giỏ hàng</span>
+                          </button>
+                          <button class="btn-buy">Mua ngay</button>
                         </div>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -145,28 +90,29 @@
         <div class="store-info">
 
             <div class="store-header">
-                <img src="store-logo.png" alt="Logo Smart Shop"
+                <img [src]="productDetail?.seller_info?.image_url" 
+                    [alt]="productDetail?.seller_info?.store_name"
                     class="store-logo">
                 <div class="store-details">
-                    <h2>Smart Shop</h2>
+                    <h2>{{productDetail?.seller_info?.store_name}}</h2>
                     <button class="chat-button">Chat Ngay</button>
                     <button class="view-store-button">Xem Shop</button>
                 </div>
             </div>
 
             <div class="store-contact">
-                <p><strong>Điện thoại:</strong> (123) 456-7890</p>
-                <p><strong>Email:</strong> contact.smartshop.com</p>
+                <p><strong>Điện thoại:</strong> {{productDetail?.seller_info?.phone_number}}</p>
+                <p><strong>Email:</strong> {{productDetail?.seller_info?.email}}</p>
             </div>
 
             <div class="store-stats">
                 <div class="stat">
                     <span class="label">Đánh Giá</span>
-                    <span class="value">36,6k</span>
+                    <span class="value">{{productDetail?.seller_info?.total_reviews}}</span>
                 </div>
                 <div class="stat">
                     <span class="label">Sản Phẩm</span>
-                    <span class="value">39</span>
+                    <span class="value">{{productDetail?.seller_info?.total_products_sold}}</span>
                 </div>
                 <div class="stat">
                     <span class="label">Tham Gia</span>
@@ -189,54 +135,23 @@
         <div class="related-products mt-4">
             <h3>Các sản phẩm khác của cửa hàng</h3>
             <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="../../assets/related1.jpg"
-                            class="card-img-top"
-                            alt="Related Product 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Sản phẩm liên quan 1</h5>
-                            <p class="card-text">Giá: $XX.XX</p>
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                @if(productRecommend) {
+                    @for (product of productRecommend; track $index) {
+                        <div class="col-md-3">
+                            <div class="card">
+                                <img [src]="product.thumbnail == null 
+                                ? 'assets/images/img-hero.png' : product.thumbnail"
+                                    class="card-img-top"
+                                    [alt]="product.name">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{product.name}}</h5>
+                                    <p class="card-text">{{formatCurrency(product.price)}}</p>
+                                    <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="../../assets/related2.jpg"
-                            class="card-img-top"
-                            alt="Related Product 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Sản phẩm liên quan 2</h5>
-                            <p class="card-text">Giá: $XX.XX</p>
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="../../assets/related3.jpg"
-                            class="card-img-top"
-                            alt="Related Product 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Sản phẩm liên quan 3</h5>
-                            <p class="card-text">Giá: $XX.XX</p>
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="../../assets/related4.jpg"
-                            class="card-img-top"
-                            alt="Related Product 4">
-                        <div class="card-body">
-                            <h5 class="card-title">Sản phẩm liên quan 4</h5>
-                            <p class="card-text">Giá: $XX.XX</p>
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
-                        </div>
-                    </div>
-                </div>
+                    }
+                }
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { ApiResponse } from "../dto/response/api-response.model";
 import { ProductListResponse } from "../dto/response/products-response.model";
 import { ProductDetailResponse } from "../dto/response/product-detail.model";
+import { ProductResponse } from "../dto/response/product-response.model";
 
 @Injectable({
     providedIn: 'root'
@@ -33,5 +34,9 @@ export class ProductService {
 
     getDetailProduct(productId: number): Observable<ApiResponse<ProductDetailResponse>> {
         return this.http.get<ApiResponse<ProductDetailResponse>>(`${this.PRODUCT_API}/${productId}/detail`);
+    }
+
+    getProductRecommend(productId: number): Observable<ApiResponse<ProductResponse[]>> {
+        return this.http.get<ApiResponse<ProductResponse[]>>(`${this.PRODUCT_API}/${productId}/recommends`);
     }
 }

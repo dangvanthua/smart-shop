@@ -60,10 +60,11 @@ $sub-color: #fed6d6;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             align-items: center;
-            gap: 6px;
+            row-gap: 4px;
+            column-gap: 6px;
 
             .attribute-item {
-                background-color: #f1f1f1;
+                background-color: #f4f4f4;
                 padding: 2px 4px;
                 border: 1px solid #a8a8a8;
                 border-radius: 2px;
@@ -71,8 +72,10 @@ $sub-color: #fed6d6;
                 align-items: center;
                 justify-content: center;
                 flex-wrap: wrap;
-                width: 100%;
-                height: 40px;
+                width: 80%;
+                height: 32px;
+                font-size: 14px;
+                cursor: pointer;
             }
         }
 
@@ -173,7 +176,7 @@ $sub-color: #fed6d6;
     border: 1px solid #ddd;
     border-radius: 5px;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
 
     .store-header {
