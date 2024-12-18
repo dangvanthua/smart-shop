@@ -1,222 +1,178 @@
-<section class="section-order">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="page-breadcrumb">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a>Home</a></li>
-                            <li class="breadcrumb-item"><a>Library</a></li>
-                            <li class="breadcrumb-item active"
-                                aria-current="page">Data</li>
-                        </ol>
-                    </nav>
+<div class="order-container">
+    <div class="order-details">
+        <h2>Địa chỉ và Thanh toán</h2>
+        <div class="address-selection">
+            <h3>Địa chỉ nhận hàng</h3>
+            <div class="address-item">
+                <input id="address1" name="address" type="radio"/>
+                <span>18/1/3 đường số 8 Linh Xuân, Thủ Đức, Khánh Hòa, Việt Nam</span>
+                <div class="address-actions">
+                    <a href="#">Sửa</a> | <a href="#">Xóa</a>
+                </div>
+            </div>
+          
+            <div class="add-new-address">
+                <button type="button" class="btn-new-address" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                    <ng-icon name="bootstrapPlus"></ng-icon> Thêm địa chỉ mới
+                </button>
+
+              <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form [formGroup]="form">
+                                    <!-- Tỉnh/Thành phố -->
+                                    <div class="form-group">
+                                      <label for="city-select">Tỉnh/Thành phố</label>
+                                      <select
+                                        id="city-select"
+                                        class="form-control"
+                                        formControlName="city">
+                                        <option value="">Chọn tỉnh/thành phố</option>
+                                        <option *ngFor="let city of cities" [value]="city.id">
+                                          {{ city.name }}
+                                        </option>
+                                      </select>
+                                      <div *ngIf="form.get('city')?.touched && form.get('city')?.invalid" class="text-danger">
+                                        Vui lòng chọn tỉnh/thành phố.
+                                      </div>
+                                    </div>
+                                  
+                                    <!-- Quận/Huyện -->
+                                    <div class="form-group">
+                                      <label for="district-select">Quận/Huyện</label>
+                                      <select
+                                        id="district-select"
+                                        class="form-control"
+                                        formControlName="district"
+                                        [disabled]="!form.get('city')?.value">
+                                        <option value="">Chọn quận/huyện</option>
+                                        <option *ngFor="let district of districts" [value]="district.id">
+                                          {{ district.name }}
+                                        </option>
+                                      </select>
+                                      <div *ngIf="form.get('district')?.touched && form.get('district')?.invalid" class="text-danger">
+                                        Vui lòng chọn quận/huyện.
+                                      </div>
+                                    </div>
+                                  
+                                    <!-- Phường/Xã -->
+                                    <div class="form-group">
+                                      <label for="ward-select">Phường/Xã</label>
+                                      <select
+                                        id="ward-select"
+                                        class="form-control"
+                                        formControlName="ward"
+                                        [disabled]="!form.get('district')?.value">
+                                        <option value="">Chọn phường/xã</option>
+                                        <option *ngFor="let ward of wards" [value]="ward.id">
+                                          {{ ward.name }}
+                                        </option>
+                                      </select>
+                                      <div *ngIf="form.get('ward')?.touched && form.get('ward')?.invalid" class="text-danger">
+                                        Vui lòng chọn phường/xã.
+                                      </div>
+                                    </div>
+                                  
+                                    <!-- Địa chỉ cụ thể -->
+                                    <div class="form-group">
+                                      <label for="addressDetail">Địa chỉ cụ thể</label>
+                                      <input
+                                        type="text"
+                                        id="addressDetail"
+                                        class="form-control"
+                                        placeholder="Nhập địa chỉ cụ thể"
+                                        formControlName="addressDetail" />
+                                      <div *ngIf="form.get('addressDetail')?.touched && form.get('addressDetail')?.invalid" class="text-danger">
+                                        Vui lòng nhập địa chỉ cụ thể.
+                                      </div>
+                                    </div>
+                                  </form>                                  
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-primary">Lưu địa chỉ</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="order-info row mt-3">
-            <div class="col-md-12">
-                <h3>Thông tin nguời nhận</h3>
-
-                <form class="form-user" [formGroup]="form">
-                    <div class="form-group">
-                        <label for="fullName" class="custom-label">Họ và
-                            tên</label>
-                        <input type="text" class="custom-input" id="fullName"
-                            placeholder="Nhập họ và tên của bạn">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="phone" class="custom-label">Số điện
-                            thoại</label>
-                        <input type="tel" class="custom-input" id="phone"
-                            placeholder="Nhập số điện thoại của bạn">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="city" class="custom-label">Thành phố /
-                            Tỉnh</label>
-                        <select id="city" formControlName="city"
-                            class="custom-select">
-                            <option value disabled selected>Chọn thành
-                                phố/tỉnh</option>
-                            @for (city of cities; track $index) {
-                            <option [value]="city.id">
-                                {{ city.full_name }}
-                            </option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="district" class="custom-label">Quận /
-                            Huyện</label>
-                        <select class="custom-select" formControlName="district"
-                            id="district">
-                            <option value disabled selected>Chọn
-                                quận/huyện</option>
-                            @for (district of districts; track $index) {
-                            <option [value]="district.id">
-                                {{ district.full_name }}
-                            </option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="ward" class="custom-label">Phường /
-                            Xã</label>
-                        <select class="custom-select" formControlName="ward"
-                            id="ward">
-                            <option value disabled selected>Chọn
-                                phường/xã</option>
-
-                            @for (ward of wards; track $index) {
-                            <option [value]="ward.id">
-                                {{ ward.full_name }}
-                            </option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="addressDetail" class="custom-label">Vị trí
-                            chi tiết</label>
-                        <input type="text" class="custom-input"
-                            id="addressDetail" formControlName="addressDetail"
-                            placeholder="Nhập đường, tổ, ấp hoặc khu phố">
-                    </div>
-
-                </form>
+        <div class="payment-methods">
+            <h3>Phương thức thanh toán</h3>
+            <div class="payment-option">
+                <input id="cod" name="payment" type="radio"/>
+                <label for="cod">Thanh toán khi nhận hàng</label>
             </div>
-
-            <div class="col-md-12 mt-5">
-                <h3>Đơn hàng của bạn</h3>
-
-                <div class="product-info">
-                    <table class="product-table">
-                        <thead>
-                            <tr>
-                                <th>Sản phẩm</th>
-                                <th>Đơn giá</th>
-                                <th>Số lượng</th>
-                                <th>Thành tiền</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="d-flex align-items-center gx-3">
-                                    <img
-                                        src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lov126zmyy4u68@resize_w80_nl.webp"
-                                        alt="Product item order"
-                                        class="product-img">
-                                    <h5>Đồng hồ Galaxy Watch 5</h5>
-                                </td>
-                                <td>5,500,000 VND</td>
-                                <td>
-                                    <span class="quantity">1</span>
-                                </td>
-                                <td>5,500,000 VND</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center gx-3">
-                                    <img
-                                        src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lov126zmyy4u68@resize_w80_nl.webp"
-                                        alt="Product item order"
-                                        class="product-img">
-                                    <h5>Đồng hồ Galaxy Watch 5</h5>
-                                </td>
-                                <td>5,500,000 VND</td>
-                                <td>
-                                    <span class="quantity">1</span>
-                                </td>
-                                <td>5,500,000 VND</td>
-                            </tr>
-                            <tr>
-                                <td class="d-flex align-items-center gx-3">
-                                    <img
-                                        src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lov126zmyy4u68@resize_w80_nl.webp"
-                                        alt="Product item order"
-                                        class="product-img">
-                                    <h5>Đồng hồ Galaxy Watch 5</h5>
-                                </td>
-                                <td>5,500,000 VND</td>
-                                <td>
-                                    <span class="quantity">1</span>
-                                </td>
-                                <td>5,500,000 VND</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="order-method row mt-4">
-            <div class="col-md-8">
-                <h3>Tổng số tiền</h3>
-                <div class="order-summary">
-                    <div class="summary-item">
-                        <span>Tổng phụ</span>
-                        <span class="amount">16,500,000 VND</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Phí vận chuyển</span>
-                        <select class="custom-select shipping-method">
-                            <option value="0" selected>Chọn phương thức giao
-                                hàng</option>
-                            <option value="50000">Giao hàng nhanh (50,000
-                                VND)</option>
-                            <option value="30000">Giao hàng tiêu chuẩn (30,000
-                                VND)</option>
-                        </select>
-                    </div>
-                    <div class="summary-item">
-                        <span>Giảm giá</span>
-                        <input type="text" class="custom-input coupon-code"
-                            placeholder="Nhập mã giảm giá">
-                    </div>
-                    <div class="summary-item total">
-                        <span>Tổng thanh toán</span>
-                        <span class="amount">16,500,000 VND</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <h3>Phương thức thanh toán</h3>
-                <div class="payment-method">
-                    <div class="payment-option">
-                        <input type="radio" id="cod" name="payment" value="cod"
-                            checked>
-                        <label for="cod">Thanh toán khi nhận hàng (COD)</label>
-                    </div>
-                    <div class="payment-option">
-                        <input type="radio" id="vnpay" name="payment"
-                            value="vnpay">
-                        <img src="/assets/images/vnpay.png" alt="VN Pay icon"
-                            class="payment-icon">
-                        <label for="vnpay">VN Pay</label>
-                    </div>
-                    <div class="payment-option">
-                        <input type="radio" id="paypal" name="payment"
-                            value="paypal">
-                        <img src="/assets/images/paypal.png" alt="VN Pay icon"
-                            class="payment-icon">
-                        <label for="paypal">PayPal</label>
-                    </div>
-                    <div class="payment-option">
-                        <input type="radio" id="momo" name="payment"
-                            value="momo">
-                        <img src="/assets/images/momo.png" alt="VN Pay icon"
-                            class="payment-icon">
-                        <label for="momo">Momo</label>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary order-btn">Đặt
-                    hàng</button>
+            <div class="payment-option">
+                <input id="bank" name="payment" type="radio"/>
+                <label for="bank">Thanh toán ngân hàng</label>
             </div>
         </div>
     </div>
-</section>
+
+    <div class="order-summary">
+        <h2>Đơn hàng của bạn</h2>
+        <div class="order-item">
+            <img src="https://storage.googleapis.com/a1aa/image/VMx3MHeweLnCGEDhqX1AVN87jeD4PIZRwWC2sAHPKzeQMAoPB.jpg" alt="Khẩu trang 5D xám" class="item-image"/>
+            <div class="item-info">
+                <p class="item-name">Khẩu trang 5D xám - 100 chiếc</p>
+                <div class="item-quantity">Số lượng: 2</div>                
+                <p class="item-price">180.000 ₫</p>
+            </div>
+        </div>
+
+        <div class="voucher-selection">
+          <h3>Chọn mã giảm giá</h3>
+          <div class="voucher-dropdown">
+              <label for="voucher-select">Chọn voucher:</label>
+              <select id="voucher-select" multiple [(ngModel)]="selectedVouchers" (change)="updateVouchers()">
+                  <option *ngFor="let voucher of availableVouchers" [value]="voucher">
+                      {{ voucher.name }} - {{ voucher.value }} ₫
+                  </option>
+              </select>
+          </div>
+      </div>      
+      
+      <!-- Danh sách voucher đã chọn -->
+      @if (selectedVouchers.length > 0) {
+        <div class="voucher-preview">
+            <h3>Voucher đã chọn:</h3>
+            <div *ngFor="let voucher of selectedVouchers" class="voucher-item">
+                <div class="voucher-info">
+                    <h4>{{ voucher.name }}</h4>
+                    <p>Giảm: {{ voucher.value }} ₫</p>
+                </div>
+                <button (click)="removeVoucher(voucher)" class="remove-button">
+                  <ng-icon name="bootstrapXCircleFill" class="remove-button"></ng-icon>
+                </button>
+            </div>
+        </div>
+      }
+      
+        <div class="order-totals">
+            <div class="total-row">
+                <span>Tổng đơn hàng</span><span>180.000 ₫</span>
+            </div>
+            <div class="total-row">
+                <span>Voucher giảm giá</span><span>0 ₫</span>
+            </div>
+            <div class="total-row">
+                <span>Phí giao hàng</span><span>15.000 ₫</span>
+            </div>
+            <div class="total-row total-price">
+                <span>Tổng cộng</span><span>195.000 ₫</span>
+            </div>
+        </div>
+
+        <div class="order-actions">
+            <a href="#" class="checkout-button">Thanh toán</a>
+            <a href="#" class="back-to-cart">Quay lại giỏ hàng</a>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+<app-header/>
 <section class="section-home">
     <section class="hero-section">
         <div class="container">
@@ -157,7 +158,9 @@
                             <h4 class="product-name">{{product.name}}</h4>
                             <div class="d-flex align-items-baseline justify-content-between">
                                 <p class="product-price">{{formatCurrency(product.price)}}</p>
-                                <ng-icon class="cart-icon" name="bootstrapCart"></ng-icon>
+                                <div class="product-icon-cart">
+                                    <ng-icon class="cart-icon" name="bootstrapCart"></ng-icon> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -174,3 +177,4 @@
         </div>
     </section>
 </section>
+<app-footer/>

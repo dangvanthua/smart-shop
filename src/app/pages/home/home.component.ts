@@ -9,14 +9,18 @@ import { CategoryService } from '../../services/category.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapCart } from '@ng-icons/bootstrap-icons';
 import { Router } from '@angular/router';
+import { HeaderComponent } from "../../components/header/header.component";
+import { FooterComponent } from "../../components/footer/footer.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     NgIconComponent,
-    CommonModule
-  ],
+    CommonModule,
+    HeaderComponent,
+    FooterComponent
+],
   viewProviders: [provideIcons({
     bootstrapCart,
   })],

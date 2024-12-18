@@ -20,13 +20,13 @@
             <h3>Smart Shop</h3>
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
-                    <input placeholder="Email" type="email"
-                        formControlName="email" />
+                    <input placeholder="Số điện thoại" type="text"
+                        formControlName="phone" />
                     <div class="error"
-                        *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+                        *ngIf="loginForm.get('phone')?.touched && loginForm.get('phone')?.invalid">
                         <small
-                            *ngIf="loginForm.get('email')?.errors?.['required']">
-                            Vui lòng nhập Email.
+                            *ngIf="loginForm.get('phone')?.errors?.['required']">
+                            Vui lòng nhập số điện thoại.
                         </small>
                     </div>
                 </div>

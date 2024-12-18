@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
 import { ApiResponse } from '../../dto/response/api-response.model';
 import { AuthResponse } from '../../dto/response/auth-response.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -27,25 +28,27 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authSerivce: AuthService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const email = this.loginForm.value.email;
+      const phone_number = this.loginForm.value.phone;
       const password = this.loginForm.value.password;
-      const authRequest: AuthRequest = { email, password };
+      const authRequest: AuthRequest = { phone_number, password };
       this.authSerivce.login(authRequest).subscribe({
         next: (response: ApiResponse<AuthResponse>) => {
           if (response.code === 1000) {
-            if (response.result?.is_authenticated && response.result.access_token) {
-              const accessToken = response.result?.access_token;
+            if (response.result?.authenticated && response.result.token) {
+              const accessToken = response.result?.token;
               this.tokenService.saveToken(accessToken);
+              this.router.navigate(['']);
             }
           }
         }

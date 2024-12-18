@@ -30,7 +30,8 @@
         <div class="user-actions">
             <a href="#" class="account">
                 <ng-icon class="account-icon" name="bootstrapPerson"></ng-icon>
-                <span>Log in</span>
+                @if (userDetail) {<span>{{userDetail.fullname}}</span> }
+                @else {<span>Log in</span>}
             </a>
 
             <a href="#" class="cart">
@@ -57,7 +58,21 @@
                       <ul class="menu-categories">
                         @for (category of categories; track $index) {
                             <li class="category-item">
-                                <a href="">{{category.name}}</a>
+                                <div class="category-header" (click)="toggleCategory(category)">
+                                    {{ category.name }}
+                                    <span *ngIf="category.sub_categories!.length > 0" class="arrow">
+                                        @if (category.isExpanded) {
+                                            <ng-icon name="bootstrapChevronCompactRight"></ng-icon>
+                                        }@else {
+                                            <ng-icon name="bootstrapChevronDown"></ng-icon>
+                                        }
+                                    </span>
+                                  </div>
+                                  <ul *ngIf="category.isExpanded" class="sub-category">
+                                    <li *ngFor="let subCategory of category.sub_categories">
+                                      {{ subCategory.name }}
+                                    </li>
+                                  </ul>
                             </li>
                         }
                       </ul>

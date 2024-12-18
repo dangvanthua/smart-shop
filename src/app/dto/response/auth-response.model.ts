@@ -1,5 +1,5 @@
 
 export interface AuthResponse {
-    access_token: string;
-    is_authenticated: boolean;
+    token: string;
+    authenticated: boolean;
 }

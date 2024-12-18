@@ -1,6 +1,7 @@
 export interface CategoryResponse {
     id: number;
     name: string;
-    subCategories: CategoryResponse[];
+    sub_categories: CategoryResponse[];
     createdAt: string;
+    isExpanded: boolean;
   }

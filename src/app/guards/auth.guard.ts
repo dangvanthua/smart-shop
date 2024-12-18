@@ -1,31 +1,23 @@
-import { inject, Injectable } from "@angular/core";
-import { TokenService } from "../services/token.service";
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service'; // Import AuthService
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class AuthGuard {
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
 
-    constructor(
-        private tokenService: TokenService,
-        private router: Router) { }
-
-    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        const isTokenExpired = this.tokenService.isTokenExpired();
-        const isLoggedIn = this.tokenService.isLoggedIn();
-
-        if (!isTokenExpired && isLoggedIn) {
-            return true;
-        } else {
-            this.router.navigate(['/login']);
-            return false;
-        }
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | Observable<boolean> | Promise<boolean> {
+    const isLoggedIn = this.authService.isAuthenticated(); // Kiểm tra trạng thái đăng nhập
+    if (!isLoggedIn) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } }); // Chuyển hướng về trang đăng nhập
+      return false;
     }
+    return true;
+  }
 }
-
-export const AuthGuardFn: CanActivateFn = (
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean => {
-    return inject(AuthGuard).canActivate(next, state);
-} 

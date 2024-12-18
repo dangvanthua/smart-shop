@@ -1,4 +1,5 @@
 import { ProductImageResponse } from "./product-image.model";
+import { PromotionCodeResponse } from "./promotion-response.mode";
 import { SellerInfoResponse } from "./seller-response.model";
 
 export interface ProductDetailResponse {
@@ -10,4 +11,5 @@ export interface ProductDetailResponse {
     is_active: boolean;
     images: ProductImageResponse[];
     seller_info: SellerInfoResponse;
+    promotion_codes: PromotionCodeResponse[]
   }
