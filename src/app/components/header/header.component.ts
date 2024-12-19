@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { UserResponse } from '../../dto/response/user-response.model';
 import { TokenService } from '../../services/token.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +23,8 @@ import { TokenService } from '../../services/token.service';
   imports: [
     NgIconComponent,
     StickyNavigationDirective,
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   viewProviders: [
     provideIcons({

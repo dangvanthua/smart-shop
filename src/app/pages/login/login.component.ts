@@ -46,7 +46,8 @@ export class LoginComponent {
         next: (response: ApiResponse<AuthResponse>) => {
           if (response.code === 1000) {
             if (response.result?.authenticated && response.result.token) {
-              const accessToken = response.result?.token;
+              console.log(response.result.token);
+              const accessToken = response.result.token;
               this.tokenService.saveToken(accessToken);
               this.router.navigate(['']);
             }

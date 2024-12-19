@@ -1,3 +1,4 @@
+<app-header/>
 <div class="cart-container">
     <table class="cart-table">
       <thead>
@@ -13,8 +14,8 @@
       <tbody>
         <tr *ngFor="let item of cartItems">
           <td><input type="checkbox" [(ngModel)]="item.selected" (change)="onItemSelect()" /></td>
-          <td><img [src]="item.image" alt="{{ item.name }}" class="product-image" /> {{ item.name }}</td>
-          <td>{{ item.price | currency }}</td>
+          <td><img [src]="item.product.thumbnail" alt="{{ item.product.name }}" class="product-image" /> {{ item.product.name }}</td>
+          <td>{{ item.product.price| currency: 'VND' }}</td>
           <td>
             <div class="quantity-control">
               <button (click)="changeQuantity(item, 'decrease')">-</button>
@@ -22,7 +23,7 @@
               <button (click)="changeQuantity(item, 'increase')">+</button>
             </div>
           </td>
-          <td>{{ item.quantity * item.price | currency }}</td>
+          <td>{{ item.quantity * item.product.price| currency: 'VND' }}</td>
           <td>
             <button class="remove-btn" (click)="removeItem(item)">
                 <ng-icon name="bootstrapTrash"></ng-icon>
@@ -33,9 +34,9 @@
     </table>
     <div class="cart-footer">
         <div class="info-checkout">
-          <p class="total-price">Tổng giá: {{ getTotalPrice() | currency }}</p>
+          <p class="total-price">Tổng giá: {{ getTotalPrice() | currency: 'VND' }}</p>
           <button (click)="checkout()" class="checkout-btn">Thanh toán</button>
         </div>
     </div>      
   </div>
-  
+<app-footer/>

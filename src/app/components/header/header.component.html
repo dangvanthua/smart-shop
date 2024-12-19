@@ -28,13 +28,13 @@
         </div>
 
         <div class="user-actions">
-            <a href="#" class="account">
+            <div class="account">
                 <ng-icon class="account-icon" name="bootstrapPerson"></ng-icon>
                 @if (userDetail) {<span>{{userDetail.fullname}}</span> }
-                @else {<span>Log in</span>}
-            </a>
+                @else {<a [routerLink]="['/login']">Log in</a>}
+            </div>
 
-            <a href="#" class="cart">
+            <a [routerLink]="['/cart']" class="cart">
                 <ng-icon class="cart-icon" name="bootstrapCart"></ng-icon>
                 <span>3</span>
             </a>
@@ -62,9 +62,9 @@
                                     {{ category.name }}
                                     <span *ngIf="category.sub_categories!.length > 0" class="arrow">
                                         @if (category.isExpanded) {
-                                            <ng-icon name="bootstrapChevronCompactRight"></ng-icon>
-                                        }@else {
                                             <ng-icon name="bootstrapChevronDown"></ng-icon>
+                                        }@else {
+                                            <ng-icon name="bootstrapChevronCompactRight"></ng-icon>
                                         }
                                     </span>
                                   </div>

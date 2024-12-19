@@ -3,6 +3,11 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { bootstrapTrash } from '@ng-icons/bootstrap-icons';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { CartService } from '../../services/cart.service';
+import { ApiResponse } from '../../dto/response/api-response.model';
+import { CartResponse } from '../../dto/response/cart-response.mode';
+import { HeaderComponent } from "../../components/header/header.component";
+import { FooterComponent } from "../../components/footer/footer.component";
 
 @Component({
   selector: 'app-cart',
@@ -10,29 +15,48 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
   imports: [
     FormsModule,
     CommonModule,
-    NgIconComponent
-  ],
+    NgIconComponent,
+    HeaderComponent,
+    FooterComponent
+],
   viewProviders: [provideIcons({bootstrapTrash})],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
 export class CartComponent {
-  cartItems = [
-    { id: 1, name: 'Sản phẩm A', price: 100, image: 'path/to/image.jpg', selected: false, quantity: 1 },
-    { id: 2, name: 'Sản phẩm B', price: 200, image: 'path/to/image.jpg', selected: false, quantity: 1 },
-    { id: 3, name: 'Sản phẩm C', price: 300, image: 'path/to/image.jpg', selected: false, quantity: 1 }
-  ];
 
-  selectAll(event: any) {
+  cartItems: CartResponse[] = [];
+
+  constructor(private cartService: CartService) {}
+
+  ngOnInit(): void {
+    this.loadCartItems();
+  }
+
+  loadCartItems(): void {
+    this.cartService.getAllCartItem().subscribe({
+      next: (response: ApiResponse<CartResponse[]>) => {
+        if(response.code === 1000 && response.result) {
+          console.log(response.result);
+          this.cartItems = response.result;
+        }
+      },
+      error: (err) => {
+        console.error('Không thể tải giỏ hàng', err);
+      }
+    })
+  }
+
+  selectAll(event: any): void {
     const isChecked = event.target.checked;
     this.cartItems.forEach(item => item.selected = isChecked);
   }
 
-  onItemSelect() {
-    // Logic when an item is selected/deselected
+  onItemSelect(): void {
+    // Logic khi một item được chọn hoặc bỏ chọn
   }
 
-  changeQuantity(item: any, action: string) {
+  changeQuantity(item: CartResponse, action: string): void {
     if (action === 'increase') {
       item.quantity++;
     } else if (action === 'decrease' && item.quantity > 1) {
@@ -40,19 +64,19 @@ export class CartComponent {
     }
   }
 
-  removeItem(item: any) {
+  removeItem(item: CartResponse): void {
     this.cartItems = this.cartItems.filter(cartItem => cartItem.id !== item.id);
   }
 
   getTotalPrice(): number {
     return this.cartItems
       .filter(item => item.selected)
-      .reduce((total, item) => total + (item.price * item.quantity), 0);
+      .reduce((total, item) => total + (item.product.price * item.quantity), 0);
   }
 
-  checkout() {
+  checkout(): void {
     const selectedItems = this.cartItems.filter(item => item.selected);
     console.log('Thanh toán cho các sản phẩm:', selectedItems);
-    // Implement the checkout logic here
+    // Thực hiện logic thanh toán tại đây
   }
 }

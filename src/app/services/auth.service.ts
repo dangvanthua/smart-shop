@@ -6,7 +6,8 @@ import { ApiResponse } from "../dto/response/api-response.model";
 import { AuthResponse } from "../dto/response/auth-response.model";
 import { TokenService } from "./token.service";
 import { AuthRequest } from "../dto/request/auth-request.model";
-import { JwtHelperService } from "@auth0/angular-jwt";
+
+
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,6 @@ export class AuthService {
 
     constructor(
         private http: HttpClient,
-        private jwtHelper: JwtHelperService,
         private tokenService: TokenService) { }
 
     login(authRequest: AuthRequest): Observable<ApiResponse<AuthResponse>> {
@@ -26,6 +26,7 @@ export class AuthService {
     }
 
     refreshToken(): Observable<AuthResponse> {
+        debugger;
         const refreshToken = this.tokenService.getToken();
     
         return this.http.post<ApiResponse<AuthResponse>>(`${this.AUTH_API}/refresh`, { token: refreshToken }).pipe(
@@ -40,34 +41,6 @@ export class AuthService {
 
     logout() {
         this.tokenService.removeToken();
-    }
-
-    hasRole(role: string) {
-        const token = this.tokenService.getToken();
-
-        if(token === null) {
-            return false;
-        }
-
-        const decodedToken = this.jwtHelper.decodeToken(token);
-
-        return decodedToken['scope'].includes(role);
-    }
-
-    getExpriesAt() {
-        const token = this.tokenService.getToken();
-
-        if(token === null) {
-            return false;
-        }
-
-        const decodedToken = this.jwtHelper.decodeToken(token);
-
-        return decodedToken['exp'];
-    }
-
-    isTokenExpried(token: string) {
-        return this.jwtHelper.isTokenExpired(token, 5);
     }
 
     isAuthenticated(): boolean {

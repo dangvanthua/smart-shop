@@ -11,6 +11,8 @@ import { bootstrapCart } from '@ng-icons/bootstrap-icons';
 import { Router } from '@angular/router';
 import { HeaderComponent } from "../../components/header/header.component";
 import { FooterComponent } from "../../components/footer/footer.component";
+import { CartService } from '../../services/cart.service';
+import { CartRequest } from '../../dto/request/cart-request.model';
 
 @Component({
   selector: 'app-home',
@@ -45,6 +47,7 @@ export class HomeComponent {
   constructor(
     private categoryService: CategoryService,
     private productService: ProductService,
+    private cartService: CartService,
     private router: Router,
     private currencyPipe: CurrencyPipe) {}
 
@@ -118,5 +121,20 @@ export class HomeComponent {
 
   goToProductDetail(productId: number): void {
     this.router.navigate(['/product-detail', productId]);
+  }
+
+  addCart(productId: number) {
+    const cartRequest: CartRequest = {
+      product_id: productId,
+      quantity: 1
+    }
+    this.cartService.addProductToCart(cartRequest).subscribe({
+      next: (response: ApiResponse<void>) => {
+        console.log('Add to cart success');
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 }

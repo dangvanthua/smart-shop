@@ -119,13 +119,15 @@
                  [attr.aria-labelledby]="'category' + i + '-tab'">
                 <div class="row">
                     <div *ngFor="let product of productCategories" class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                        <div class="card" (click)="goToProductDetail(product.id)">
-                            <img [src]="product.thumbnail == null ? 'assets/images/img-hero.png' : product.thumbnail" class="hot-image" alt="Product hot image">
+                        <div class="card">
+                            <img  [src]="product.thumbnail == null ? 'assets/images/img-hero.png' : product.thumbnail" class="hot-image" alt="Product hot image">
                             <div class="card-body">
-                                <h4 class="product-name">{{ product.name }}</h4>
+                                <h4 class="product-name" (click)="goToProductDetail(product.id)">{{ product.name }}</h4>
                                 <div class="d-flex align-items-baseline justify-content-between">
                                     <p class="product-price">{{ formatCurrency(product.price) }}</p>
-                                    <ng-icon class="cart-icon" name="bootstrapCart"></ng-icon>
+                                    <div class="product-icon-cart" (click)="addCart(product.id)">
+                                        <ng-icon class="cart-icon" name="bootstrapCart"></ng-icon> 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -151,14 +153,14 @@
         <div class="row">
             @for (product of products; track $index) {
                 <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="card" (click)="goToProductDetail(product.id)">
+                    <div class="card">
                         <img [src]="product.thumbnail == null ? 'assets/images/img-hero.png' : product.thumbnail" class="hot-image"
                             alt="Product hot image">
                         <div class="card-body">
-                            <h4 class="product-name">{{product.name}}</h4>
+                            <h4 class="product-name" (click)="goToProductDetail(product.id)">{{product.name}}</h4>
                             <div class="d-flex align-items-baseline justify-content-between">
                                 <p class="product-price">{{formatCurrency(product.price)}}</p>
-                                <div class="product-icon-cart">
+                                <div class="product-icon-cart" (click)="addCart(product.id)">
                                     <ng-icon class="cart-icon" name="bootstrapCart"></ng-icon> 
                                 </div>
                             </div>

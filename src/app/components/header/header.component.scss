@@ -135,9 +135,12 @@ $header-height: 50px;
             }
 
             .account {
-                span {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                a {
                     margin-left: 2px;
-                    font-size: $font-size-regular;
+                    font-size: $font-size-small;
                     font-weight: 500;
                     color: $color-text;
                 }
