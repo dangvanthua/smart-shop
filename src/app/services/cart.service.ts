@@ -21,4 +21,8 @@ export class CartService {
     getAllCartItem(): Observable<ApiResponse<CartResponse[]>> {
         return this.http.get<ApiResponse<CartResponse[]>>(`${this.CART_API}`);
     }
+
+    updateCartItem(cartId: number, cartRequest: CartRequest): Observable<ApiResponse<void>> {
+        return this.http.put<ApiResponse<void>>(`${this.CART_API}/${cartId}`, cartRequest);
+    }
 }

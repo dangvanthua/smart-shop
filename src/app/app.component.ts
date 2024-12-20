@@ -14,8 +14,6 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [
     RouterModule,
-    HeaderComponent,
-    FooterComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

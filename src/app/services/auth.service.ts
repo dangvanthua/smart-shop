@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { map, Observable } from "rxjs";
+import { catchError, map, Observable, throwError } from "rxjs";
 import { ApiResponse } from "../dto/response/api-response.model";
 import { AuthResponse } from "../dto/response/auth-response.model";
 import { TokenService } from "./token.service";
 import { AuthRequest } from "../dto/request/auth-request.model";
+import { RefreshRequest } from "../dto/request/refresh-request.model";
 
 
 
@@ -25,16 +26,29 @@ export class AuthService {
             authRequest);
     }
 
-    refreshToken(): Observable<AuthResponse> {
-        debugger;
+    refreshToken(): Observable<ApiResponse<AuthResponse>> {
         const refreshToken = this.tokenService.getToken();
     
-        return this.http.post<ApiResponse<AuthResponse>>(`${this.AUTH_API}/refresh`, { token: refreshToken }).pipe(
-            map((response: ApiResponse<AuthResponse>) => {
-                if (!response.result) {
-                    throw new Error('Token refresh failed: Result is null');
+        if (!refreshToken) {
+            return throwError(() => new Error('No refresh token available'));
+        }
+
+        const newRequestToken: RefreshRequest = {
+            token: refreshToken
+        }
+    
+        // Gửi token trong Authorization header (vì refresh là endpoint yêu cầu token)
+        return this.http.post<ApiResponse<AuthResponse>>(`${this.AUTH_API}/refresh`, newRequestToken).pipe(
+            map(response => {
+                if (response.code === 1000 && response.result) {
+                    const newToken = response.result.token;
+                    this.tokenService.saveToken(newToken);  // Lưu token mới
                 }
-                return response.result;
+                return response;
+            }),
+            catchError(error => {
+                console.error("Refresh token failed:", error);
+                return throwError(() => new Error("Refresh token failed"));
             })
         );
     }
@@ -45,6 +59,7 @@ export class AuthService {
 
     isAuthenticated(): boolean {
         const token = this.tokenService.getToken();
-        return !!token;
+        const isTokenExpried = this.tokenService.isTokenExpired();
+        return !!token && !isTokenExpried;
     }
 }

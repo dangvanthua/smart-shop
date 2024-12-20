@@ -1,98 +1,126 @@
-import { HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError, finalize, switchMap } from 'rxjs/operators';
 import { TokenService } from '../services/token.service';
-import { catchError, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { ApiResponse } from '../dto/response/api-response.model';
+import { AuthResponse } from '../dto/response/auth-response.model';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const tokenService = inject(TokenService);
-  const authService = inject(AuthService);
+@Injectable({providedIn: 'root'})
+export class JwtInterceptor implements HttpInterceptor {
 
-  if (req.url.includes('/products') 
-    || req.url.includes('/users/login')
-    || req.url.includes('/users/refresh')) {
-    return next(req); 
-  }
+  private readonly PUBLIC_ENDPOINTS_POST = [
+    '/users',
+    '/auth/token',
+    '/auth/introspect',
+    '/auth/logout',
+    '/auth/refresh'
+  ];
 
-  // Lấy token từ TokenService
-  const token = tokenService.getToken();
+  private readonly PUBLIC_ENDPOINTS_GET = [
+    '/categories',
+    '/products'
+  ];
 
-  // Nếu không có token (người dùng chưa đăng nhập), tiếp tục gửi request mà không có Authorization header
-  if (!token) {
-    return next(req);
-  }
+  private isRefreshing = false; 
+  private refreshTokenSubject: string | null = null;
 
-  // Nếu token hết hạn, thực hiện refresh token
-  if (tokenService.isTokenExpired()) {
-    return authService.refreshToken().pipe(
-      switchMap((authResponse) => {
-        if (!authResponse || !authResponse.token) {
-          throw new Error('Token refresh failed: No new token received');
+  constructor(
+    private tokenService: TokenService,
+    private authService: AuthService
+  ) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Nếu là public endpoint, không cần thêm Authorization header
+    debugger;
+    if (this.isPublicEndpoint(req)) {
+      return next.handle(req);
+    }
+
+    // Nếu không phải public endpoint và có token, thêm Authorization header
+    const token = this.tokenService.getToken();
+    if (token) {
+      req = req.clone({
+        headers: req.headers.set('Authorization', 'Bearer ' + token)
+      });
+    }
+
+    return next.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401 && !this.isRefreshing) {
+          return this.handle401Error(req, next);
         }
-
-        // Lưu token mới vào TokenService
-        tokenService.saveToken(authResponse.token);
-
-        // Clone lại request với token mới
-        const newReq = req.clone({
-          setHeaders: {
-            Authorization: `Bearer ${authResponse.token}`,
-          },
-        });
-
-        // Tiếp tục với request đã được thêm token mới
-        return next(newReq);
-      }),
-      catchError((refreshErr) => {
-        // Log lỗi và xóa token
-        console.error('Refresh token error:', refreshErr);
-        tokenService.removeToken();
-        return throwError(() => new Error('Unable to refresh token: ' + refreshErr.message));
+        return throwError(() => error);
       })
     );
   }
 
-  // Nếu token không hết hạn, tiếp tục với request hiện tại
-  const authReq = req.clone({
-    setHeaders: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  private addAuthorizationHeader(req: HttpRequest<any>, token: string): HttpRequest<any> {
+    return req.clone({
+      headers: req.headers.set('Authorization', 'Bearer ' + token)
+    });
+  }
 
-  return next(authReq).pipe(
-    catchError((err) => {
-      // Xử lý lỗi nếu server trả về 401 (Unauthorized)
-      if (err.status === 401) {
-        return authService.refreshToken().pipe(
-          switchMap((authResponse) => {
-            if (!authResponse || !authResponse.token) {
-              throw new Error('Token refresh failed: No new token received');
-            }
+  private handle401Error(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.refreshTokenSubject = null;
+  
+      return this.authService.refreshToken().pipe(
+        switchMap((response: ApiResponse<AuthResponse>) => {
+          if (response.code === 1000 && response.result) {
+            const newToken = response.result.token; // Lấy token mới từ phản hồi
+            this.refreshTokenSubject = newToken;
+  
+            // Gửi lại request ban đầu với token mới
+            return next.handle(this.addAuthorizationHeader(req, newToken));
+          } else {
+            this.authService.logout(); // Đăng xuất nếu làm mới token thất bại
+            return throwError(() => new Error('Token refresh failed'));
+          }
+        }),
+        catchError((refreshError) => {
+          this.isRefreshing = false;
+          this.authService.logout();
+          return throwError(() => refreshError);
+        }),
+        finalize(() => {
+          this.isRefreshing = false;
+        })
+      );
+    } else {
+      // Đợi token mới sẵn sàng và gửi lại request ban đầu
+      return new Observable<HttpEvent<any>>((observer) => {
+        const interval = setInterval(() => {
+          if (this.refreshTokenSubject) {
+            clearInterval(interval);
+            next
+              .handle(this.addAuthorizationHeader(req, this.refreshTokenSubject))
+              .subscribe({
+                next: (event) => observer.next(event),
+                error: (err) => observer.error(err),
+                complete: () => observer.complete(),
+              });
+          }
+        }, 100);
+      });
+    }
+  }
+  
 
-            // Lưu token mới vào TokenService
-            tokenService.saveToken(authResponse.token);
+  private isPublicEndpoint(req: HttpRequest<any>): boolean {
+    debugger;
+    const isPublicPost = req.method === 'POST' && this.PUBLIC_ENDPOINTS_POST.some(endpoint =>
+      this.matchEndpoint(req.url, endpoint)
+    );
+    const isPublicGet = req.method === 'GET' && this.PUBLIC_ENDPOINTS_GET.some(endpoint =>
+      this.matchEndpoint(req.url, endpoint)
+    );
+    return isPublicPost || isPublicGet;
+  }
 
-            // Clone lại request với token mới
-            const newReq = req.clone({
-              setHeaders: {
-                Authorization: `Bearer ${authResponse.token}`,
-              },
-            });
-
-            // Tiếp tục với request đã được thêm token mới
-            return next(newReq);
-          }),
-          catchError((refreshErr) => {
-            // Nếu không thể làm mới token, xóa token và điều hướng đến trang đăng nhập
-            console.error('Unable to refresh token:', refreshErr);
-            tokenService.removeToken();
-            return throwError(() => new Error('Unable to refresh token: ' + refreshErr.message));
-          })
-        );
-      }
-
-      // Nếu lỗi không phải 401, trả về lỗi ban đầu
-      return throwError(() => err);
-    })
-  );
-};
+  private matchEndpoint(url: string, endpoint: string): boolean {
+    return url.includes(endpoint);
+  }  
+}

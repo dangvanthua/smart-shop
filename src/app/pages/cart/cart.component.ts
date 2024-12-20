@@ -8,6 +8,9 @@ import { ApiResponse } from '../../dto/response/api-response.model';
 import { CartResponse } from '../../dto/response/cart-response.mode';
 import { HeaderComponent } from "../../components/header/header.component";
 import { FooterComponent } from "../../components/footer/footer.component";
+import { CartRequest } from '../../dto/request/cart-request.model';
+import { AuthService } from '../../services/auth.service';
+import { AuthResponse } from '../../dto/response/auth-response.model';
 
 @Component({
   selector: 'app-cart',
@@ -27,7 +30,9 @@ export class CartComponent {
 
   cartItems: CartResponse[] = [];
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+  ) {}
 
   ngOnInit(): void {
     this.loadCartItems();
@@ -57,11 +62,42 @@ export class CartComponent {
   }
 
   changeQuantity(item: CartResponse, action: string): void {
-    if (action === 'increase') {
+    if (action === 'increase' && item.quantity < 11) {
       item.quantity++;
+
+      const cartId = item.id;
+      const cartRequest: CartRequest = {
+        product_id: item.product.id,
+        quantity: item.quantity,
+      }
+
+      // thuc hien logic them so luong san pham
+      this.updateQuantity(cartId, cartRequest);
     } else if (action === 'decrease' && item.quantity > 1) {
       item.quantity--;
+
+      const cartId = item.id;
+      const cartRequest: CartRequest = {
+        product_id: item.product.id,
+        quantity: item.quantity,
+      }
+      
+      // thuc hien logic them so luong san pham
+      this.updateQuantity(cartId, cartRequest);
     }
+  }
+
+  updateQuantity(cartId: number, cartRequest: CartRequest) {
+    this.cartService.updateCartItem(cartId, cartRequest).subscribe({
+      next: (response: ApiResponse<void>) => {
+        if(response.code === 1000) {
+          console.log(response.message);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   removeItem(item: CartResponse): void {
@@ -78,5 +114,6 @@ export class CartComponent {
     const selectedItems = this.cartItems.filter(item => item.selected);
     console.log('Thanh toán cho các sản phẩm:', selectedItems);
     // Thực hiện logic thanh toán tại đây
+   
   }
 }

@@ -54,7 +54,7 @@ export class HeaderComponent {
   }
 
   loadUserInfo() {
-    if(this.tokenService.getToken()) {
+    if(this.tokenService.isLoggedIn()) {
       this.userService.getUserDetail().subscribe({
         next: (response: ApiResponse<UserResponse>) => {
           if(response.code === 1000 && response.result) {
