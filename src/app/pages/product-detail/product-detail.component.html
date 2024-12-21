@@ -119,11 +119,11 @@
                         </div>
                   
                         <div class="btn-purchase-action mt-4">
-                          <button class="btn-cart">
+                          <button class="btn-cart" (click)="addCart(productDetail.id)">
                             <ng-icon name="bootstrapCartPlus"></ng-icon>
                             <span>Thêm vào giỏ hàng</span>
                           </button>
-                          <button class="btn-buy">Mua ngay</button>
+                          <button class="btn-buy" (click)="buyNow(productDetail.id)">Mua ngay</button>
                         </div>
                       </div>
                     </div>

@@ -25,4 +25,8 @@ export class CartService {
     updateCartItem(cartId: number, cartRequest: CartRequest): Observable<ApiResponse<void>> {
         return this.http.put<ApiResponse<void>>(`${this.CART_API}/${cartId}`, cartRequest);
     }
+
+    deleteCartItems(selectedProductIds: number[]): Observable<ApiResponse<void>> {
+        return this.http.delete<ApiResponse<void>>(`${this.CART_API}`, {body: selectedProductIds});
+    }
 }

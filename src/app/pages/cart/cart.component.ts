@@ -9,8 +9,8 @@ import { CartResponse } from '../../dto/response/cart-response.mode';
 import { HeaderComponent } from "../../components/header/header.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { CartRequest } from '../../dto/request/cart-request.model';
-import { AuthService } from '../../services/auth.service';
-import { AuthResponse } from '../../dto/response/auth-response.model';
+import { debounceTime, Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -29,27 +29,59 @@ import { AuthResponse } from '../../dto/response/auth-response.model';
 export class CartComponent {
 
   cartItems: CartResponse[] = [];
+  private updateQuantitySubject = new Subject<{cartId: number; cartRequest: CartRequest; item: CartResponse}>;
 
   constructor(
+    private route: ActivatedRoute,
     private cartService: CartService,
-  ) {}
-
-  ngOnInit(): void {
-    this.loadCartItems();
+  ) {
+    this.updateQuantitySubject.pipe(debounceTime(500)).subscribe(({cartId, cartRequest, item}) => {
+      this.cartService.updateCartItem(cartId, cartRequest).subscribe({
+        next: (response: ApiResponse<void>) => {
+          if(response.code === 1000) {
+            console.log(response.message);
+          }
+          item.isUpdating = false;
+        },
+        error: (err) => {
+          console.log(err);
+          item.isUpdating = false;
+        }
+      })
+    });
   }
 
-  loadCartItems(): void {
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      const selectedProductId = +params['selectedProductId'];
+      this.loadCartItems(selectedProductId);
+    });
+  }
+
+  loadCartItems(selectedProductId?: number): void {
     this.cartService.getAllCartItem().subscribe({
       next: (response: ApiResponse<CartResponse[]>) => {
         if(response.code === 1000 && response.result) {
-          console.log(response.result);
-          this.cartItems = response.result;
+          this.cartItems = response.result.map(item => ({
+            ...item,
+            isUpdating: false,
+          }));
+
+          if(selectedProductId) {
+            this.selectProduct(selectedProductId);
+          }
         }
       },
       error: (err) => {
         console.error('Không thể tải giỏ hàng', err);
       }
     })
+  }
+
+  selectProduct(productId: number) {
+    this.cartItems.forEach((item) => {
+      item.selected = item.product.id === productId; 
+    });
   }
 
   selectAll(event: any): void {
@@ -62,48 +94,67 @@ export class CartComponent {
   }
 
   changeQuantity(item: CartResponse, action: string): void {
+
+    if(item.isUpdating) return;
+
+    const originalQuantity = item.quantity;
+
     if (action === 'increase' && item.quantity < 11) {
       item.quantity++;
-
-      const cartId = item.id;
-      const cartRequest: CartRequest = {
-        product_id: item.product.id,
-        quantity: item.quantity,
-      }
-
-      // thuc hien logic them so luong san pham
-      this.updateQuantity(cartId, cartRequest);
     } else if (action === 'decrease' && item.quantity > 1) {
       item.quantity--;
-
-      const cartId = item.id;
-      const cartRequest: CartRequest = {
-        product_id: item.product.id,
-        quantity: item.quantity,
-      }
-      
-      // thuc hien logic them so luong san pham
-      this.updateQuantity(cartId, cartRequest);
+    } else {
+      return;
     }
-  }
 
-  updateQuantity(cartId: number, cartRequest: CartRequest) {
-    this.cartService.updateCartItem(cartId, cartRequest).subscribe({
-      next: (response: ApiResponse<void>) => {
-        if(response.code === 1000) {
-          console.log(response.message);
-        }
-      },
-      error: (err) => {
-        console.log(err);
+    const cartRequest: CartRequest = {
+      product_id: item.product.id,
+      quantity: item.quantity,
+    };
+
+    item.isUpdating = true;
+    this.updateQuantitySubject.next({cartId: item.id, cartRequest: cartRequest, item});
+
+    setTimeout(() => {
+      if(item.isUpdating) {
+        item.quantity = originalQuantity;
+        item.isUpdating = false;
       }
-    })
+    }, 1000);
   }
 
   removeItem(item: CartResponse): void {
     this.cartItems = this.cartItems.filter(cartItem => cartItem.id !== item.id);
   }
 
+  removeSelectedItems(): void {
+    const selectedProductIds = this.cartItems
+      .filter(item => item.selected) 
+      .map(item => item.product.id);
+  
+    if (selectedProductIds.length === 0) {
+      console.warn('Không có sản phẩm nào được chọn để xóa');
+      return;
+    }
+  
+    this.cartItems = this.cartItems.filter(item => !item.selected);
+  
+    this.cartService.deleteCartItems(selectedProductIds).subscribe({
+      next: (response) => {
+        if (response.code === 1000) {
+          console.log('Xóa các sản phẩm thành công:', response.message);
+        }
+      },
+      error: (err) => {
+        console.error('Lỗi khi xóa các sản phẩm:', err);
+      }
+    });
+  }
+
+  hasSelectedItems(): boolean {
+    return this.cartItems.some(item => item.selected);
+  }
+  
   getTotalPrice(): number {
     return this.cartItems
       .filter(item => item.selected)

@@ -33,10 +33,15 @@
       </tbody>
     </table>
     <div class="cart-footer">
+      @if (hasSelectedItems()) {
         <div class="info-checkout">
+          <div class="footer-btn-remove mb-2">
+            <button (click)="removeSelectedItems()" class="remove-selected-btn">Xóa các sản phẩm đã chọn</button>
+          </div>
           <p class="total-price">Tổng giá: {{ getTotalPrice() | currency: 'VND' }}</p>
           <button (click)="checkout()" class="checkout-btn">Thanh toán</button>
         </div>
+      }
     </div>      
   </div>
 <app-footer/>

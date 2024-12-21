@@ -7,4 +7,5 @@ export interface CartResponse {
     added_at: Date;
     product: ProductResponse;
     selected?: boolean;
+    isUpdating: boolean
 }

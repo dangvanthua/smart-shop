@@ -32,8 +32,6 @@ export class JwtInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Nếu là public endpoint, không cần thêm Authorization header
-    debugger;
     if (this.isPublicEndpoint(req)) {
       return next.handle(req);
     }
@@ -110,7 +108,6 @@ export class JwtInterceptor implements HttpInterceptor {
   
 
   private isPublicEndpoint(req: HttpRequest<any>): boolean {
-    debugger;
     const isPublicPost = req.method === 'POST' && this.PUBLIC_ENDPOINTS_POST.some(endpoint =>
       this.matchEndpoint(req.url, endpoint)
     );
