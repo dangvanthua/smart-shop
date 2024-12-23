@@ -15,12 +15,14 @@ export class JwtInterceptor implements HttpInterceptor {
     '/auth/token',
     '/auth/introspect',
     '/auth/logout',
-    '/auth/refresh'
+    '/auth/refresh',
   ];
 
   private readonly PUBLIC_ENDPOINTS_GET = [
     '/categories',
-    '/products'
+    '/products',
+    '/auth/social-login',
+    '/auth/social/callback'
   ];
 
   private isRefreshing = false; 

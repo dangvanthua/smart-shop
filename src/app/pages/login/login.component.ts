@@ -58,6 +58,20 @@ export class LoginComponent {
       this.loginForm.markAllAsTouched();
     }
   }
+
+  loginWithGoogle() {
+    this.authSerivce.authenticate("google").subscribe({
+      next: (response: ApiResponse<string>) => {
+        if(response.code === 1000 && response.result) {
+          const url = response.result;
+          window.location.href = url;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
 }
 
 

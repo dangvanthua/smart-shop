@@ -3,13 +3,13 @@ import { RoleResponse } from "./role-response.model";
 export interface UserResponse {
     id: number;
     fullname: string;
-    phoneNumber: string;
+    phone_number: string;
     email: string;
     password: string;
-    createdAt: string;
-    updatedAt: string;
-    isActive: number;
-    dateOfBirth: string;
+    created_at: string;
+    updated_at: string;
+    is_active: number;
+    date_of_birth: string;
     avatar: string;
-    role: RoleResponse;
+    role_responses: RoleResponse;
 }

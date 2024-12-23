@@ -28,10 +28,15 @@
         </div>
 
         <div class="user-actions">
-            <div class="account">
-                <ng-icon class="account-icon" name="bootstrapPerson"></ng-icon>
-                @if (userDetail) {<span>{{userDetail.fullname}}</span> }
-                @else {<a [routerLink]="['/login']">Log in</a>}
+            <div class="account">      
+                @if (userDetail) {
+                    <img [src]="userDetail.avatar" [alt]="userDetail.fullname">
+                    <span>{{userDetail.fullname}}</span> 
+                }
+                @else {
+                    <ng-icon class="account-icon" name="bootstrapPerson"></ng-icon>
+                    <a [routerLink]="['/login']">Log in</a>
+                }
             </div>
 
             <a [routerLink]="['/cart']" class="cart">

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { catchError, map, Observable, throwError } from "rxjs";
 import { ApiResponse } from "../dto/response/api-response.model";
 import { AuthResponse } from "../dto/response/auth-response.model";
@@ -61,5 +61,18 @@ export class AuthService {
         const token = this.tokenService.getToken();
         const isTokenExpried = this.tokenService.isTokenExpired();
         return !!token && !isTokenExpried;
+    }
+
+    authenticate(loginType: 'google' | 'facebook'): Observable<ApiResponse<string>> {
+        return this.http.get<ApiResponse<string>>(
+            `${this.AUTH_API}/social-login?login_type=${loginType}`);
+    }
+
+    exchangeCodeForToken(code: string, loginType: 'google' | 'facebook'): Observable<ApiResponse<AuthResponse>> {
+        const params = new HttpParams()
+            .set('code', code)
+            .set('login_type', loginType);
+
+        return this.http.get<ApiResponse<AuthResponse>>(`${this.AUTH_API}/social/callback`, {params});
     }
 }
