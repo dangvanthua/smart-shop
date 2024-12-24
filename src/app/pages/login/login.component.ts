@@ -72,6 +72,20 @@ export class LoginComponent {
       }
     })
   }
+
+  loginWithFacebook() {
+    this.authSerivce.authenticate("facebook").subscribe({
+      next: (response: ApiResponse<string>) => {
+        if(response.code === 1000 && response.result) {
+          const url = response.result;
+          window.location.href = url;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
 }
 
 

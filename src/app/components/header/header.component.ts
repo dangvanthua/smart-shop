@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { UserResponse } from '../../dto/response/user-response.model';
 import { TokenService } from '../../services/token.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -44,6 +44,7 @@ export class HeaderComponent {
   userDetail?: UserResponse;
 
   constructor(
+    private router: Router,
     private categoryService: CategoryService,
     private userService: UserService,
     private tokenService: TokenService,
@@ -84,5 +85,10 @@ export class HeaderComponent {
 
   toggleCategory(category: CategoryResponse): void {
     category.isExpanded = !category.isExpanded;
+  }
+
+  logOut() {
+    this.tokenService.removeToken();
+    this.router.navigate(['/login']);
   }
 }

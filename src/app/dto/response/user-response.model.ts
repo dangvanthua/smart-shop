@@ -11,5 +11,5 @@ export interface UserResponse {
     is_active: number;
     date_of_birth: string;
     avatar: string;
-    role_responses: RoleResponse;
+    role_responses: RoleResponse[];
 }

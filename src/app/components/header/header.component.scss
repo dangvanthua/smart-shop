@@ -139,11 +139,35 @@ $header-height: 50px;
                 align-items: center;
                 gap: 4px;
 
-                img {
-                    width: 24px;
-                    height: 24px;
-                    border-radius: 50%;
-                    object-fit: cover;
+                .account-dropdown {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    cursor: pointer;
+
+                    img {
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+
+                    span {
+                        margin-left: 2px;
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: $color-text;
+                    }
+                } 
+
+                .dropdown-menu {
+                    li {
+                        cursor: pointer;
+                        &:hover {
+                            background-color: $color-primary;
+                            color: $color-background;
+                        }
+                    }
                 }
 
                 ng-icon {
@@ -151,13 +175,6 @@ $header-height: 50px;
                 }
 
                 a {
-                    margin-left: 2px;
-                    font-size: 14px;
-                    font-weight: 600;
-                    color: $color-text;
-                }
-
-                span {
                     margin-left: 2px;
                     font-size: 14px;
                     font-weight: 600;

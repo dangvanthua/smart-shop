@@ -6,6 +6,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthCallbackComponent } from './pages/auth-callback/auth-callback.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent }, 
@@ -15,4 +16,5 @@ export const routes: Routes = [
     { path: 'product-detail/:id', component: ProductDetailComponent }, 
     { path: 'order', component: OrderComponent, canActivate: [AuthGuard] },
     { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+    { path: 'privacy', component: PrivacyPolicyComponent}
 ];

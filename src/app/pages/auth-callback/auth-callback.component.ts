@@ -41,6 +41,7 @@ export class AuthCallbackComponent {
 
     this.activeRouted.queryParams.pipe(take(1)).subscribe(params => {
       const code = params['code'];
+      console.log(code, loginType);
       if (code) {
         this.authService.exchangeCodeForToken(code, loginType).pipe(
           tap((response: ApiResponse<AuthResponse>) => {
@@ -54,10 +55,18 @@ export class AuthCallbackComponent {
           next: (apiResponse: ApiResponse<UserResponse>) => {
             if (apiResponse.code === 1000 && apiResponse.result) {
               const result = apiResponse.result;
-              if (result.role_responses.name === 'ADMIN') {
-                this.router.navigate(['/admin']);
-              } else if (result.role_responses.name === 'USER') {
-                this.router.navigate(['/']);
+              const roles = result.role_responses || []; 
+
+              const adminRole = roles.find(role => role.name === 'ADMIN');
+              const userRole = roles.find(role => role.name === 'USER');
+          
+              if (adminRole) {
+                this.router.navigate(['/admin']); 
+              } else if (userRole) {
+                this.router.navigate(['/']); 
+              } else {
+                console.error('Vai trò không hợp lệ.');
+                this.router.navigate(['/login']);
               }
             } else {
               console.error('Xác thực không thành công.');

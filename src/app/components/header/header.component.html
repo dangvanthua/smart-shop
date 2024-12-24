@@ -30,8 +30,15 @@
         <div class="user-actions">
             <div class="account">      
                 @if (userDetail) {
-                    <img [src]="userDetail.avatar" [alt]="userDetail.fullname">
-                    <span>{{userDetail.fullname}}</span> 
+                    <div class="dropdown-toggle account-dropdown" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img [src]="userDetail.avatar" [alt]="userDetail.fullname">
+                        <span>{{userDetail.fullname}}</span> 
+                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Tài khoản của tôi</a></li>
+                        <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
+                        <li><a class="dropdown-item" (click)="logOut()">Đăng xuất</a></li>
+                    </ul>
                 }
                 @else {
                     <ng-icon class="account-icon" name="bootstrapPerson"></ng-icon>
@@ -93,7 +100,7 @@
                         <a href="#" class="nav-link">Bài viết</a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link">Hỗ trợ</a>
+                        <a [routerLink]="['/privacy']">Hỗ trợ</a>
                     </li>
                     <li>
                         <a href="#" class="nav-link">Đăng ký bán hàng</a>
