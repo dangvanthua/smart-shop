@@ -46,6 +46,7 @@ export class AuthCallbackComponent {
         this.authService.exchangeCodeForToken(code, loginType).pipe(
           tap((response: ApiResponse<AuthResponse>) => {
             if (response.code === 1000 && response.result) {
+              console.log(response.result);
               const token = response.result.token;
               this.tokenService.saveToken(token);
             }
