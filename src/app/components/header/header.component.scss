@@ -246,6 +246,12 @@ $header-height: 50px;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
+
+                    ng-icon {
+                        width: 22px;
+                        height: 14px;
+                        font-weight: 700;
+                    }
                 }
 
                 .sub-category {

@@ -10,7 +10,7 @@ import { HeaderComponent } from "../../components/header/header.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { CartRequest } from '../../dto/request/cart-request.model';
 import { debounceTime, Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -33,6 +33,7 @@ export class CartComponent {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private cartService: CartService,
   ) {
     this.updateQuantitySubject.pipe(debounceTime(500)).subscribe(({cartId, cartRequest, item}) => {
@@ -163,8 +164,10 @@ export class CartComponent {
 
   checkout(): void {
     const selectedItems = this.cartItems.filter(item => item.selected);
-    console.log('Thanh toán cho các sản phẩm:', selectedItems);
-    // Thực hiện logic thanh toán tại đây
-   
+    const productIds: string[] = [];
+    selectedItems.forEach(item => {
+      productIds.push(String(item.product.id));
+    })
+    this.router.navigate(['/order'], {queryParams: {productIds: productIds.join(',')}});
   }
 }

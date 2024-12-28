@@ -22,7 +22,8 @@ export class JwtInterceptor implements HttpInterceptor {
     '/categories',
     '/products',
     '/auth/social-login',
-    '/auth/social/callback'
+    '/auth/social/callback',
+    '/api-tinhthanh'
   ];
 
   private isRefreshing = false; 

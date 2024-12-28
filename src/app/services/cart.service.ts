@@ -29,4 +29,12 @@ export class CartService {
     deleteCartItems(selectedProductIds: number[]): Observable<ApiResponse<void>> {
         return this.http.delete<ApiResponse<void>>(`${this.CART_API}`, {body: selectedProductIds});
     }
+
+    getCartItemsByProductIds(productIds: number[]): Observable<ApiResponse<CartResponse[]>> {
+        let result = '';
+        if(productIds && productIds.length > 0) {
+            result = productIds.join(',');
+        }
+        return this.http.get<ApiResponse<CartResponse[]>>(`${this.CART_API}/items/${result}`)
+    }
 }

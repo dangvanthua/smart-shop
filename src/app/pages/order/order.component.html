@@ -1,18 +1,27 @@
+<app-header/>
 <div class="order-container">
     <div class="order-details">
         <h2>Địa chỉ và Thanh toán</h2>
         <div class="address-selection">
             <h3>Địa chỉ nhận hàng</h3>
-            <div class="address-item">
-                <input id="address1" name="address" type="radio"/>
-                <span>18/1/3 đường số 8 Linh Xuân, Thủ Đức, Khánh Hòa, Việt Nam</span>
-                <div class="address-actions">
-                    <a href="#">Sửa</a> | <a href="#">Xóa</a>
-                </div>
-            </div>
+            @for (addressResponse of addressResponses; track $index) {
+              <div class="address-item">
+                  <input id="address1" name="address" type="radio" [checked]="addressResponse.is_default"/>
+                  <span>
+                    {{addressResponse.address_line}}, 
+                    Phường {{addressResponse.ward}}, 
+                    Quận {{addressResponse.district}}, 
+                    TP {{addressResponse.city}}, 
+                    {{addressResponse.country}}
+                  </span>
+                  <div class="address-actions">
+                      <a href="#">Sửa</a> | <a href="#">Xóa</a>
+                  </div>
+              </div>
+            }
           
             <div class="add-new-address">
-                <button type="button" class="btn-new-address" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                <button type="button" class="btn-new-address" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" (click)="openAddressModal()">
                     <ng-icon name="bootstrapPlus"></ng-icon> Thêm địa chỉ mới
                 </button>
 
@@ -48,8 +57,7 @@
                                       <select
                                         id="district-select"
                                         class="form-control"
-                                        formControlName="district"
-                                        [disabled]="!form.get('city')?.value">
+                                        formControlName="district">
                                         <option value="">Chọn quận/huyện</option>
                                         <option *ngFor="let district of districts" [value]="district.id">
                                           {{ district.name }}
@@ -66,8 +74,7 @@
                                       <select
                                         id="ward-select"
                                         class="form-control"
-                                        formControlName="ward"
-                                        [disabled]="!form.get('district')?.value">
+                                        formControlName="ward">
                                         <option value="">Chọn phường/xã</option>
                                         <option *ngFor="let ward of wards" [value]="ward.id">
                                           {{ ward.name }}
@@ -95,7 +102,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                <button type="button" class="btn btn-primary">Lưu địa chỉ</button>
+                                <button type="button" class="btn btn-primary" (click)="saveAddress()">Lưu địa chỉ</button>
                             </div>
                         </div>
                     </div>
@@ -103,29 +110,52 @@
             </div>
         </div>
 
-        <div class="payment-methods">
-            <h3>Phương thức thanh toán</h3>
-            <div class="payment-option">
-                <input id="cod" name="payment" type="radio"/>
-                <label for="cod">Thanh toán khi nhận hàng</label>
-            </div>
-            <div class="payment-option">
-                <input id="bank" name="payment" type="radio"/>
-                <label for="bank">Thanh toán ngân hàng</label>
-            </div>
+        <div class="note">
+          <label for="note-input">Ghi chú</label>
+          <textarea class="note-textarea" name="note-input" id="note-order"></textarea>
         </div>
+        
+        <div class="payment-methods">
+          <h3>Phương thức thanh toán</h3>
+          <div class="payment-option">
+            <input id="cod" name="payment" type="radio" (change)="onPaymentMethodChange('cod')" [checked]="true"/>
+            <label for="cod">Thanh toán khi nhận hàng</label>
+          </div>
+          <div class="payment-option">
+            <input id="credit_card" name="payment" type="radio" (change)="onPaymentMethodChange('credit_card')" />
+            <label for="credit_card">Thẻ tín dụng</label>
+          </div>
+          <div class="payment-option">
+            <input id="e_wallet" name="payment" type="radio" (change)="onPaymentMethodChange('e_wallet')" />
+            <label for="e_wallet">Ví điện tử</label>
+          </div>
+        </div>
+        
+        <div class="shipping-methods">
+          <h3>Phương thức vận chuyển</h3>
+          <div class="shipping-option">
+            <input id="standard" name="shipping" type="radio" (change)="onShippingMethodChange('standard')" [checked]="true"/>
+            <label for="standard">Vận chuyển thường (Standard)</label>
+          </div>
+          <div class="shipping-option">
+            <input id="express" name="shipping" type="radio" (change)="onShippingMethodChange('express')" />
+            <label for="express">Vận chuyển nhanh (Express)</label>
+          </div>
+        </div>        
     </div>
 
     <div class="order-summary">
         <h2>Đơn hàng của bạn</h2>
-        <div class="order-item">
-            <img src="https://storage.googleapis.com/a1aa/image/VMx3MHeweLnCGEDhqX1AVN87jeD4PIZRwWC2sAHPKzeQMAoPB.jpg" alt="Khẩu trang 5D xám" class="item-image"/>
-            <div class="item-info">
-                <p class="item-name">Khẩu trang 5D xám - 100 chiếc</p>
-                <div class="item-quantity">Số lượng: 2</div>                
-                <p class="item-price">180.000 ₫</p>
-            </div>
-        </div>
+        @for (item of cartItems; track $index) {
+          <div class="order-item">
+              <img [src]="item.product.thumbnail" [alt]="item.product.name" class="item-image"/>
+              <div class="item-info">
+                  <p class="item-name">{{item.product.name}}</p>
+                  <div class="item-quantity">Số lượng: {{item.quantity}}</div>                
+                  <p class="item-price">{{formatCurrency(item.product.price)}}</p>
+              </div>
+          </div>
+        }
 
         <div class="voucher-selection">
           <h3>Chọn mã giảm giá</h3>
@@ -133,7 +163,12 @@
               <label for="voucher-select">Chọn voucher:</label>
               <select id="voucher-select" multiple [(ngModel)]="selectedVouchers" (change)="updateVouchers()">
                   <option *ngFor="let voucher of availableVouchers" [value]="voucher">
-                      {{ voucher.name }} - {{ voucher.value }} ₫
+                      {{ voucher.promotion_name }} - 
+                      @if ( voucher.discount_type === "percentage") {
+                       {{voucher.promotion_discount_value}}%
+                      }@else if (voucher.discount_type === "percentage") {
+                       {{formatCurrency(voucher.promotion_discount_value)}}
+                      }
                   </option>
               </select>
           </div>
@@ -145,8 +180,12 @@
             <h3>Voucher đã chọn:</h3>
             <div *ngFor="let voucher of selectedVouchers" class="voucher-item">
                 <div class="voucher-info">
-                    <h4>{{ voucher.name }}</h4>
-                    <p>Giảm: {{ voucher.value }} ₫</p>
+                    <h4>{{ voucher.promotion_name }}</h4>
+                    @if ( voucher.discount_type === "percentage") {
+                      <p>Giảm: {{voucher.promotion_discount_value}}%</p>
+                    }@else if (voucher.discount_type === "percentage") {
+                      <p>Giảm: {{formatCurrency(voucher.promotion_discount_value)}}</p>
+                    }
                 </div>
                 <button (click)="removeVoucher(voucher)" class="remove-button">
                   <ng-icon name="bootstrapXCircleFill" class="remove-button"></ng-icon>
@@ -157,22 +196,23 @@
       
         <div class="order-totals">
             <div class="total-row">
-                <span>Tổng đơn hàng</span><span>180.000 ₫</span>
+                <span>Tổng đơn hàng</span><span>{{formatCurrency(totalPriceProduct)}}</span>
             </div>
             <div class="total-row">
-                <span>Voucher giảm giá</span><span>0 ₫</span>
+                <span>Voucher giảm giá</span><span>{{formatCurrency(this.totalDiscount)}}</span>
             </div>
             <div class="total-row">
-                <span>Phí giao hàng</span><span>15.000 ₫</span>
+                <span>Phí giao hàng</span><span>{{formatCurrency(shippingFee)}}</span>
             </div>
             <div class="total-row total-price">
-                <span>Tổng cộng</span><span>195.000 ₫</span>
+              <span>Tổng cộng</span><span>{{formatCurrency(totalPrice)}}</span>
             </div>
         </div>
 
         <div class="order-actions">
-            <a href="#" class="checkout-button">Thanh toán</a>
-            <a href="#" class="back-to-cart">Quay lại giỏ hàng</a>
+            <a href="#" class="checkout-button" (click)="createOrder()">Đặt hàng</a>
+            <a [routerLink]="['/cart']" class="back-to-cart">Quay lại giỏ hàng</a>
         </div>
     </div>
 </div>
+<app-footer />

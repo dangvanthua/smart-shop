@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
 import { ApiResponse } from '../../dto/response/api-response.model';
 import { AuthResponse } from '../../dto/response/auth-response.model';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,8 @@ import { Router } from '@angular/router';
   imports: [
     NgIconComponent,
     ReactiveFormsModule,
-    CommonModule],
+    CommonModule,
+    RouterModule],
   viewProviders: [provideIcons({ bootstrapGoogle, bootstrapFacebook })],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
