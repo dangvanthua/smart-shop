@@ -7,4 +7,5 @@ export interface PromotionCodeResponse {
     start_date: Date;
     end_date: Date;
     is_active: boolean;
+    product_id: number;
 }

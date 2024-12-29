@@ -15,6 +15,8 @@ import { AddressService } from '../../services/address.service';
 import { AddressRequest } from '../../dto/request/address-request.model';
 import { PromotionCodeResponse } from '../../dto/response/promotion-response.mode';
 import { PromotionService } from '../../services/promotion.service';
+import { CartItemRequest } from '../../dto/request/cart-item-request.model';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-order',
@@ -35,6 +37,7 @@ import { PromotionService } from '../../services/promotion.service';
 })
 export class OrderComponent implements OnInit {
   form: FormGroup;
+  noteForm: FormGroup;
   cities: any[] = [];
   districts: any[] = [];
   wards: any[] = [];
@@ -57,7 +60,12 @@ export class OrderComponent implements OnInit {
     private locationService: LocationService,
     private addressService: AddressService,
     private cartService: CartService,
-    private promotionService: PromotionService) {
+    private promotionService: PromotionService,
+    private orderService: OrderService) {
+
+    this.noteForm = this.fb.group({
+      note: ['', Validators.maxLength(100)],
+    });
 
     this.form = this.fb.group({
       city: ['', Validators.required],
@@ -110,7 +118,8 @@ export class OrderComponent implements OnInit {
         });
       }
     });
-
+    this.selectedPaymentMethod = 'cod'; 
+    this.selectedShippingMethod = 'standard'; 
     this.getUserAddress();
   }
 
@@ -261,6 +270,43 @@ export class OrderComponent implements OnInit {
   }
 
   createOrder() {
-
-  }
+    if (!this.selectedPaymentMethod || !this.selectedShippingMethod) {
+      console.log('Please select payment and shipping methods');
+      return;
+    }
+  
+    const cartItemRequest: CartItemRequest[] = this.cartItems.map(item => {
+      // Lấy danh sách mã giảm giá áp dụng cho sản phẩm
+      const appliedVouchers = this.selectedVouchers
+        .filter(voucher => item.product.id === voucher.product_id) 
+        .map(voucher => voucher.promotion_code.toString()); // Chuyển mã giảm giá thành chuỗi
+  
+      return {
+        product_id: item.product.id,
+        quantity: item.quantity,
+        promotion_code: appliedVouchers, 
+      };
+    });
+    
+    const defaultAddress = this.addressResponses.find(address => address.is_default);
+    const orderRequest = {
+      note: this.noteForm.get('note')?.value,
+      shipping_address: `${defaultAddress?.address_line}, ${defaultAddress?.ward}, ${defaultAddress?.district}, ${defaultAddress?.city}`,
+      payment_method: this.selectedPaymentMethod,
+      shipping_method: this.selectedShippingMethod,
+      cart_items: cartItemRequest,
+    };
+  
+    console.log(orderRequest);
+  
+    // Gửi order request đến server (thêm logic gọi API tại đây nếu cần)
+    this.orderService.createOrder(orderRequest).subscribe({
+      next: (response: ApiResponse<string>) => {
+        if(response.code === 1000 && response.result != null) {
+          const resultUrl = response.result.trim();
+          window.location.href = resultUrl;
+        }
+      }
+    })
+  }  
 }

@@ -9,9 +9,9 @@
                   <input id="address1" name="address" type="radio" [checked]="addressResponse.is_default"/>
                   <span>
                     {{addressResponse.address_line}}, 
-                    Phường {{addressResponse.ward}}, 
-                    Quận {{addressResponse.district}}, 
-                    TP {{addressResponse.city}}, 
+                    {{addressResponse.ward}}, 
+                    {{addressResponse.district}}, 
+                    {{addressResponse.city}}, 
                     {{addressResponse.country}}
                   </span>
                   <div class="address-actions">
@@ -110,10 +110,10 @@
             </div>
         </div>
 
-        <div class="note">
+        <form class="note" [formGroup]="noteForm">
           <label for="note-input">Ghi chú</label>
-          <textarea class="note-textarea" name="note-input" id="note-order"></textarea>
-        </div>
+          <textarea class="note-textarea" formControlName="note" id="note-order"></textarea>
+        </form>
         
         <div class="payment-methods">
           <h3>Phương thức thanh toán</h3>
@@ -210,7 +210,7 @@
         </div>
 
         <div class="order-actions">
-            <a href="#" class="checkout-button" (click)="createOrder()">Đặt hàng</a>
+            <button class="checkout-button" (click)="createOrder()">Đặt hàng</button>
             <a [routerLink]="['/cart']" class="back-to-cart">Quay lại giỏ hàng</a>
         </div>
     </div>
