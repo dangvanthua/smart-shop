@@ -1,0 +1,161 @@
+// Define variables
+$background-color: #fff;
+$border-color: #ddd;
+$text-color: #333;
+$active-color: #6200ea;
+$active-hover-color: #6200ea;
+$muted-text-color: #6c757d;
+$profile-padding: 20px;
+$profile-border-radius: 8px;
+$avatar-size: 120px;
+
+.profile-sidebar {
+    background-color: $background-color;
+    padding: $profile-padding;
+    border-right: 1px solid $border-color;
+
+    .text-center {
+        img {
+            width: $avatar-size;
+            height: $avatar-size;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        h5 {
+            margin-top: 10px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: $text-color;
+        }
+
+        a {
+            color: $muted-text-color;
+            font-size: 0.9rem;
+
+            &:hover {
+                text-decoration: underline;
+                color: $active-color;
+            }
+        }
+    }
+
+    .nav {
+        .nav-link {
+            color: $text-color;
+            font-size: 0.95rem;
+            padding: 10px 15px;
+            border-radius: 4px;
+
+            &.active {
+                color: $active-color;
+                font-weight: bold;
+                background-color: rgba($active-color, 0.1);
+            }
+
+            &:hover {
+                color: $active-hover-color;
+                background-color: rgba($active-hover-color, 0.1);
+            }
+
+            i {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+.profile-content {
+    background-color: $background-color;
+    padding: $profile-padding;
+    border-right: 1px solid $border-color;
+
+    .content-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    h5 {
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    p {
+        color: $muted-text-color;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid $border-color;
+        padding: 10px;
+    }
+
+    .btn-primary {
+        background-color: $active-color;
+        border-color: $active-color;
+        border-radius: 5px;
+        padding: 10px 20px;
+
+        &:hover {
+            background-color: $active-hover-color;
+            border-color: $active-hover-color;
+        }
+    }
+
+    .btn-outline-primary {
+        color: $active-color;
+        border-color: $active-color;
+        border-radius: 5px;
+        padding: 10px 20px;
+
+        &:hover {
+            color: $background-color;
+            background-color: $active-color;
+            border-color: $active-color;
+        }
+    }
+
+    .btn-link {
+        color: $active-color;
+        font-size: 0.9rem;
+
+        &:hover {
+            color: $active-hover-color;
+            text-decoration: underline;
+        }
+    }
+}
+
+// Additional styles for the avatar section
+.col-md-3 {
+    .col-form-label {
+        font-size: 20px;
+        font-weight: 700;
+    }
+    
+    .avatar-section {
+        text-align: center;
+        margin-bottom: 20px;
+
+        img {
+            width: $avatar-size;
+            height: $avatar-size;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid $border-color;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        p {
+            font-size: 0.85rem;
+            color: $muted-text-color;
+        }
+    }
+}

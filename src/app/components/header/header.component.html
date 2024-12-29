@@ -16,7 +16,7 @@
 
     <div class="main-header">
         <div class="logo">
-            <span class="shop-name">Smart Shop</span>
+            <a class="shop-name" [routerLink]="['/']">Smart Shop</a>
         </div>
 
         <div class="search-bar">
@@ -35,7 +35,7 @@
                         <span>{{userDetail.fullname}}</span> 
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Tài khoản của tôi</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['/profile']">Tài khoản của tôi</a></li>
                         <li><a class="dropdown-item">Đơn hàng</a></li>
                         <li><a class="dropdown-item" (click)="logOut()">Đăng xuất</a></li>
                     </ul>

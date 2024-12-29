@@ -9,6 +9,7 @@ import { AuthCallbackComponent } from './pages/auth-callback/auth-callback.compo
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentCancelComponent } from './pages/payment-cancel/payment-cancel.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent }, 
@@ -20,5 +21,6 @@ export const routes: Routes = [
     { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
     { path: 'privacy', component: PrivacyPolicyComponent},
     { path: 'payment/success', component: PaymentSuccessComponent},
-    {path: 'payment/cancel', component: PaymentCancelComponent}
+    { path: 'payment/cancel', component: PaymentCancelComponent},
+    { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard]}
 ];
