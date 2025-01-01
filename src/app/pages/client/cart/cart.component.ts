@@ -11,6 +11,7 @@ import { FooterComponent } from "../../../components/footer/footer.component";
 import { CartRequest } from '../../../dto/request/cart-request.model';
 import { debounceTime, Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BreadcrumComponent } from "../../../components/breadcrum/breadcrum.component";
 
 @Component({
   selector: 'app-cart',
@@ -20,7 +21,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     CommonModule,
     NgIconComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
 ],
   viewProviders: [provideIcons({bootstrapTrash})],
   templateUrl: './cart.component.html',

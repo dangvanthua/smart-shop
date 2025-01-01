@@ -39,4 +39,8 @@ export class ProductService {
     getProductRecommend(productId: number): Observable<ApiResponse<ProductResponse[]>> {
         return this.http.get<ApiResponse<ProductResponse[]>>(`${this.PRODUCT_API}/${productId}/recommends`);
     }
+
+    searchProductByKeyword(keyword: string): Observable<ApiResponse<ProductResponse[]>> {
+        return this.http.get<ApiResponse<ProductResponse[]>>(`${this.PRODUCT_API}/search?q=${keyword}`);
+    }
 }

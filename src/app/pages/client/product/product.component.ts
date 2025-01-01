@@ -4,6 +4,7 @@ import { bootstrapMenuButton } from '@ng-icons/bootstrap-icons';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../../components/header/header.component';
 import { FooterComponent } from '../../../components/footer/footer.component';
+import { BreadcrumComponent } from "../../../components/breadcrum/breadcrum.component";
 
 @Component({
   selector: 'app-product',
@@ -12,8 +13,9 @@ import { FooterComponent } from '../../../components/footer/footer.component';
     NgIconComponent,
     CommonModule,
     HeaderComponent,
-    FooterComponent
-  ],
+    FooterComponent,
+    BreadcrumComponent
+],
   viewProviders: [provideIcons({ bootstrapMenuButton })],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']

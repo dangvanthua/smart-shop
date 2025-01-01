@@ -109,7 +109,8 @@ $avatar-size: 120px;
         border-color: $active-color;
         border-radius: 5px;
         padding: 10px 20px;
-        width: 40%;
+        width: 100%;
+        max-width: 200px;
 
         &:hover {
             background-color: $active-hover-color;

@@ -1,0 +1,38 @@
+nav {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c757d;
+    margin-bottom: 12px;
+  
+    a {
+      color: #007bff;
+      text-decoration: none;
+      transition: color 0.3s;
+  
+      &:hover {
+        color: #0056b3;
+      }
+    }
+  
+    & > ng-container:not(:last-child) {
+      margin-right: 5px;
+  
+      a {
+        margin-right: 5px;
+      }
+  
+      &::after {
+        content: '>';
+        margin-left: 5px;
+        color: #adb5bd; // Màu của dấu phân cách
+      }
+    }
+  
+    & > ng-container:last-child {
+      font-weight: 700;
+      color: #495057; // Màu của breadcrumb cuối cùng
+    }
+  }
+  

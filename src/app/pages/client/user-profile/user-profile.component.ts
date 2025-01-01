@@ -4,6 +4,7 @@ import { FooterComponent } from "../../../components/footer/footer.component";
 import { UserService } from '../../../services/user.service';
 import { UserResponse } from '../../../dto/response/user-response.model';
 import { ApiResponse } from '../../../dto/response/api-response.model';
+import { BreadcrumComponent } from "../../../components/breadcrum/breadcrum.component";
 
 @Component({
   selector: 'app-user-profile',

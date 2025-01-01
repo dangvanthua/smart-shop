@@ -120,7 +120,7 @@ export class HomeComponent {
   }
 
   goToProductDetail(productId: number): void {
-    this.router.navigate(['/product-detail', productId]);
+    this.router.navigate(['/product', productId]);
   }
 
   addCart(productId: number) {

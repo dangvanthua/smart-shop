@@ -16,6 +16,11 @@ import { UserService } from '../../services/user.service';
 import { UserResponse } from '../../dto/response/user-response.model';
 import { TokenService } from '../../services/token.service';
 import { Router, RouterModule } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ProductResponse } from '../../dto/response/product-response.model';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { ProductService } from '../../services/product.service';
+import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 
 @Component({
   selector: 'app-header',
@@ -23,8 +28,10 @@ import { Router, RouterModule } from '@angular/router';
   imports: [
     NgIconComponent,
     StickyNavigationDirective,
+    ClickOutsideDirective,
     CommonModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
   viewProviders: [
     provideIcons({
@@ -39,19 +46,54 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-
+  searchControl = new FormControl();
+  filteredProducts: ProductResponse[] = [];
   categories: CategoryResponse[] = [];
   userDetail?: UserResponse;
+  showList: boolean = false;
 
   constructor(
     private router: Router,
     private categoryService: CategoryService,
     private userService: UserService,
     private tokenService: TokenService,
+    private productService: ProductService,
   ) {}
 
   ngOnInit(): void {
     this.loadUserInfo();
+    this.searchControl.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((keyword) => this.productService.searchProductByKeyword(keyword))
+    )
+    .subscribe((results) => {
+      if(results.code === 1000 && results.result) {
+        this.filteredProducts = results.result;
+      }
+    })
+  }
+
+  onSearch() {
+    const keyword = this.searchControl.value;
+    this.productService.searchProductByKeyword(keyword).subscribe((results) => {
+      if(results.code === 1000 && results.result) {
+        this.filteredProducts = results.result;
+      }
+    });
+  }
+
+  showProductList() {
+    this.showList = true;
+  }
+
+  hideProductList() {
+    this.showList = false;
+  }
+
+
+  goToProductDetail(productId: number): void {
+    this.router.navigate(['/product', productId]);
   }
 
   loadUserInfo() {

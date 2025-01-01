@@ -17,6 +17,7 @@ import { PromotionCodeResponse } from '../../../dto/response/promotion-response.
 import { PromotionService } from '../../../services/promotion.service';
 import { CartItemRequest } from '../../../dto/request/cart-item-request.model';
 import { OrderService } from '../../../services/order.service';
+import { BreadcrumComponent } from "../../../components/breadcrum/breadcrum.component";
 
 @Component({
   selector: 'app-order',
@@ -28,7 +29,7 @@ import { OrderService } from '../../../services/order.service';
     CommonModule,
     FormsModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
 ],
   providers: [CurrencyPipe],
   viewProviders: [provideIcons({bootstrapPlus, bootstrapXCircleFill})],

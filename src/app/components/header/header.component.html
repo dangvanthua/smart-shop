@@ -19,12 +19,22 @@
             <a class="shop-name" [routerLink]="['/']">Smart Shop</a>
         </div>
 
-        <div class="search-bar">
-            <select class="category-select">
-                <option>Tất cả danh mục</option>
-            </select>
-            <input type="text" placeholder="Tìm kiếm sản phẩm...">
-            <button class="btn search-btn">Tìm</button>
+        <div class="search-bar" appClickOutside (clickOutside)="hideProductList()">
+            <input 
+            type="text" 
+            [formControl]="searchControl"
+            placeholder="Tìm kiếm sản phẩm..."
+            (focus)="showProductList()">
+            <button class="btn search-btn" (click)="onSearch()">Tìm</button>
+            @if(filteredProducts.length > 0 && showList == true) {
+                <ul class="list-products">
+                    @for (product of filteredProducts; track $index) {
+                        <li class="list-product-item" (click)="goToProductDetail(product.id)">
+                            <a>{{product.name}}</a>
+                        </li>
+                    }
+                </ul>
+            }
         </div>
 
         <div class="user-actions">
@@ -35,7 +45,7 @@
                         <span>{{userDetail.fullname}}</span> 
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" [routerLink]="['/profile']">Tài khoản của tôi</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['/account/profile']">Tài khoản của tôi</a></li>
                         <li><a class="dropdown-item">Đơn hàng</a></li>
                         <li><a class="dropdown-item" (click)="logOut()">Đăng xuất</a></li>
                     </ul>
@@ -46,7 +56,7 @@
                 }
             </div>
 
-            <a [routerLink]="['/cart']" class="cart">
+            <a [routerLink]="['/account/cart']" class="cart">
                 <ng-icon class="cart-icon" name="bootstrapCart"></ng-icon>
                 <span>3</span>
             </a>
