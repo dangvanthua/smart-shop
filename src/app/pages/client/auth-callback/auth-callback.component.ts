@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { switchMap, take, tap } from 'rxjs';
-import { ApiResponse } from '../../dto/response/api-response.model';
-import { AuthResponse } from '../../dto/response/auth-response.model';
-import { TokenService } from '../../services/token.service';
-import { UserService } from '../../services/user.service';
-import { UserResponse } from '../../dto/response/user-response.model';
+import { ApiResponse } from '../../../dto/response/api-response.model';
+import { AuthResponse } from '../../../dto/response/auth-response.model';
+import { TokenService } from '../../../services/token.service';
+import { UserService } from '../../../services/user.service';
+import { UserResponse } from '../../../dto/response/user-response.model';
 
 @Component({
   selector: 'app-auth-callback',

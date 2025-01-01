@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { ProductService } from '../../services/product.service';
-import { ProductListResponse } from '../../dto/response/products-response.model';
-import { ApiResponse } from '../../dto/response/api-response.model';
-import { ProductResponse } from '../../dto/response/product-response.model';
+import { ProductService } from '../../../services/product.service';
+import { ProductListResponse } from '../../../dto/response/products-response.model';
+import { ApiResponse } from '../../../dto/response/api-response.model';
+import { ProductResponse } from '../../../dto/response/product-response.model';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { CategoryResponse } from '../../dto/response/category-response.model';
-import { CategoryService } from '../../services/category.service';
+import { CategoryResponse } from '../../../dto/response/category-response.model';
+import { CategoryService } from '../../../services/category.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapCart } from '@ng-icons/bootstrap-icons';
 import { Router } from '@angular/router';
-import { HeaderComponent } from "../../components/header/header.component";
-import { FooterComponent } from "../../components/footer/footer.component";
-import { CartService } from '../../services/cart.service';
-import { CartRequest } from '../../dto/request/cart-request.model';
+import { HeaderComponent } from "../../../components/header/header.component";
+import { FooterComponent } from "../../../components/footer/footer.component";
+import { CartService } from '../../../services/cart.service';
+import { CartRequest } from '../../../dto/request/cart-request.model';
 
 @Component({
   selector: 'app-home',

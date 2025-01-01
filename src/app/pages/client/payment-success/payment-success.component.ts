@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaymentService } from '../../services/payment.service';
-import { VerifyPaymentRequest } from '../../dto/request/payment-request.model';
-import { ApiResponse } from '../../dto/response/api-response.model';
+import { PaymentService } from '../../../services/payment.service';
+import { VerifyPaymentRequest } from '../../../dto/request/payment-request.model';
+import { ApiResponse } from '../../../dto/response/api-response.model';
 
 @Component({
   selector: 'app-payment-success',

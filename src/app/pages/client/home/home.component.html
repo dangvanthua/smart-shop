@@ -120,7 +120,8 @@
                 <div class="row">
                     <div *ngFor="let product of productCategories" class="col-sm-6 col-md-4 col-lg-3 mb-4">
                         <div class="card">
-                            <img  [src]="product.thumbnail == null ? 'assets/images/img-hero.png' : product.thumbnail" class="hot-image" alt="Product hot image">
+                            <img  [src]="product.thumbnail" class="hot-image" 
+                            alt="Product hot image" (click)="goToProductDetail(product.id)">
                             <div class="card-body">
                                 <h4 class="product-name" (click)="goToProductDetail(product.id)">{{ product.name }}</h4>
                                 <div class="d-flex align-items-baseline justify-content-between">
@@ -138,7 +139,9 @@
     
         <div class="row">
             <div class="col-12 text-center">
-                <button class="btn-load" (click)="loadMoreCategoryProduct()">Xem thêm</button>
+                @if(pageCategory !== (totalProductCategoryPages - 1)) {
+                    <button class="btn-load" (click)="loadMoreCategoryProduct()">Xem thêm</button>
+                }
             </div>
         </div>
     </section>
@@ -154,8 +157,8 @@
             @for (product of products; track $index) {
                 <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                     <div class="card">
-                        <img [src]="product.thumbnail == null ? 'assets/images/img-hero.png' : product.thumbnail" class="hot-image"
-                            alt="Product hot image">
+                        <img [src]="product.thumbnail" class="hot-image"
+                            alt="Product hot image" (click)="goToProductDetail(product.id)">
                         <div class="card-body">
                             <h4 class="product-name" (click)="goToProductDetail(product.id)">{{product.name}}</h4>
                             <div class="d-flex align-items-baseline justify-content-between">

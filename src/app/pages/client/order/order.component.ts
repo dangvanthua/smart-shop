@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LocationService } from '../../services/location.service';
+import { LocationService } from '../../../services/location.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapPlus, bootstrapXCircleFill } from '@ng-icons/bootstrap-icons';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { HeaderComponent } from "../../components/header/header.component";
-import { FooterComponent } from "../../components/footer/footer.component";
-import { CartResponse } from '../../dto/response/cart-response.mode';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { CartService } from '../../services/cart.service';
-import { ApiResponse } from '../../dto/response/api-response.model';
-import { AddressResponse } from '../../dto/response/address-response.model';
-import { AddressService } from '../../services/address.service';
-import { AddressRequest } from '../../dto/request/address-request.model';
-import { PromotionCodeResponse } from '../../dto/response/promotion-response.mode';
-import { PromotionService } from '../../services/promotion.service';
-import { CartItemRequest } from '../../dto/request/cart-item-request.model';
-import { OrderService } from '../../services/order.service';
+import { HeaderComponent } from "../../../components/header/header.component";
+import { FooterComponent } from "../../../components/footer/footer.component";
+import { CartResponse } from '../../../dto/response/cart-response.mode';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { CartService } from '../../../services/cart.service';
+import { ApiResponse } from '../../../dto/response/api-response.model';
+import { AddressResponse } from '../../../dto/response/address-response.model';
+import { AddressService } from '../../../services/address.service';
+import { AddressRequest } from '../../../dto/request/address-request.model';
+import { PromotionCodeResponse } from '../../../dto/response/promotion-response.mode';
+import { PromotionService } from '../../../services/promotion.service';
+import { CartItemRequest } from '../../../dto/request/cart-item-request.model';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
   selector: 'app-order',
@@ -57,6 +57,7 @@ export class OrderComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private currencyPipe: CurrencyPipe,
+    private router: Router,
     private locationService: LocationService,
     private addressService: AddressService,
     private cartService: CartService,
@@ -297,14 +298,14 @@ export class OrderComponent implements OnInit {
       cart_items: cartItemRequest,
     };
   
-    console.log(orderRequest);
-  
     // Gửi order request đến server (thêm logic gọi API tại đây nếu cần)
     this.orderService.createOrder(orderRequest).subscribe({
       next: (response: ApiResponse<string>) => {
         if(response.code === 1000 && response.result != null) {
           const resultUrl = response.result.trim();
           window.location.href = resultUrl;
+        }else if(response.result == null) {
+          this.router.navigate(['/']);
         }
       }
     })

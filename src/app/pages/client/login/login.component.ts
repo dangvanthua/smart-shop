@@ -3,11 +3,11 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapGoogle, bootstrapFacebook } from '@ng-icons/bootstrap-icons';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthRequest } from '../../dto/request/auth-request.model';
-import { AuthService } from '../../services/auth.service';
-import { TokenService } from '../../services/token.service';
-import { ApiResponse } from '../../dto/response/api-response.model';
-import { AuthResponse } from '../../dto/response/auth-response.model';
+import { AuthRequest } from '../../../dto/request/auth-request.model';
+import { AuthService } from '../../../services/auth.service';
+import { TokenService } from '../../../services/token.service';
+import { ApiResponse } from '../../../dto/response/api-response.model';
+import { AuthResponse } from '../../../dto/response/auth-response.model';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -47,7 +47,6 @@ export class LoginComponent {
         next: (response: ApiResponse<AuthResponse>) => {
           if (response.code === 1000) {
             if (response.result?.authenticated && response.result.token) {
-              console.log(response.result.token);
               const accessToken = response.result.token;
               this.tokenService.saveToken(accessToken);
               this.router.navigate(['']);

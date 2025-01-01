@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from "../../components/header/header.component";
-import { FooterComponent } from "../../components/footer/footer.component";
-import { UserService } from '../../services/user.service';
-import { UserResponse } from '../../dto/response/user-response.model';
-import { ApiResponse } from '../../dto/response/api-response.model';
+import { HeaderComponent } from "../../../components/header/header.component";
+import { FooterComponent } from "../../../components/footer/footer.component";
+import { UserService } from '../../../services/user.service';
+import { UserResponse } from '../../../dto/response/user-response.model';
+import { ApiResponse } from '../../../dto/response/api-response.model';
 
 @Component({
   selector: 'app-user-profile',

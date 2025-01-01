@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { bootstrapTrash } from '@ng-icons/bootstrap-icons';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { CartService } from '../../services/cart.service';
-import { ApiResponse } from '../../dto/response/api-response.model';
-import { CartResponse } from '../../dto/response/cart-response.mode';
-import { HeaderComponent } from "../../components/header/header.component";
-import { FooterComponent } from "../../components/footer/footer.component";
-import { CartRequest } from '../../dto/request/cart-request.model';
+import { CartService } from '../../../services/cart.service';
+import { ApiResponse } from '../../../dto/response/api-response.model';
+import { CartResponse } from '../../../dto/response/cart-response.mode';
+import { HeaderComponent } from "../../../components/header/header.component";
+import { FooterComponent } from "../../../components/footer/footer.component";
+import { CartRequest } from '../../../dto/request/cart-request.model';
 import { debounceTime, Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 

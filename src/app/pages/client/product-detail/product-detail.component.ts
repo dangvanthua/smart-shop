@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapCartPlus, bootstrapTruck } from '@ng-icons/bootstrap-icons';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../../services/product.service';
-import { ApiResponse } from '../../dto/response/api-response.model';
-import { ProductDetailResponse } from '../../dto/response/product-detail.model';
+import { ProductService } from '../../../services/product.service';
+import { ApiResponse } from '../../../dto/response/api-response.model';
+import { ProductDetailResponse } from '../../../dto/response/product-detail.model';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ProductResponse } from '../../dto/response/product-response.model';
-import { HeaderComponent } from '../../components/header/header.component';
-import { FooterComponent } from '../../components/footer/footer.component';
-import { CartService } from '../../services/cart.service';
-import { CartRequest } from '../../dto/request/cart-request.model';
+import { ProductResponse } from '../../../dto/response/product-response.model';
+import { HeaderComponent } from '../../../components/header/header.component';
+import { FooterComponent } from '../../../components/footer/footer.component';
+import { CartService } from '../../../services/cart.service';
+import { CartRequest } from '../../../dto/request/cart-request.model';
 
 @Component({
   selector: 'app-product-detail',

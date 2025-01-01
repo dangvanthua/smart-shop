@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RegisterComponent } from './pages/register/register.component';
-import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
-import { ProductComponent } from './pages/product/product.component';
-import { OrderComponent } from './pages/order/order.component';
-import { HomeComponent } from './pages/home/home.component';
+import { RegisterComponent } from './pages/client/register/register.component';
+import { ProductDetailComponent } from './pages/client/product-detail/product-detail.component';
+import { ProductComponent } from './pages/client/product/product.component';
+import { OrderComponent } from './pages/client/order/order.component';
+import { HomeComponent } from './pages/client/home/home.component';
 import { HeaderComponent } from "./components/header/header.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { RouterModule } from '@angular/router';

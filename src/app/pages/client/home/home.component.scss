@@ -137,7 +137,6 @@ $transition-base: 0.3s ease;
     }
 
     .card {
-        border: none;
         transition: transform $transition-base;
 
         &:hover {
@@ -147,7 +146,8 @@ $transition-base: 0.3s ease;
 
         .hot-image {
             background-position: center;
-            max-height: auto;
+            height: 100%;
+            max-height: 200px;
             width: 100%;
             object-fit: cover;
         }
@@ -173,6 +173,21 @@ $transition-base: 0.3s ease;
                 font-size: 18px;
                 color: $primary-color;
             } 
+
+            .product-icon-cart {
+                width: 40px;
+                height: 40px;
+                background-color: $primary-color;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+        
+                .cart-icon {
+                    font-size: 18px;
+                    color: $secondary-color;
+                } 
+            }
         }
     }
 
@@ -219,6 +234,7 @@ $transition-base: 0.3s ease;
         }
     }
 
+
     .card {
         transition: transform $transition-base;
 
@@ -229,7 +245,8 @@ $transition-base: 0.3s ease;
 
         .hot-image {
             background-position: center;
-            max-height: auto;
+            height: 100%;
+            max-height: 210px;
             width: 100%;
             object-fit: cover;
         }
@@ -259,7 +276,7 @@ $transition-base: 0.3s ease;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-
+        
                 .cart-icon {
                     font-size: 18px;
                     color: $secondary-color;

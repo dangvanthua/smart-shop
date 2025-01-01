@@ -2,8 +2,8 @@ import { Component, ViewChild, ElementRef, Renderer2, OnDestroy } from '@angular
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapMenuButton } from '@ng-icons/bootstrap-icons';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../components/header/header.component';
-import { FooterComponent } from '../../components/footer/footer.component';
+import { HeaderComponent } from '../../../components/header/header.component';
+import { FooterComponent } from '../../../components/footer/footer.component';
 
 @Component({
   selector: 'app-product',

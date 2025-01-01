@@ -73,7 +73,17 @@ $avatar-size: 120px;
     .content-item {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        gap: 12px;
+
+        .user-action {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+             
+            a {
+                text-wrap: nowrap;
+            }
+        }
     }
 
     h5 {
@@ -99,6 +109,7 @@ $avatar-size: 120px;
         border-color: $active-color;
         border-radius: 5px;
         padding: 10px 20px;
+        width: 40%;
 
         &:hover {
             background-color: $active-hover-color;

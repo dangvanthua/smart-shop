@@ -157,22 +157,24 @@
           </div>
         }
 
-        <div class="voucher-selection">
-          <h3>Chọn mã giảm giá</h3>
-          <div class="voucher-dropdown">
-              <label for="voucher-select">Chọn voucher:</label>
-              <select id="voucher-select" multiple [(ngModel)]="selectedVouchers" (change)="updateVouchers()">
-                  <option *ngFor="let voucher of availableVouchers" [value]="voucher">
-                      {{ voucher.promotion_name }} - 
-                      @if ( voucher.discount_type === "percentage") {
-                       {{voucher.promotion_discount_value}}%
-                      }@else if (voucher.discount_type === "percentage") {
-                       {{formatCurrency(voucher.promotion_discount_value)}}
-                      }
-                  </option>
-              </select>
-          </div>
-      </div>      
+        @if(availableVouchers.length > 0) {
+          <div class="voucher-selection">
+            <h3>Chọn mã giảm giá</h3>
+            <div class="voucher-dropdown">
+                <label for="voucher-select">Chọn voucher:</label>
+                <select id="voucher-select" multiple [(ngModel)]="selectedVouchers" (change)="updateVouchers()">
+                    <option *ngFor="let voucher of availableVouchers" [value]="voucher">
+                        {{ voucher.promotion_name }} - 
+                        @if ( voucher.discount_type === "percentage") {
+                         {{voucher.promotion_discount_value}}%
+                        }@else if (voucher.discount_type === "percentage") {
+                         {{formatCurrency(voucher.promotion_discount_value)}}
+                        }
+                    </option>
+                </select>
+            </div>
+          </div>      
+        }
       
       <!-- Danh sách voucher đã chọn -->
       @if (selectedVouchers.length > 0) {
