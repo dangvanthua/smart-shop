@@ -124,7 +124,7 @@ export class ProductDetailComponent {
       this.cartService.addProductToCart(cartRequest).subscribe({
         next: (response: ApiResponse<void>) => {
           if(response.code === 1000) {
-            this.router.navigate(['/cart'], {
+            this.router.navigate(['/account/cart'], {
               queryParams: {selectedProductId: productId},
             });
           }

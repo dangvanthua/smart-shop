@@ -5,13 +5,15 @@ import { CommonModule } from '@angular/common';
 import { UserRequest } from '../../../dto/request/user-request.model';
 import { ApiResponse } from '../../../dto/response/api-response.model';
 import { UserResponse } from '../../../dto/response/user-response.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    RouterModule,
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']

@@ -1,0 +1,67 @@
+<app-header></app-header>
+<div class="container py-3">
+  <div class="text-end mb-4">
+    <button class="btn btn-secondary">EXPORT</button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <div class="filter-item">
+      <label for="fromDate" class="form-label">FROM DATE</label>
+      <input id="fromDate" type="date" class="form-control">
+    </div>
+    <div class="filter-item">
+      <label for="toDate" class="form-label">TO DATE</label>
+      <input id="toDate" type="date" class="form-control">
+    </div>
+    <div class="filter-item">
+      <label for="status" class="form-label">STATUS</label>
+      <select id="status" class="form-control">
+        <option>Chọn trạng thái</option>
+        <option>SUBMITTED</option>
+        <option>INVOICED</option>
+      </select>
+    </div>
+    <div class="filter-item">
+      <label for="reference" class="form-label">REFERENCE</label>
+      <input id="reference" type="text" class="form-control" placeholder="#">
+    </div>
+
+    <div class="filter-item mt-4 d-flex items-center g-3">
+        <button class="btn btn-outline-secondary me-2">Làm sạch</button>
+        <button class="btn btn-success">Tìm kiếm</button>
+    </div>
+  </div>
+
+  <!-- Orders Table -->
+  <div class="table-responsive mt-5">
+    <table class="table align-middle table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>DATE</th>
+          <th>DELIVERY DATE</th>
+          <th>TOTAL</th>
+          <th>QUANTITY</th>
+          <th>LAST UPDATE</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.date }}</td>
+          <td>{{ order.deliveryDate }}</td>
+          <td>{{ order.total | currency:'USD' }}</td>
+          <td>{{ order.quantity }}</td>
+          <td>{{ order.lastUpdate }}</td>
+          <td class="action-item">
+            <button class="btn text-secondary">Chi tiết</button>
+            <button class="btn btn-outline-success btn-sm">Mua lại</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-footer></app-footer>

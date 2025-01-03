@@ -32,7 +32,6 @@ export class BreadcrumbService {
       // Tiếp tục đệ quy vào các child routes khác
       this.createBreadcrumbs(child, url, breadcrumbs);
     }
-    console.log(breadcrumbs);
     return breadcrumbs;
   }
   

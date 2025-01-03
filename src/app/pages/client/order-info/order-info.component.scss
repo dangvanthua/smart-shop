@@ -1,0 +1,42 @@
+.container {
+    .btn {
+      &.btn-link {
+        padding: 0;
+        text-decoration: underline;
+      }
+  
+      &.btn-outline-success {
+        font-size: 0.9rem;
+      }
+    }
+  
+    .table {
+      th, td {
+        vertical-align: middle;
+        font-size: 14px;
+        font-weight: 600;
+      }
+  
+      .table-light {
+        background-color: #f8f9fa;
+      }
+    }
+
+    .filters {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        align-items: center;
+        column-gap: 8px;
+
+        .form-label {
+          font-weight: bold;
+        }
+    }
+
+    .action-item {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+    }
+}
+  
