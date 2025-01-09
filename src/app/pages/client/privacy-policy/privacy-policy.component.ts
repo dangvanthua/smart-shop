@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { FooterComponent } from "../../../components/footer/footer.component";
-import { HeaderComponent } from "../../../components/header/header.component";
-import { BreadcrumComponent } from "../../../components/breadcrum/breadcrum.component";
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-privacy-policy',
   standalone: true,
-  imports: [FooterComponent, HeaderComponent],
+  imports: [
+    FooterComponent, 
+    HeaderComponent],
   templateUrl: './privacy-policy.component.html',
   styleUrl: './privacy-policy.component.scss'
 })

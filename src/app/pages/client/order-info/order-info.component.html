@@ -1,7 +1,14 @@
 <app-header></app-header>
-<div class="container py-3">
+<div class="container py-5">
   <div class="text-end mb-4">
-    <button class="btn btn-secondary">EXPORT</button>
+    <button class="btn btn-info me-3">
+      <ng-icon name="bootstrapFileBarGraph"></ng-icon>
+      Thống kê
+    </button>
+    <button class="btn btn-secondary">
+      <ng-icon name="bootstrapFilter"></ng-icon>
+      Export
+    </button>
   </div>
 
   <!-- Filters -->
@@ -18,8 +25,11 @@
       <label for="status" class="form-label">STATUS</label>
       <select id="status" class="form-control">
         <option>Chọn trạng thái</option>
-        <option>SUBMITTED</option>
-        <option>INVOICED</option>
+        <option>PENDING</option>
+        <option>PROCESSING</option>
+        <option>SHIPPED</option>
+        <option>DELIVERED</option>
+        <option>CANCELLED</option>
       </select>
     </div>
     <div class="filter-item">
@@ -39,29 +49,57 @@
       <thead class="table-light">
         <tr>
           <th>ID</th>
-          <th>DATE</th>
-          <th>DELIVERY DATE</th>
-          <th>TOTAL</th>
-          <th>QUANTITY</th>
-          <th>LAST UPDATE</th>
+          <th>Ngày đặt</th>
+          <th>Ngày giao</th>
+          <th>Trạng thái</th>
+          <th>Vận chuyển</th>
+          <th>Thanh toán</th>
+          <th>Số theo dõi</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders">
+        <tr *ngFor="let order of orders?.order_responses">
           <td>{{ order.id }}</td>
-          <td>{{ order.date }}</td>
-          <td>{{ order.deliveryDate }}</td>
-          <td>{{ order.total | currency:'USD' }}</td>
-          <td>{{ order.quantity }}</td>
-          <td>{{ order.lastUpdate }}</td>
+          <td>{{ order.order_date }}</td>
+          <td>{{ order.shipping_date }}</td>
+          <td>{{ order.status | enumTranslate:'OrderStatus'}}</td>
+          <td>{{ order.shipping_method | enumTranslate:'ShippingMethod' }}</td>
+          <td>{{ order.payment_method | enumTranslate:'PaymentMethod'}}</td>
+          <td>{{ order.tracking_number }}</td>
           <td class="action-item">
             <button class="btn text-secondary">Chi tiết</button>
             <button class="btn btn-outline-success btn-sm">Mua lại</button>
           </td>
+
+          <ng-template #orderDetailModal let-modal>
+           
+          </ng-template>
         </tr>
       </tbody>
     </table>
+
+    <div class="order-pagination">
+      <nav aria-label="Page navigation order">
+        <ul class="pagination">
+          <li class="page-item" [class.disabled]="page === 0">
+            <a class="page-link cursor-pointer" (click)="changePage(page - 1)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          @for (pageIndex of getPages(); track $index) {
+            <li class="page-item" [class.active]="pageIndex === page">
+              <a class="page-link cursor-pointer" (click)="changePage(pageIndex)">{{pageIndex + 1}}</a>
+            </li>
+          }
+          <li class="page-item" [class.disabled]="page === totalPages - 1">
+            <a class="page-link cursor-pointer" (click)="changePage(page + 1)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>
 <app-footer></app-footer>

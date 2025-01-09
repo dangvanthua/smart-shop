@@ -2,9 +2,9 @@ import { Component, ViewChild, ElementRef, Renderer2, OnDestroy } from '@angular
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapMenuButton } from '@ng-icons/bootstrap-icons';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../../components/header/header.component';
-import { FooterComponent } from '../../../components/footer/footer.component';
-import { BreadcrumComponent } from "../../../components/breadcrum/breadcrum.component";
+import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { BreadcrumComponent } from '../../../shared/components/breadcrum/breadcrum.component';
 
 @Component({
   selector: 'app-product',

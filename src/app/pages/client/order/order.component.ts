@@ -4,8 +4,6 @@ import { LocationService } from '../../../services/location.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapPlus, bootstrapXCircleFill } from '@ng-icons/bootstrap-icons';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { HeaderComponent } from "../../../components/header/header.component";
-import { FooterComponent } from "../../../components/footer/footer.component";
 import { CartResponse } from '../../../dto/response/cart-response.mode';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
@@ -17,7 +15,8 @@ import { PromotionCodeResponse } from '../../../dto/response/promotion-response.
 import { PromotionService } from '../../../services/promotion.service';
 import { CartItemRequest } from '../../../dto/request/cart-item-request.model';
 import { OrderService } from '../../../services/order.service';
-import { BreadcrumComponent } from "../../../components/breadcrum/breadcrum.component";
+import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-order',

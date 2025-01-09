@@ -7,20 +7,20 @@ import {
   bootstrapPersonVcard, 
   bootstrapChevronCompactRight, 
   bootstrapChevronDown } from '@ng-icons/bootstrap-icons';
-import { StickyNavigationDirective } from '../../directives/fix-navigation.directive';
-import { CategoryService } from '../../services/category.service';
-import { CategoryResponse } from '../../dto/response/category-response.model';
-import { ApiResponse } from '../../dto/response/api-response.model';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user.service';
-import { UserResponse } from '../../dto/response/user-response.model';
-import { TokenService } from '../../services/token.service';
 import { Router, RouterModule } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ProductResponse } from '../../dto/response/product-response.model';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
-import { ProductService } from '../../services/product.service';
-import { ClickOutsideDirective } from '../../directives/click-outside.directive';
+import { StickyNavigationDirective } from '../../../directives/fix-navigation.directive';
+import { ClickOutsideDirective } from '../../../directives/click-outside.directive';
+import { ProductResponse } from '../../../dto/response/product-response.model';
+import { CategoryResponse } from '../../../dto/response/category-response.model';
+import { UserResponse } from '../../../dto/response/user-response.model';
+import { CategoryService } from '../../../services/category.service';
+import { UserService } from '../../../services/user.service';
+import { TokenService } from '../../../services/token.service';
+import { ProductService } from '../../../services/product.service';
+import { ApiResponse } from '../../../dto/response/api-response.model';
 
 @Component({
   selector: 'app-header',

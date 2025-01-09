@@ -1,5 +1,5 @@
 <app-header/>
-<div class="cart-container">
+<div class="cart-container" *ngIf="cartItems.length > 0 else cartText" >
     <table class="cart-table">
       <thead>
         <tr>
@@ -42,6 +42,15 @@
           <button (click)="checkout()" class="checkout-btn">Thanh toán</button>
         </div>
       }
-    </div>      
-  </div>
+    </div> 
+</div>
+  <ng-template #cartText>
+    <div class="block-no-data">
+      <p class="text-secondary text-center text-cart">Không có sản phẩm trong giỏ hàng</p>
+      <div class="image-block">
+        <img src="assets/images/no-cart.png" alt="No product in a cart" class="img-no-cart">
+      </div>
+    </div>
+  </ng-template>
+
 <app-footer/>

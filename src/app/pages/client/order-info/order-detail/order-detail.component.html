@@ -1,0 +1,29 @@
+<!-- <div class="modal-header">
+    <h5 class="modal-title">Chi tiết đơn hàng #{{ selectedOrder?.id }}</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" *ngIf="selectedOrder">
+    <p><strong>Ngày đặt:</strong> {{ selectedOrder.order_date }}</p>
+    <p><strong>Địa chỉ giao hàng:</strong> {{ selectedOrder.shipping_address }}</p>
+    <p><strong>Phương thức vận chuyển:</strong> {{ selectedOrder.shipping_method }}</p>
+    <p><strong>Phương thức thanh toán:</strong> {{ selectedOrder.payment_method }}</p>
+    <p><strong>Trạng thái:</strong> {{ selectedOrder.status }}</p>
+
+    <h4>Chi tiết sản phẩm:</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Sản phẩm</th>
+          <th>Số lượng</th>
+          <th>Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of selectedOrder.order_details">
+          <td>{{ detail.product_response.name }}</td>
+          <td>{{ detail.number_of_products }}</td>
+          <td>{{ detail.total_money | currency:'VND' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->

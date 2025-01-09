@@ -6,12 +6,11 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { CartService } from '../../../services/cart.service';
 import { ApiResponse } from '../../../dto/response/api-response.model';
 import { CartResponse } from '../../../dto/response/cart-response.mode';
-import { HeaderComponent } from "../../../components/header/header.component";
-import { FooterComponent } from "../../../components/footer/footer.component";
 import { CartRequest } from '../../../dto/request/cart-request.model';
 import { debounceTime, Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BreadcrumComponent } from "../../../components/breadcrum/breadcrum.component";
+import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-cart',

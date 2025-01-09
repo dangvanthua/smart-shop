@@ -12,12 +12,29 @@ import { PaymentCancelComponent } from './pages/client/payment-cancel/payment-ca
 import { UserProfileComponent } from './pages/client/user-profile/user-profile.component';
 import { RegisterComponent } from './pages/client/register/register.component';
 import { OrderInfoComponent } from './pages/client/order-info/order-info.component';
+import { BlogComponent } from './pages/client/blog/blog.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } },
-    { path: 'login', component: LoginComponent, data: { breadcrumb: 'Login' } },
-    { path: 'register', component: RegisterComponent, data: { breadcrumb: 'Register' } },
+    { 
+        path: '', 
+        redirectTo: 'home', 
+        pathMatch: 'full' 
+    },
+    { 
+        path: 'home', 
+        component: HomeComponent, 
+        data: { breadcrumb: 'Home' } 
+    },
+    { 
+        path: 'login', 
+        component: LoginComponent, 
+        data: { breadcrumb: 'Login' } 
+    },
+    { 
+        path: 'register', 
+        component: RegisterComponent, 
+        data: { breadcrumb: 'Register' } 
+    },
     {
         path: 'auth', children: [
             { path: 'google/callback', component: AuthCallbackComponent },
@@ -26,20 +43,46 @@ export const routes: Routes = [
     },
     {
         path: 'product', children: [
-            { path: ':id', component: ProductDetailComponent, data: { breadcrumb: 'Product Detail' } },
+            { 
+                path: ':id', 
+                component: ProductDetailComponent,
+                data: { breadcrumb: 'Product Detail' } 
+            },
         ]
     },
-    { path: 'order', component: OrderComponent, data: { breadcrumb: 'Order' } },
-    { path: 'order-info', component: OrderInfoComponent, data: { breadcrumb: 'Order Info' } },
+    { 
+        path: 'order', 
+        component: OrderComponent, 
+        canActivate: [AuthGuard], 
+        data: { breadcrumb: 'Order' } 
+    },
+    { 
+        path: 'order-info', 
+        canActivate: [AuthGuard], 
+        component: OrderInfoComponent, 
+        data: { breadcrumb: 'Order Info' } 
+    },
     {
         path: 'account', canActivate: [AuthGuard], children: [
-            { path: 'cart', component: CartComponent, data: { breadcrumb: 'Cart' } },
-            { path: 'profile', component: UserProfileComponent, data: { breadcrumb: 'Profile' } }
+            { 
+                path: 'cart', 
+                component: CartComponent, 
+                data: { breadcrumb: 'Cart' } 
+            },
+            { 
+                path: 'profile', 
+                component: UserProfileComponent, 
+                data: { breadcrumb: 'Profile' } 
+            }
         ]
     },
     {
         path: 'policy', children: [
-            { path: 'privacy', component: PrivacyPolicyComponent, data: { breadcrumb: 'Privacy Policy' } }
+            { 
+                path: 'privacy', 
+                component: PrivacyPolicyComponent, 
+                data: { breadcrumb: 'Privacy Policy' } 
+            }
         ]
     },
     {
@@ -48,5 +91,15 @@ export const routes: Routes = [
             { path: 'cancel', component: PaymentCancelComponent }
         ]
     },
-    { path: '**', redirectTo: 'home', pathMatch: 'full' }
+    {
+        path: 'blog', 
+        component: BlogComponent, 
+        canActivate: [AuthGuard], 
+        data: {breadcrumb: 'Blog'}
+    },
+    { 
+        path: '**', 
+        redirectTo: 'home', 
+        pathMatch: 'full' 
+    }
 ];

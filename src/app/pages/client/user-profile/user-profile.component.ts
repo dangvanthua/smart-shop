@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from "../../../components/header/header.component";
-import { FooterComponent } from "../../../components/footer/footer.component";
 import { UserService } from '../../../services/user.service';
 import { UserResponse } from '../../../dto/response/user-response.model';
 import { ApiResponse } from '../../../dto/response/api-response.model';
-import { BreadcrumComponent } from "../../../components/breadcrum/breadcrum.component";
+import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent],
+  imports: [
+    HeaderComponent, 
+    FooterComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })

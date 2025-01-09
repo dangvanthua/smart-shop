@@ -46,7 +46,7 @@
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" [routerLink]="['/account/profile']">Tài khoản của tôi</a></li>
-                        <li><a class="dropdown-item">Đơn hàng</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['/order-info']">Đơn hàng</a></li>
                         <li><a class="dropdown-item" (click)="logOut()">Đăng xuất</a></li>
                     </ul>
                 }
@@ -107,7 +107,7 @@
                         <a href="#" class="nav-link">Trang chủ</a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link">Bài viết</a>
+                        <a [routerLink]="['/blog']" class="nav-link">Bài viết</a>
                     </li>
                     <li>
                         <a class="nav-link">Hỗ trợ</a>
