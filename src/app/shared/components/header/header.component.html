@@ -80,21 +80,23 @@
                       <ul class="menu-categories">
                         @for (category of categories; track $index) {
                             <li class="category-item">
-                                <div class="category-header" (click)="toggleCategory(category)">
+                                <div class="category-header" (click)="navigateCategory(category)">
                                     {{ category.name }}
-                                    <span *ngIf="category.sub_categories!.length > 0" class="arrow">
-                                        @if (category.isExpanded) {
-                                            <ng-icon name="bootstrapChevronDown"></ng-icon>
-                                        }@else {
-                                            <ng-icon name="bootstrapChevronCompactRight"></ng-icon>
-                                        }
-                                    </span>
-                                  </div>
-                                  <ul *ngIf="category.isExpanded" class="sub-category">
+                                    <div (click)="toggleCategory(category)">
+                                        <span *ngIf="category.sub_categories!.length > 0" class="arrow">
+                                            @if (category.isExpanded) {
+                                                <ng-icon name="bootstrapChevronDown"></ng-icon>
+                                            }@else {
+                                                <ng-icon name="bootstrapChevronCompactRight"></ng-icon>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                                <ul *ngIf="category.isExpanded" class="sub-category">
                                     <li *ngFor="let subCategory of category.sub_categories">
-                                      {{ subCategory.name }}
+                                        {{ subCategory.name }}
                                     </li>
-                                  </ul>
+                                </ul>
                             </li>
                         }
                       </ul>

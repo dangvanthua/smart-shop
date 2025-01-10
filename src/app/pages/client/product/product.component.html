@@ -1,10 +1,9 @@
 <app-header />
 <div class="container mt-5">
-    <app-breadcrum/>
     <div class="row">
         <div class="col-12 d-md-none mb-3 text-end">
             <button class="btn btn-outline-secondary" id="menu-toggle"
-                #menuToggle (click)="toggleSidebar()">
+                #menuToggle>
                 <ng-icon name="bootstrapMenuButton"></ng-icon> Danh Mục
             </button>
         </div>
@@ -16,15 +15,12 @@
                 <ng-icon name="bootstrapMenuButton"></ng-icon>
                 <h5>Danh Mục</h5>
             </div>
-            <a class="active" href="#" (click)="toggleSidebar()">Máy Ảnh &amp;
-                Máy Quay Phim</a>
-            <a href="#" (click)="toggleSidebar()">Máy ảnh - Máy quay phim</a>
-            <a href="#" (click)="toggleSidebar()">Camera giám sát &amp; Camera
-                hệ thống</a>
-            <a href="#" (click)="toggleSidebar()">Thẻ nhớ</a>
-            <a href="#" (click)="toggleSidebar()">Ống kính</a>
-            <a href="#" (click)="toggleSidebar()">Phụ kiện máy ảnh</a>
-            <a href="#" (click)="toggleSidebar()">Thêm</a>
+            @if (category) {
+                <a class="category-item active mt-3" (click)="loadProductByCategoryId(category.id)">{{category.name}}</a>
+                @for (categoryItem of category.sub_categories; track $index) {
+                    <a class="category-item" (click)="loadProductByCategoryId(categoryItem.id)">{{categoryItem.name}}</a>
+                }
+            }
         </div>
 
         <!-- Main Content -->
@@ -47,24 +43,22 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="product-card">
-                        <img class="img-fluid"
-                            alt="Xiaomi Micro SD 1TB 512gb 256GB 128GB"
-                            src="https://storage.googleapis.com/a1aa/image/rNe5nqgL41TmOyxu7eJmsueZ1ZdsQdNY1Sz6dnSffuDDfCj7E.jpg" />
-                        <div class="badge bg-warning text-dark">Yêu thích</div>
-                        <div class="body-card">
-                            <h6 class="mt-2">Xiaomi Micro SD 1TB 512gb 256GB
-                                128GB</h6>
-                            <div class="price">₫56.000</div>
-                            <div class="discount">-16%</div>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 4.3 Đã bán 6,9k
+                @if (productResponse) {
+                    @for (product of productResponse; track $index) {
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <img class="img-fluid"
+                                    [alt]="product.name"
+                                    [src]="product.thumbnail" />
+                                <div class="badge bg-warning text-dark">Yêu thích</div>
+                                <div class="body-card">
+                                    <h6 class="mt-2">{{ product.name }}</h6>
+                                    <div class="price">{{product.price | currency: 'VND'}}</div>
+                                </div>
                             </div>
-                            <div class="location">Nước ngoài</div>
                         </div>
-                    </div>
-                </div>
+                    }
+                }
             </div>
         </div>
     </div>

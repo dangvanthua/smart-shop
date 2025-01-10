@@ -3,7 +3,7 @@ import { ProductService } from '../../../services/product.service';
 import { ProductListResponse } from '../../../dto/response/products-response.model';
 import { ApiResponse } from '../../../dto/response/api-response.model';
 import { ProductResponse } from '../../../dto/response/product-response.model';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { CategoryResponse } from '../../../dto/response/category-response.model';
 import { CategoryService } from '../../../services/category.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';

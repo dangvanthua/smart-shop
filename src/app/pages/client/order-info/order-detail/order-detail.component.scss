@@ -1,0 +1,143 @@
+// Căn chỉnh tổng thể của modal
+.modal-header {
+    background-color: #f8f9fa; // Màu nền nhạt
+    border-bottom: 1px solid #dee2e6;
+    padding: 16px 24px; // Padding sử dụng px
+
+    .modal-title-wrap {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+    }
+  
+    .modal-title {
+      font-size: 20px; // Kích thước tiêu đề
+      font-weight: bold;
+      color: #343a40; // Màu tiêu đề đậm
+    }
+  
+    .btn-close {
+      color: #6c757d;
+      &:hover {
+        color: #495057;
+      }
+    }
+  }
+  
+  .modal-body {
+    padding: 24px; 
+    background-color: #ffffff;
+    overflow: auto;
+    height: 460px;
+
+    &::-webkit-scrollbar {
+        width: 8px; 
+      }
+    
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+        border-radius: 10px;  
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        background-color: #888; 
+        border-radius: 10px; 
+        border: 2px solid #f1f1f1;
+      }
+    
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: #555; 
+      }
+  
+    p {
+      font-size: 15px;
+      color: #495057;
+      margin-bottom: 12px;
+  
+      strong {
+        color: #212529;
+      }
+    }
+  
+    h4 {
+      margin-top: 32px; 
+      font-size: 18px; 
+      color: #343a40;
+      border-bottom: 2px solid #dee2e6;
+      padding-bottom: 8px;
+    }
+  }
+  
+  // Bảng chi tiết sản phẩm
+  .table {
+    margin-top: 16px;
+    border-collapse: collapse;
+  
+    thead {
+      background-color: #e9ecef;
+      th {
+        padding: 12px; 
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        color: #495057;
+        border: 1px solid #dee2e6;
+      }
+    }
+  
+    tbody {
+      tr {
+        &:hover {
+          background-color: #f8f9fa; // Màu nền khi hover
+        }
+      }
+  
+      td {
+        padding: 12px; 
+        font-size: 14px;
+        color: #333;
+        border: 1px solid #dee2e6;
+        text-align: center;
+  
+        &:first-child {
+          font-weight: bold; 
+        }
+      }
+    }
+  }
+  
+  // Responsive cho modal
+  @media (max-width: 768px) {
+    .modal-header {
+      .modal-title {
+        font-size: 18px; 
+      }
+    }
+  
+    .modal-body {
+      p,
+      h4 {
+        font-size: 14px;
+      }
+  
+      .table {
+        font-size: 13px;
+      }
+    }
+  }
+  
+.product-image {
+    width: 50px; 
+    height: auto;
+    border-radius: 4px; 
+    object-fit: cover; 
+}
+
+.orders-total {
+    display: flex;
+    align-items: baseline;
+    justify-content: right;
+    font-size: 14px;
+    font-weight: 700;
+    gap: 6px;
+}

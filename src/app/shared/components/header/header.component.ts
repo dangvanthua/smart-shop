@@ -129,6 +129,14 @@ export class HeaderComponent {
     category.isExpanded = !category.isExpanded;
   }
 
+  navigateCategory(category: CategoryResponse): void {
+    if(category != null) {
+      this.router.navigate(['/product/category'], {
+        queryParams: {id: category.id},
+      });
+    }
+  }
+
   logOut() {
     this.tokenService.removeToken();
     this.router.navigate(['/login']);

@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
   ): boolean | Observable<boolean> | Promise<boolean> {
     const isLoggedIn = this.authService.isAuthenticated(); // Kiểm tra trạng thái đăng nhập
     if (!isLoggedIn) {
-      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } }); // Chuyển hướng về trang đăng nhập
+      this.router.navigate(['/'], { queryParams: { returnUrl: state.url } }); // Chuyển hướng về trang đăng nhập
       return false;
     }
     return true;

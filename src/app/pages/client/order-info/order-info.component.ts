@@ -9,6 +9,9 @@ import { OrderHistoryResponse } from '../../../dto/response/order-history-respon
 import { EnumTranslatePipe } from '../../../directives/enum-translate.directive';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { OrderResponse } from '../../../dto/response/order-response.model';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 Chart.register(...registerables);
 @Component({
@@ -37,7 +40,10 @@ export class OrderInfoComponent {
   totalPages: number = 0;
   totalElement: number = 0;
 
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private orderService: OrderService,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     this.loadOrders();
@@ -66,5 +72,10 @@ export class OrderInfoComponent {
     return Array(this.totalPages)
       .fill(0)
       .map((_, i) => i);
+  }
+
+  openDetailModal(order: OrderResponse) {
+    const modalRef = this.modalService.open(OrderDetailComponent, {size: 'lg', animation: true});
+    modalRef.componentInstance.order = order;
   }
 }

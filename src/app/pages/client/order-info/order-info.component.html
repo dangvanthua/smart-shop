@@ -68,13 +68,9 @@
           <td>{{ order.payment_method | enumTranslate:'PaymentMethod'}}</td>
           <td>{{ order.tracking_number }}</td>
           <td class="action-item">
-            <button class="btn text-secondary">Chi tiết</button>
+            <button class="btn text-secondary" (click)="openDetailModal(order)">Chi tiết</button>
             <button class="btn btn-outline-success btn-sm">Mua lại</button>
           </td>
-
-          <ng-template #orderDetailModal let-modal>
-           
-          </ng-template>
         </tr>
       </tbody>
     </table>

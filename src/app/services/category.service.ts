@@ -21,4 +21,8 @@ export class CategoryService {
     getAllCategories(): Observable<ApiResponse<CategoryResponse[]>> {
         return this.http.get<ApiResponse<CategoryResponse[]>>(`${this.CATE_API}`);
     }
+
+    getCategory(categoryId: number): Observable<ApiResponse<CategoryResponse>> {
+        return this.http.get<ApiResponse<CategoryResponse>>(`${this.CATE_API}/${categoryId}`);
+    }
 }

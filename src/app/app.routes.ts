@@ -13,6 +13,7 @@ import { UserProfileComponent } from './pages/client/user-profile/user-profile.c
 import { RegisterComponent } from './pages/client/register/register.component';
 import { OrderInfoComponent } from './pages/client/order-info/order-info.component';
 import { BlogComponent } from './pages/client/blog/blog.component';
+import { ProductComponent } from './pages/client/product/product.component';
 
 export const routes: Routes = [
     { 
@@ -41,14 +42,15 @@ export const routes: Routes = [
             { path: 'facebook/callback', component: AuthCallbackComponent }
         ]
     },
+    { 
+        path: 'product/category', 
+        component: ProductComponent, 
+        data: { breadcrumb: 'Products' } 
+    },
     {
-        path: 'product', children: [
-            { 
-                path: ':id', 
-                component: ProductDetailComponent,
-                data: { breadcrumb: 'Product Detail' } 
-            },
-        ]
+        path: 'product/:id', 
+        component: ProductDetailComponent,
+        data: { breadcrumb: 'Product Detail' } 
     },
     { 
         path: 'order', 
