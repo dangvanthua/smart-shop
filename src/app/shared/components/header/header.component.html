@@ -30,6 +30,7 @@
                 <ul class="list-products">
                     @for (product of filteredProducts; track $index) {
                         <li class="list-product-item" (click)="goToProductDetail(product.id)">
+                            <img [src]="product.thumbnail" [alt]="product.name">
                             <a>{{product.name}}</a>
                         </li>
                     }

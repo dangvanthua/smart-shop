@@ -37,7 +37,6 @@ export class PaymentSuccessComponent {
   }
 
   verifyPayment(paymentId: string, payerId: string): void {
-    // Gọi API để xác nhận thanh toán từ PayPal (hoặc backend)
     const verifyReq: VerifyPaymentRequest = {
       payment_id: paymentId,
       payer_id: payerId
