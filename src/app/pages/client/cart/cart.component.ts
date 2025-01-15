@@ -121,7 +121,7 @@ export class CartComponent {
         item.quantity = originalQuantity;
         item.isUpdating = false;
       }
-    }, 500);
+    }, 1000);
   }
 
   removeItem(item: CartResponse): void {
