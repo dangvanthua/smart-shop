@@ -17,7 +17,7 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     register(userRequest: UserRequest): Observable<ApiResponse<UserResponse>> {
-        return this.http.post<ApiResponse<UserResponse>>(`${this.USER_API}/register`, userRequest);
+        return this.http.post<ApiResponse<UserResponse>>(`${this.USER_API}`, userRequest);
     }
 
     getUserDetail(): Observable<ApiResponse<UserResponse>> {

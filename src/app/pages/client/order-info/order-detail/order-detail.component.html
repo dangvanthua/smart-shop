@@ -14,9 +14,12 @@
     <p><strong>Phương thức vận chuyển:</strong> {{ order.shipping_method | enumTranslate:'ShippingMethod' }}</p>
     <p><strong>Phương thức thanh toán:</strong> {{ order.payment_method | enumTranslate:'PaymentMethod'}}</p>
   </div>
+  <div class="d-flex justify-content-between align-items-center">
+    <p><strong>Số theo dõi:</strong> {{order.tracking_number}}</p>
+    <p><strong>Trạng thái:</strong> {{ order.status | enumTranslate:'OrderStatus' }}</p>
+  </div>
   <p><strong>Địa chỉ giao hàng:</strong> {{ order.shipping_address }}</p>
   <p><strong>Nội dung:</strong> {{order.note}}</p>
-  <p><strong>Trạng thái:</strong> {{ order.status | enumTranslate:'OrderStatus' }}</p>
 
   <h4>Chi tiết sản phẩm:</h4>
   <table class="table">

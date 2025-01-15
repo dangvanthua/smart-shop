@@ -12,90 +12,93 @@
   </div>
 
   <!-- Filters -->
-  <div class="filters">
-    <div class="filter-item">
-      <label for="fromDate" class="form-label">FROM DATE</label>
-      <input id="fromDate" type="date" class="form-control">
-    </div>
-    <div class="filter-item">
-      <label for="toDate" class="form-label">TO DATE</label>
-      <input id="toDate" type="date" class="form-control">
-    </div>
-    <div class="filter-item">
-      <label for="status" class="form-label">STATUS</label>
-      <select id="status" class="form-control">
-        <option>Chọn trạng thái</option>
-        <option>PENDING</option>
-        <option>PROCESSING</option>
-        <option>SHIPPED</option>
-        <option>DELIVERED</option>
-        <option>CANCELLED</option>
-      </select>
-    </div>
-    <div class="filter-item">
-      <label for="reference" class="form-label">REFERENCE</label>
-      <input id="reference" type="text" class="form-control" placeholder="#">
-    </div>
-
-    <div class="filter-item mt-4 d-flex items-center g-3">
-        <button class="btn btn-outline-secondary me-2">Làm sạch</button>
-        <button class="btn btn-success">Tìm kiếm</button>
+   <div class="order-filters">
+    <div class="filters">
+      <form [formGroup]="formFilter" class="form-filters">
+         <div class="filter-item">
+           <label for="status" class="form-label">STATUS</label>
+           <select id="status" class="form-control" formControlName="status">
+             <option value="">Chọn trạng thái</option>
+             <option value="pending">PENDING</option>
+             <option value="processing">PROCESSING</option>
+             <option value="shipped">SHIPPED</option>
+             <option value="delivered">DELIVERED</option>
+             <option value="cancelled">CANCELLED</option>
+           </select>
+         </div>
+         <div class="filter-item">
+           <label for="reference" class="form-label">REFERENCE</label>
+           <input id="reference" type="text" class="form-control" placeholder="#" formControlName="reference">
+         </div>
+      </form>
+   
+       <div class="filter-item mt-4 d-flex items-center g-3">
+           <button class="btn btn-outline-secondary me-2 btn-reset" (click)="formFilter.reset()">Làm sạch</button>
+           <button class="btn btn-success btn-filter" (click)="filterOrder()">Tìm kiếm</button>
+       </div>
     </div>
   </div>
 
   <!-- Orders Table -->
   <div class="table-responsive mt-5">
-    <table class="table align-middle table-hover">
-      <thead class="table-light">
-        <tr>
-          <th>ID</th>
-          <th>Ngày đặt</th>
-          <th>Ngày giao</th>
-          <th>Trạng thái</th>
-          <th>Vận chuyển</th>
-          <th>Thanh toán</th>
-          <th>Số theo dõi</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let order of orders?.order_responses">
-          <td>{{ order.id }}</td>
-          <td>{{ order.order_date }}</td>
-          <td>{{ order.shipping_date }}</td>
-          <td>{{ order.status | enumTranslate:'OrderStatus'}}</td>
-          <td>{{ order.shipping_method | enumTranslate:'ShippingMethod' }}</td>
-          <td>{{ order.payment_method | enumTranslate:'PaymentMethod'}}</td>
-          <td>{{ order.tracking_number }}</td>
-          <td class="action-item">
-            <button class="btn text-secondary" (click)="openDetailModal(order)">Chi tiết</button>
-            <button class="btn btn-outline-success btn-sm">Mua lại</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="order-pagination">
-      <nav aria-label="Page navigation order">
-        <ul class="pagination">
-          <li class="page-item" [class.disabled]="page === 0">
-            <a class="page-link cursor-pointer" (click)="changePage(page - 1)" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          @for (pageIndex of getPages(); track $index) {
-            <li class="page-item" [class.active]="pageIndex === page">
-              <a class="page-link cursor-pointer" (click)="changePage(pageIndex)">{{pageIndex + 1}}</a>
+    @if(totalPages > 0) {
+      <table class="table align-middle table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Ngày đặt</th>
+            <th>Ngày giao</th>
+            <th>Trạng thái</th>
+            <th>Vận chuyển</th>
+            <th>Thanh toán</th>
+            <th>Số theo dõi</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders?.order_responses">
+            <td>{{ order.id }}</td>
+            <td>{{ order.order_date }}</td>
+            <td>{{ order.shipping_date }}</td>
+            <td>{{ order.status | enumTranslate:'OrderStatus'}}</td>
+            <td>{{ order.shipping_method | enumTranslate:'ShippingMethod' }}</td>
+            <td>{{ order.payment_method | enumTranslate:'PaymentMethod'}}</td>
+            <td>{{ order.tracking_number }}</td>
+            <td class="action-item">
+              <button class="btn text-secondary" (click)="openDetailModal(order)">Chi tiết</button>
+              <button class="btn btn-outline-success btn-sm">Mua lại</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <div class="order-pagination">
+        <nav aria-label="Page navigation order">
+          <ul class="pagination">
+            <li class="page-item" [class.disabled]="page === 0">
+              <a class="page-link cursor-pointer" (click)="changePage(page - 1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
             </li>
-          }
-          <li class="page-item" [class.disabled]="page === totalPages - 1">
-            <a class="page-link cursor-pointer" (click)="changePage(page + 1)" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+            @for (pageIndex of getPages(); track $index) {
+              <li class="page-item" [class.active]="pageIndex === page">
+                <a class="page-link cursor-pointer" (click)="changePage(pageIndex)">{{pageIndex + 1}}</a>
+              </li>
+            }
+            <li class="page-item" [class.disabled]="page === totalPages - 1">
+              <a class="page-link cursor-pointer" (click)="changePage(page + 1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    }@else {
+      <div class="text-center">
+        <p class="fw-bold">Không có đơn hàng nào</p>
+        <img src="assets/images/no-cart.png" alt="Not found order">
+      </div>
+    }
   </div>
 </div>
 <app-footer></app-footer>

@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { ApiResponse } from "../dto/response/api-response.model";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { OrderHistoryResponse } from "../dto/response/order-history-response.model";
+import { OrderFilterRequest } from "../dto/request/order-filter-request.model";
 
 @Injectable({
     providedIn: 'root'
@@ -19,10 +20,21 @@ export class OrderService {
         return this.http.post<ApiResponse<string>>(`${this.ORDER_API}`, orderRequest);
     }
 
-    getOrderHistory(page: number, size: number): Observable<ApiResponse<OrderHistoryResponse>> {
-        const params = new HttpParams()
+    getOrderHistory(
+        page: number, 
+        size: number, 
+        orderFilterRequest: OrderFilterRequest): Observable<ApiResponse<OrderHistoryResponse>> {
+
+        let params = new HttpParams()
             .set("page", page)
             .set("size", size);
+
+        if (orderFilterRequest.status) {
+            params = params.set("status", orderFilterRequest.status);
+        }
+        if (orderFilterRequest.reference) {
+            params = params.set("reference", orderFilterRequest.reference);
+        }            
 
         return this.http.get<ApiResponse<OrderHistoryResponse>>(`${this.ORDER_API}`, {params});
     }

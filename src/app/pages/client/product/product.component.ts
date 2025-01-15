@@ -26,8 +26,6 @@ import { ProductResponse } from '../../../dto/response/product-response.model';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent {
-  @ViewChild('menuToggle') menuToggle!: ElementRef;
-  @ViewChild('sidebar') sidebar!: ElementRef;
 
   isSidebarVisible = false;
   category?: CategoryResponse;

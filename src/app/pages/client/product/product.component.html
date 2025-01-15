@@ -2,15 +2,13 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-12 d-md-none mb-3 text-end">
-            <button class="btn btn-outline-secondary" id="menu-toggle"
-                #menuToggle>
+            <button class="btn btn-outline-secondary" id="menu-toggle">
                 <ng-icon name="bootstrapMenuButton"></ng-icon> Danh Mục
             </button>
         </div>
 
         <!-- Sidebar -->
-        <div class="col-md-2 sidebar" #sidebar
-            [ngClass]="{ 'show': isSidebarVisible }">
+        <div class="col-md-2 sidebar" [ngClass]="{ 'show': isSidebarVisible }">
             <div class="menu d-flex align-items-baseline">
                 <ng-icon name="bootstrapMenuButton"></ng-icon>
                 <h5>Danh Mục</h5>

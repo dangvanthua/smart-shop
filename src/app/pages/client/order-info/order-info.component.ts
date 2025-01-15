@@ -12,6 +12,8 @@ import { FooterComponent } from '../../../shared/components/footer/footer.compon
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrderResponse } from '../../../dto/response/order-response.model';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { OrderFilterRequest } from '../../../dto/request/order-filter-request.model';
 
 Chart.register(...registerables);
 @Component({
@@ -21,6 +23,7 @@ Chart.register(...registerables);
     HeaderComponent, 
     FooterComponent, 
     CommonModule,
+    ReactiveFormsModule,
     NgIconComponent,
     EnumTranslatePipe
   ],
@@ -39,26 +42,49 @@ export class OrderInfoComponent {
   size: number = 5;
   totalPages: number = 0;
   totalElement: number = 0;
+  formFilter: FormGroup;
 
   constructor(
     private orderService: OrderService,
-    private modalService: NgbModal
-  ) {}
+    private modalService: NgbModal,
+    private fb: FormBuilder
+  ) {
+    this.formFilter = this.fb.group({
+      status: [''],
+      reference: ['']
+    });
+  }
 
   ngOnInit(): void {
     this.loadOrders();
   }
 
   loadOrders(): void {
-    this.orderService.getOrderHistory(this.page, this.size).subscribe({
+
+    const filters = this.formFilter.value;
+
+    const orderFilterRequest: OrderFilterRequest = {
+      status: filters.status || '',
+      reference: filters.reference || ''
+    };
+
+    this.orderService.getOrderHistory(this.page, this.size, orderFilterRequest).subscribe({
       next: (response: ApiResponse<OrderHistoryResponse>) => {
         if(response.code === 1000 && response.result) {
           this.orders = response.result;
           this.totalPages = response.result.total_pages;
           this.totalElement = response.result.total_elements;
         }
+      },
+      error: (err) => {
+        console.log(err);
       }
     });
+  }
+
+  filterOrder() {
+    this.page = 0;
+    this.loadOrders();
   }
 
   changePage(newPage: number): void {
