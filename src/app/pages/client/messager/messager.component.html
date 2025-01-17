@@ -1,0 +1,16 @@
+<section class="section-chat">
+    <div class="chat-box">
+        <div class="chat-header">
+            <h3 class="chat-header-title">Chat</h3>
+            <div class="chat-header-action">
+                <ng-icon name="bootstrapBoxArrowRight"></ng-icon>
+                <ng-icon name="bootstrapChevronDown" (click)="onClose($event)"></ng-icon>
+            </div>
+        </div>
+        <div class="chat-box-content">
+            <app-chater-list/>
+            <app-chat-area/>
+        </div>
+    </div>
+
+</section>

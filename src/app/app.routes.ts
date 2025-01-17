@@ -89,7 +89,7 @@ export const routes: Routes = [
     },
     {
         path: 'payment', children: [
-            { path: 'success', component: PaymentSuccessComponent },
+            { path: 'success/:id', component: PaymentSuccessComponent },
             { path: 'cancel', component: PaymentCancelComponent }
         ]
     },

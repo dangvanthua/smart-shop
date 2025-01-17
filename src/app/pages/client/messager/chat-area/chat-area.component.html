@@ -1,0 +1,12 @@
+<div class="section-chat-area">
+    <div class="area-header">
+        <h3 class="header-user">goojodoqshop.vn</h3>
+    </div>
+
+    <div class="erea-message">
+        <div *ngFor="let message of messages" class="message" [ngClass]="{'sent': message.isSent, 'received': !message.isSent}">
+            <span class="message-content">{{ message.content }}</span>
+            <span class="message-time">{{ message.time }}</span>
+          </div>
+    </div>
+</div>

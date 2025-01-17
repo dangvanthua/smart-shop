@@ -1,0 +1,39 @@
+.section-chat {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 60%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    height: 550px;
+
+    .chat-box {
+        height: 100%;
+        background-color: #fff;
+
+        .chat-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 2px solid #748ffc;
+
+            .chat-header-title {
+                color: #845ef7;
+                font-size: 18px;
+                font-weight: 700;
+            }
+
+            .chat-header-action {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+        }
+
+        .chat-box-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            height: 100%;
+        }
+    }
+}

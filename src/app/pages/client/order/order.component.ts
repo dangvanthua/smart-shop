@@ -17,6 +17,7 @@ import { CartItemRequest } from '../../../dto/request/cart-item-request.model';
 import { OrderService } from '../../../services/order.service';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { PaymentInfoResponse } from '../../../dto/response/paymentinfo-reponse.model';
 
 @Component({
   selector: 'app-order',
@@ -303,6 +304,7 @@ export class OrderComponent implements OnInit {
       next: (response: ApiResponse<string>) => {
         if(response.code === 1000 && response.result != null) {
           const resultUrl = response.result.trim();
+
           window.location.href = resultUrl;
         }else if(response.result == null) {
           this.router.navigate(['/']);

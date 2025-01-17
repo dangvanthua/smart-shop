@@ -6,6 +6,7 @@ import { ApiResponse } from "../dto/response/api-response.model";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { OrderHistoryResponse } from "../dto/response/order-history-response.model";
 import { OrderFilterRequest } from "../dto/request/order-filter-request.model";
+import { PaymentInfoResponse } from "../dto/response/paymentinfo-reponse.model";
 
 @Injectable({
     providedIn: 'root'

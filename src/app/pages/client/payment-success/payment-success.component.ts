@@ -13,6 +13,7 @@ import { ApiResponse } from '../../../dto/response/api-response.model';
 })
 export class PaymentSuccessComponent {
   paymentDetails: any;
+  orderId?: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,6 +21,11 @@ export class PaymentSuccessComponent {
     private paymentService: PaymentService) { }
 
   ngOnInit(): void {
+
+    // Lấy orderId từ route parameters
+    const id = this.route.snapshot.paramMap.get('id');
+    this.orderId = id ? Number(id) : undefined;
+
     // Lấy thông tin từ URL khi thanh toán thành công
     this.route.queryParams.subscribe(params => {
       const paymentId = params['paymentId'];
@@ -39,7 +45,8 @@ export class PaymentSuccessComponent {
   verifyPayment(paymentId: string, payerId: string): void {
     const verifyReq: VerifyPaymentRequest = {
       payment_id: paymentId,
-      payer_id: payerId
+      payer_id: payerId,
+      order_id: this.orderId
     }
     this.paymentService.executePayment(verifyReq).subscribe({
       next: (response: ApiResponse<Map<string, any>>) => {
