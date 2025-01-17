@@ -9,4 +9,6 @@
             <span class="message-time">{{ message.time }}</span>
           </div>
     </div>
+
+    <app-chat-input (messageSent)="onMessageSent($event)"></app-chat-input>
 </div>

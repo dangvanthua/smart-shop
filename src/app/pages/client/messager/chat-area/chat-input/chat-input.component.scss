@@ -1,0 +1,44 @@
+.chat-input {
+    display: flex;
+    padding: 10px;
+    background-color: #f1f1f1;
+  
+    input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease-in-out;
+
+      &:focus {
+        outline: none;
+        border: 1px solid #007bff;
+      }
+    }
+  
+    button {
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 8px 16px; 
+        transition: all 0.3s ease-in-out;
+        background-color: #0056b3;
+        border-radius: 9px;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            opacity: 0.95;
+        }
+
+        ng-icon {
+            width: 16px;
+            height: 16px;
+            transition: all 0.3s ease-in-out;
+            color: #fff;
+        }
+    }
+  }
+  

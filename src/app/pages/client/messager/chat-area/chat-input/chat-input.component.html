@@ -1,0 +1,6 @@
+<div class="chat-input">
+    <input [(ngModel)]="message" placeholder="Nhập nội dung tin nhắn" (keyup.enter)="sendMessage()" />
+    <button (click)="sendMessage()">
+        <ng-icon name="bootstrapSendFill"></ng-icon>
+    </button>
+  </div>
