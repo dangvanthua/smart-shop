@@ -12,7 +12,6 @@ import { CartService } from '../../../services/cart.service';
 import { CartRequest } from '../../../dto/request/cart-request.model';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
-import { BreadcrumComponent } from '../../../shared/components/breadcrum/breadcrum.component';
 
 @Component({
   selector: 'app-product-detail',
@@ -23,7 +22,6 @@ import { BreadcrumComponent } from '../../../shared/components/breadcrum/breadcr
     FormsModule,
     HeaderComponent,
     FooterComponent,
-    BreadcrumComponent
 ],
   providers: [CurrencyPipe],
   viewProviders: [provideIcons({ bootstrapCartPlus, bootstrapTruck })],

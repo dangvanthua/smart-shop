@@ -1,8 +1,6 @@
 <app-header/>
 <section class="product-detail">
     <div class="container">
-        <app-breadcrum/>
-
         <div class="product-container">
             <div class="row">
                 <div class="col-lg-6 col-md-4 p-3">
@@ -54,7 +52,7 @@
                         <div class="row">
                             <h2 class="heading-secondary">{{ productDetail.name }}</h2>
                             <p class="detail-description mt-3">{{productDetail.description}}</p>
-                            <span class="detail-price mt-3"><strong>{{ formatCurrency( productDetail.price) }}</strong></span>
+                            <span class="detail-price mt-2"><strong>{{ formatCurrency( productDetail.price) }}</strong></span>
                         </div>
 
                         @if (productDetail.promotion_codes.length > 0) {
