@@ -304,7 +304,6 @@ export class OrderComponent implements OnInit {
       next: (response: ApiResponse<string>) => {
         if(response.code === 1000 && response.result != null) {
           const resultUrl = response.result.trim();
-
           window.location.href = resultUrl;
         }else if(response.result == null) {
           this.router.navigate(['/']);
