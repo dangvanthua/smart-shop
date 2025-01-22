@@ -23,7 +23,6 @@ export class ChatUserComponent {
   @Input() contact?: UserResponse; 
   @Input() chat?: ChatResponse;
 
-
   wrappedMessage(message: string | undefined): string {
     if(!message) return 'No message';
     return message.length < 20 ? message : message.substring(0, 17) + '...';
