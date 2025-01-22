@@ -1,7 +1,13 @@
 <div class="section-chat-list">
     <div class="chat-search">
         <form class="form-search">
-            <input type="text" class="input-search" placeholder="Tìm theo tên">
+            <input 
+            type="text" 
+            class="input-search" 
+            placeholder="Tìm theo tên" 
+            name="search"
+            [(ngModel)]="searchKey" 
+            (ngModelChange)="searchUser()">
             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                 <option selected>Tất cả</option>
                 <option value="1">Chưa đọc</option>
@@ -10,7 +16,19 @@
         </form>
     </div>
 
-    <div class="chat-users">
-        <app-chat-user/>
-    </div>
+    @if (searchNewContact === true) {
+        <div class="chat-users">
+            <div *ngFor="let contact of contacts" (click)="onSelectContact(contact)">
+                <app-chat-user [contact]="contact"></app-chat-user>
+            </div>
+        </div>
+    }@else {
+        <div class="chat-avalaibles">
+            @for (chat of chats(); track $index) {
+                <div (click)="chatClicked(chat)">
+                    <app-chat-user [chat]="chat"></app-chat-user>
+                </div>
+            }
+        </div>
+    }
 </div>

@@ -81,8 +81,8 @@
                       <ul class="menu-categories">
                         @for (category of categories; track $index) {
                             <li class="category-item">
-                                <div class="category-header" (click)="navigateCategory(category)">
-                                    {{ category.name }}
+                                <div class="category-header">
+                                    <span (click)="navigateCategory(category)"> {{ category.name }}</span>
                                     <div (click)="toggleCategory(category)">
                                         <span *ngIf="category.sub_categories!.length > 0" class="arrow">
                                             @if (category.isExpanded) {

@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { ChatInputComponent } from "./chat-input/chat-input.component";
+import { ChatResponse } from '../../../../dto/response/chat-response.model';
+import { MessageService } from '../../../../services/message.service';
+import { TokenService } from '../../../../services/token.service';
+import { MessageResponse } from '../../../../dto/response/message-response.model';
+import { ApiResponse } from '../../../../dto/response/api-response.model';
 
 @Component({
   selector: 'app-chat-area',
@@ -10,28 +15,43 @@ import { ChatInputComponent } from "./chat-input/chat-input.component";
   styleUrl: './chat-area.component.scss'
 })
 export class ChatAreaComponent {
-  messages: { content: string; isSent: boolean; time: string }[] = [];
+  page: number = 0;
+  size: number = 12;
+  userId?: number | null;
+  messages?: MessageResponse[];
+  @Input() selectedChat?: ChatResponse;
+
+  constructor(
+    private messageService: MessageService,
+    private tokenService: TokenService
+  ) {}
 
   ngOnInit(): void {
-    // Giả lập dữ liệu tin nhắn
-    this.messages = [
-      { content: 'Hello! How can I help you?', isSent: false, time: '10:00 AM' },
-      { content: 'I have a question about my order.', isSent: true, time: '10:02 AM' },
-      { content: 'Sure, what’s your order ID?', isSent: false, time: '10:03 AM' },
-      { content: 'It’s #12345.', isSent: true, time: '10:05 AM' },
-      { content: 'Sure, what’s your order ID?', isSent: false, time: '10:03 AM' },
-      { content: 'It’s #12345.', isSent: true, time: '10:05 AM' },
-      { content: 'Sure, what’s your order ID?', isSent: false, time: '10:03 AM' },
-      { content: 'It’s #12345.', isSent: true, time: '10:05 AM' },
-    ];
+    this.userId = this.tokenService.getUserIdFromToken();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Khi selectedChat thay đổi
+    if (changes['selectedChat'] && this.selectedChat) {
+      this.loadMessages(this.selectedChat.id!);
+    }
+  }
+
+  loadMessages(chatId: number): void {
+    this.messageService.getAllMessages(chatId, this.page, this.size)
+    .subscribe({
+      next: (response: ApiResponse<MessageResponse[]>) => {
+        if(response.code === 1000 && response.result) {
+          this.messages = response.result ?? [];
+        }
+      },
+      error: (err) => {
+        console.error('Error loading messages:', err);
+      }
+    });
   }
 
   onMessageSent(message: string): void {
-    const newMessage = {
-      content: message,
-      isSent: true,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-    this.messages.push(newMessage);
+    
   }
 }

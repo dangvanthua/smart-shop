@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LocationService } from '../../../services/location.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { bootstrapPlus, bootstrapXCircleFill } from '@ng-icons/bootstrap-icons';
+import { bootstrapPlus, bootstrapXCircle} from '@ng-icons/bootstrap-icons';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CartResponse } from '../../../dto/response/cart-response.mode';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -17,7 +17,6 @@ import { CartItemRequest } from '../../../dto/request/cart-item-request.model';
 import { OrderService } from '../../../services/order.service';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
-import { PaymentInfoResponse } from '../../../dto/response/paymentinfo-reponse.model';
 
 @Component({
   selector: 'app-order',
@@ -32,7 +31,10 @@ import { PaymentInfoResponse } from '../../../dto/response/paymentinfo-reponse.m
     FooterComponent,
 ],
   providers: [CurrencyPipe],
-  viewProviders: [provideIcons({bootstrapPlus, bootstrapXCircleFill})],
+  viewProviders: [provideIcons({
+    bootstrapPlus, 
+    bootstrapXCircle
+  })],
   templateUrl: './order.component.html',
   styleUrl: './order.component.scss'
 })
@@ -299,7 +301,6 @@ export class OrderComponent implements OnInit {
       cart_items: cartItemRequest,
     };
   
-    // Gửi order request đến server (thêm logic gọi API tại đây nếu cần)
     this.orderService.createOrder(orderRequest).subscribe({
       next: (response: ApiResponse<string>) => {
         if(response.code === 1000 && response.result != null) {

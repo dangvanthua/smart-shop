@@ -38,4 +38,17 @@ export class TokenService {
 
         return this.jwtHelperService.isTokenExpired(this.getToken()!);
     }
+
+    getUserIdFromToken(): number | null {
+        const token = this.getToken();
+        if(!token) return null;
+
+        try {
+            const decodeToken = this.jwtHelperService.decodeToken(token);
+            return decodeToken?.userId ?? null;
+        }catch (error) {
+            console.log('Error decoding token: ', error);
+            return null;
+        }
+    }
 }

@@ -14,7 +14,7 @@
             display: flex;
             align-items: baseline;
             justify-content: space-between;
-            padding: 8px;
+            padding: 8px 12px;
             border-bottom: 2px solid #748ffc;
 
             .chat-header-title {
@@ -27,6 +27,17 @@
                 display: flex;
                 align-items: center;
                 gap: 12px;
+
+                ng-icon {
+                    height: 20px;
+                    width: 20px;
+                    cursor: pointer;
+                    transition: color 0.3s ease-in-out;
+
+                    &:hover {
+                        color: #845ef7;
+                    }
+                }
             }
         }
 

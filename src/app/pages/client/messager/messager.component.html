@@ -3,13 +3,14 @@
         <div class="chat-header">
             <h3 class="chat-header-title">Chat</h3>
             <div class="chat-header-action">
+                <ng-icon name="bootstrapGear"></ng-icon>
                 <ng-icon name="bootstrapBoxArrowRight"></ng-icon>
                 <ng-icon name="bootstrapChevronDown" (click)="onClose($event)"></ng-icon>
             </div>
         </div>
         <div class="chat-box-content">
-            <app-chater-list [chats]="chats"></app-chater-list>
-            <app-chat-area/>
+            <app-chater-list [chats]="chats" (chatSelected)="chatSelected($event)"></app-chater-list>
+            <app-chat-area [selectedChat]="selectedChat"></app-chat-area>
         </div>
     </div>
 
