@@ -11,6 +11,15 @@
                  [ngClass]="{'sent': message.sender_id === userId, 'received': message.sender_id !== userId}">
               <span class="message-content">{{ message.content }}</span>
               <span class="message-time">{{ message.created_at | date: 'short' }}</span>
+              @if (message.state === 'SENT') {
+                <p class="message-icon">
+                    <ng-icon name="bootstrapCheck2"></ng-icon>
+                </p>
+              }@else if (message.state === 'SEEN') {
+                <p class="message-icon">
+                    <ng-icon name="bootstrapCheck2All"></ng-icon>
+                </p>
+              }
             </div>
         </div>
         

@@ -4,11 +4,21 @@ import { ChatInputComponent } from "./chat-input/chat-input.component";
 import { ChatResponse } from '../../../../dto/response/chat-response.model';
 import { TokenService } from '../../../../services/token.service';
 import { MessageResponse } from '../../../../dto/response/message-response.model';
+import { NgIcon, NgIconComponent, provideIcons } from '@ng-icons/core';
+import { bootstrapCheck2, bootstrapCheck2All } from '@ng-icons/bootstrap-icons';
 
 @Component({
   selector: 'app-chat-area',
   standalone: true,
-  imports: [CommonModule, ChatInputComponent],
+  imports: [
+    NgIconComponent,
+    CommonModule, 
+    ChatInputComponent
+  ],
+  viewProviders: provideIcons({
+    bootstrapCheck2,
+    bootstrapCheck2All
+  }),
   templateUrl: './chat-area.component.html',
   styleUrls: ['./chat-area.component.scss']
 })

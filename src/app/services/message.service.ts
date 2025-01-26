@@ -33,8 +33,9 @@ export class MessageService {
     }
 
     setMessageToSeen(chatId: number): Observable<ApiResponse<void>> {
-        const params = new HttpParams()
-            .set("chat-id", chatId);
-        return this.http.patch<ApiResponse<void>>(`${environment.apiUrl}`, {params});
-    }
+        const params = new HttpParams().set("chat-id", chatId.toString());
+        return this.http.patch<ApiResponse<void>>(
+            `${this.MESSAGE_API}`, null, { params } 
+        );
+    }    
 }
