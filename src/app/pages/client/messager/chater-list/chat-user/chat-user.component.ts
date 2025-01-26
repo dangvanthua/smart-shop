@@ -24,7 +24,7 @@ export class ChatUserComponent {
   @Input() chat?: ChatResponse;
 
   wrappedMessage(message: string | undefined): string {
-    if(!message) return 'No message';
-    return message.length < 20 ? message : message.substring(0, 17) + '...';
+    if(!message) return 'Chưa có tin nhắn';
+    return message.length < 20 ? message : message.substring(0, 10) + '...';
   }
 }

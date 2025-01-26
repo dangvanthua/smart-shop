@@ -2,8 +2,8 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    width: 60%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 65%;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     height: 550px;
 
     .chat-box {
@@ -14,19 +14,49 @@
             display: flex;
             align-items: baseline;
             justify-content: space-between;
-            padding: 8px 12px;
+            padding: 8px 20px;
+            margin-bottom: 0;
             border-bottom: 2px solid #748ffc;
 
             .chat-header-title {
                 color: #845ef7;
-                font-size: 18px;
+                font-size: 22px;
                 font-weight: 700;
             }
 
             .chat-header-action {
-                display: flex;
-                align-items: center;
-                gap: 12px;
+
+                .header-list {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                
+                    li {
+                        position: relative;
+                        padding: 0 4px;
+                        cursor: pointer;
+                
+                        &:hover span {
+                            display: block; 
+                        }
+                
+                        span {
+                            position: absolute;
+                            top: 100%; 
+                            left: 50%;
+                            transform: translateX(-50%);
+                            font-size: 12px;
+                            background-color: #000;
+                            color: #fff;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            white-space: nowrap; 
+                            display: none; 
+                            z-index: 10000; 
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                        }
+                    }
+                }                
 
                 ng-icon {
                     height: 20px;

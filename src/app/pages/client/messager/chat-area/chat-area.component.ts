@@ -1,28 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ChatInputComponent } from "./chat-input/chat-input.component";
 import { ChatResponse } from '../../../../dto/response/chat-response.model';
-import { MessageService } from '../../../../services/message.service';
 import { TokenService } from '../../../../services/token.service';
 import { MessageResponse } from '../../../../dto/response/message-response.model';
-import { ApiResponse } from '../../../../dto/response/api-response.model';
 
 @Component({
   selector: 'app-chat-area',
   standalone: true,
   imports: [CommonModule, ChatInputComponent],
   templateUrl: './chat-area.component.html',
-  styleUrl: './chat-area.component.scss'
+  styleUrls: ['./chat-area.component.scss']
 })
 export class ChatAreaComponent {
   page: number = 0;
   size: number = 12;
   userId?: number | null;
-  messages?: MessageResponse[];
-  @Input() selectedChat?: ChatResponse;
+  messageContent: string = '';
+  @Input() messages: Array<MessageResponse> = [];
+  @Input() selectedChat?: ChatResponse | null;
+  @Output() messageSent = new EventEmitter<string>();
+  @ViewChild('scrollableDiv') scrollableDiv!: ElementRef<HTMLDivElement>;
 
   constructor(
-    private messageService: MessageService,
     private tokenService: TokenService
   ) {}
 
@@ -30,28 +30,20 @@ export class ChatAreaComponent {
     this.userId = this.tokenService.getUserIdFromToken();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // Khi selectedChat thay đổi
-    if (changes['selectedChat'] && this.selectedChat) {
-      this.loadMessages(this.selectedChat.id!);
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
+  }
+
+  private scrollToBottom(): void {
+    if(this.scrollableDiv) {
+      const div = this.scrollableDiv.nativeElement;
+      div.scrollTop = div.scrollHeight;
     }
   }
-
-  loadMessages(chatId: number): void {
-    this.messageService.getAllMessages(chatId, this.page, this.size)
-    .subscribe({
-      next: (response: ApiResponse<MessageResponse[]>) => {
-        if(response.code === 1000 && response.result) {
-          this.messages = response.result ?? [];
-        }
-      },
-      error: (err) => {
-        console.error('Error loading messages:', err);
-      }
-    });
-  }
-
+  
   onMessageSent(message: string): void {
-    
+    if(message.trim()) {
+      this.messageSent.emit(message);
+    }
   }
 }

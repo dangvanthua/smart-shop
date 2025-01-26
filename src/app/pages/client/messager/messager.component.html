@@ -1,17 +1,35 @@
 <section class="section-chat">
     <div class="chat-box">
         <div class="chat-header">
-            <h3 class="chat-header-title">Chat</h3>
+            <h3 class="chat-header-title">Shop Chat</h3>
             <div class="chat-header-action">
-                <ng-icon name="bootstrapGear"></ng-icon>
-                <ng-icon name="bootstrapBoxArrowRight"></ng-icon>
-                <ng-icon name="bootstrapChevronDown" (click)="onClose($event)"></ng-icon>
+                <ul class="d-flex align-items-center gap-3 header-list">
+                    <li>
+                        <ng-icon name="bootstrapGear"></ng-icon>
+                        <span>Thiết lập cài đặt</span>
+                    </li>
+                    <li>
+                        <ng-icon name="bootstrapBoxArrowRight"></ng-icon>
+                        <span>Thu gọn</span>
+                    </li>
+                    <li>
+                        <ng-icon name="bootstrapChevronDown" (click)="onClose($event)"></ng-icon>
+                        <span>Ẩn tiện ích</span>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="chat-box-content">
-            <app-chater-list [chats]="chats" (chatSelected)="chatSelected($event)"></app-chater-list>
-            <app-chat-area [selectedChat]="selectedChat"></app-chat-area>
+            <app-chater-list 
+            [chats]="chats" 
+            (chatSelected)="chatSelected($event)">
+            </app-chater-list>
+
+            <app-chat-area 
+            [selectedChat]="selectedChat?.id ? selectedChat : null" 
+            [messages]="messages" 
+            (messageSent)="onMessageSent($event)">
+            </app-chat-area>
         </div>
     </div>
-
 </section>

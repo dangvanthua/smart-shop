@@ -1,4 +1,4 @@
-import { Component, input, InputSignal, output } from '@angular/core';
+import { Component, Output, EventEmitter, InputSignal, input } from '@angular/core';
 import { ChatUserComponent } from "./chat-user/chat-user.component";
 import { ChatResponse } from '../../../../dto/response/chat-response.model';
 import { UserResponse } from '../../../../dto/response/user-response.model';
@@ -6,9 +6,11 @@ import { ChatService } from '../../../../services/chat.service';
 import { UserService } from '../../../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { ApiResponse } from '../../../../dto/response/api-response.model';
-import { debounceTime, Subject, Subscription, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { TokenService } from '../../../../services/token.service';
+import { ChatRequest } from '../../../../dto/request/chat-request.model';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { bootstrapFullscreenExit, bootstrapMenuButtonWide, bootstrapPatchPlus } from '@ng-icons/bootstrap-icons';
 
 @Component({
   selector: 'app-chater-list',
@@ -16,8 +18,14 @@ import { TokenService } from '../../../../services/token.service';
   imports: [
     ChatUserComponent,
     FormsModule,
-    CommonModule
+    CommonModule,
+    NgIconComponent
   ],
+  viewProviders: provideIcons({
+    bootstrapMenuButtonWide,
+    bootstrapPatchPlus,
+    bootstrapFullscreenExit
+  }),
   templateUrl: './chater-list.component.html',
   styleUrl: './chater-list.component.scss'
 })
@@ -25,10 +33,8 @@ export class ChaterListComponent {
   searchNewContact = false;
   searchKey: string = '';
   contacts: Array<UserResponse> = [];
+  @Output() chatSelected = new EventEmitter<ChatResponse>();
   chats: InputSignal<ChatResponse[]> = input<ChatResponse[]>([]);
-  chatSelected = output<ChatResponse>();
-  private searchSubject: Subject<string> = new Subject<string>();
-  private subscription: Subscription = new Subscription();
 
   constructor(
     private chatService: ChatService,
@@ -37,30 +43,14 @@ export class ChaterListComponent {
   ) {}
 
   ngOnInit(): void {
-    this.subscription.add(
-      this.searchSubject.pipe(
-        debounceTime(500),
-        switchMap((searchTerm) => this.userService.searchUserIsBuyer(searchTerm))
-      ).subscribe({
-        next: (response: ApiResponse<UserResponse[]>) => {
-          if(response.code === 1000 && response.result) {
-            this.searchNewContact = true;
-            this.contacts = response.result;
-          }
-        },
-        error: (err) => {
-          console.log(err);
-        }
-      })
-    )
-  }
-
-  searchUser(): void {
-    this.searchSubject.next(this.searchKey);
+    
   }
 
   onSelectContact(contact: UserResponse): void {
-    this.chatService.createChat(contact.id).subscribe({
+    const chatReq: ChatRequest = {
+      receiver_id: contact.id
+    }
+    this.chatService.createChat(chatReq).subscribe({
       next: (response: ApiResponse<number>) => {
         if(response.code === 1000 && response.result) {
           const chat: ChatResponse = {
@@ -73,17 +63,32 @@ export class ChaterListComponent {
           this.searchNewContact = false;
           this.chatSelected.emit(chat);
         }
+      },
+      error: (err) => {
+        console.log(err);
       }
     })
   }
 
-  chatClicked(chat: ChatResponse): void {
-    this.chatSelected.emit(chat);
+  onSearchBuyer(): void {
+    this.userService.searchUserIsBuyer().subscribe({
+      next: (response: ApiResponse<UserResponse[]>) => {
+        if(response.code === 1000 && response.result) {
+          this.contacts = response.result;
+          this.searchNewContact = true;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
-  ngOnDestroy() {
-    if(this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  onExitSearch() {
+    this.searchNewContact = false;
+  }
+
+  chatClicked(chat: ChatResponse): void {
+    this.chatSelected.emit(chat);
   }
 }

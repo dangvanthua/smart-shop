@@ -1,4 +1,25 @@
 <div class="section-chat-list">
+
+    <div class="chat-actions mt-3">
+        <div class="action-custom action-general">
+            <ng-icon name="bootstrapMenuButtonWide"></ng-icon>
+            <span>Thiết lập hiển thị</span>
+        </div>
+        <div class="action-search action-general">
+            @if (!searchNewContact) {
+                <div (click)="onSearchBuyer()">
+                    <ng-icon name="bootstrapPatchPlus"></ng-icon>
+                    <span>Tìm nhanh</span>
+                </div>
+            }@else {
+                <div (click)="onExitSearch()">
+                    <ng-icon name="bootstrapFullscreenExit"></ng-icon>
+                    <span>Thoát</span>
+                </div>
+            }
+        </div>
+    </div>
+
     <div class="chat-search">
         <form class="form-search">
             <input 
@@ -6,8 +27,7 @@
             class="input-search" 
             placeholder="Tìm theo tên" 
             name="search"
-            [(ngModel)]="searchKey" 
-            (ngModelChange)="searchUser()">
+            [(ngModel)]="searchKey">
             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                 <option selected>Tất cả</option>
                 <option value="1">Chưa đọc</option>
@@ -17,13 +37,13 @@
     </div>
 
     @if (searchNewContact === true) {
-        <div class="chat-users">
+        <div class="chat-users mt-2">
             <div *ngFor="let contact of contacts" (click)="onSelectContact(contact)">
                 <app-chat-user [contact]="contact"></app-chat-user>
             </div>
         </div>
     }@else {
-        <div class="chat-avalaibles">
+        <div class="chat-avalaibles mt-2">
             @for (chat of chats(); track $index) {
                 <div (click)="chatClicked(chat)">
                     <app-chat-user [chat]="chat"></app-chat-user>

@@ -52,7 +52,7 @@ export class HomeComponent {
     private currencyPipe: CurrencyPipe) {}
 
   ngOnInit(): void {
-    this.loadCategories();
+    // this.loadCategories();
     this.loadProducts();
   }
 

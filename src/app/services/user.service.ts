@@ -24,10 +24,7 @@ export class UserService {
         return this.http.get<ApiResponse<UserResponse>>(`${this.USER_API}/detail`);
     }
 
-    searchUserIsBuyer(searchKey: string): Observable<ApiResponse<UserResponse[]>> {
-        const params = new HttpParams()
-            .set('name', searchKey.trim());
-
-        return this.http.get<ApiResponse<UserResponse[]>>(`${this.USER_API}/by-user-id`, {params});
+    searchUserIsBuyer(): Observable<ApiResponse<UserResponse[]>> {
+        return this.http.get<ApiResponse<UserResponse[]>>(`${this.USER_API}/by-user-id`);
     }
 }
