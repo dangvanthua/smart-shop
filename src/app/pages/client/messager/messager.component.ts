@@ -70,16 +70,14 @@ export class MessagerComponent {
     this.messages = [];
     if(this.selectedChat.id) {
       this.loadMessages(this.selectedChat.id);
-      if((chat.unread_count ?? 0) > 0) {
-        this.messageService.setMessageToSeen(this.selectedChat.id).subscribe({
-          next: (response: ApiResponse<void>) => {
-            console.log('Set message to seen success');
-          },
-          error: (err) => {
-            console.log('Have some error occured', err);
-          }
-        });
-      }
+      this.messageService.setMessageToSeen(this.selectedChat.id).subscribe({
+        next: (response: ApiResponse<void>) => {
+          // console.log('Set message to seen success');
+        },
+        error: (err) => {
+          console.log('Have some error occured', err);
+        }
+      });
     }else{
       console.log('Cannot get your message');
     }

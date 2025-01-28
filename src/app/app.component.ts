@@ -4,6 +4,7 @@ import { MessagerComponent } from "./pages/client/messager/messager.component";
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapMessenger } from '@ng-icons/bootstrap-icons';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './services/auth.service';
 
 
 @Component({
@@ -22,6 +23,8 @@ viewProviders: [provideIcons({bootstrapMessenger})],
 export class AppComponent {
   title = 'smart-shop';
   isMessengerOpen: boolean = false;
+
+  constructor(public authService: AuthService) {}
 
   openMessenger(): void {
     this.isMessengerOpen = true;
