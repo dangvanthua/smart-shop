@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { bootstrapSendFill } from '@ng-icons/bootstrap-icons';
+import { bootstrapFileImage, bootstrapSendFill } from '@ng-icons/bootstrap-icons';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 
 @Component({
@@ -10,7 +10,10 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
     FormsModule,
     NgIconComponent
   ],
-  viewProviders: provideIcons({bootstrapSendFill}),
+  viewProviders: provideIcons({
+    bootstrapSendFill,
+    bootstrapFileImage
+  }),
   templateUrl: './chat-input.component.html',
   styleUrl: './chat-input.component.scss'
 })

@@ -1,4 +1,7 @@
 <div class="chat-input">
+    <div class="icon-files">
+        <ng-icon name="bootstrapFileImage"></ng-icon>
+    </div>
     <input [(ngModel)]="message" placeholder="Nhập nội dung tin nhắn" (keyup.enter)="sendMessage()" />
     <button (click)="sendMessage()">
         <ng-icon name="bootstrapSendFill"></ng-icon>
