@@ -24,7 +24,11 @@ export class AppComponent {
   title = 'smart-shop';
   isMessengerOpen: boolean = false;
 
-  constructor(public authService: AuthService) {}
+  constructor(private authService: AuthService) {}
+
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
+  }
 
   openMessenger(): void {
     this.isMessengerOpen = true;

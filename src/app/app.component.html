@@ -1,6 +1,6 @@
 <router-outlet/>
 <div class="app-message">
-  <div *ngIf="authService.isAuthenticated()">
+  <div *ngIf="isAuthenticated()">
     <div class="icon-message" *ngIf="!isMessengerOpen" (click)="openMessenger()">
       <ng-icon name="bootstrapMessenger"></ng-icon>
     </div>
