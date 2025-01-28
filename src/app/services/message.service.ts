@@ -5,6 +5,7 @@ import { MessageRequest } from "../dto/request/message-request.model";
 import { Observable } from "rxjs";
 import { ApiResponse } from "../dto/response/api-response.model";
 import { MessageResponse } from "../dto/response/message-response.model";
+import { MessageResponses } from "../dto/response/messages-response.model";
 
 @Injectable({
     providedIn: 'root'
@@ -22,13 +23,13 @@ export class MessageService {
     getAllMessages(
         chatId: number, 
         page: number, 
-        size: number): Observable<ApiResponse<MessageResponse[]>> {
+        size: number): Observable<ApiResponse<MessageResponses>> {
 
         const params = new HttpParams()
             .set("page", page)
             .set("size", size);
 
-        return this.http.get<ApiResponse<MessageResponse[]>>(
+        return this.http.get<ApiResponse<MessageResponses>>(
             `${this.MESSAGE_API}/chat/${chatId}`, {params});
     }
 

@@ -13,6 +13,7 @@ import { MessageService } from '../../../services/message.service';
 import { MessageResponse } from '../../../dto/response/message-response.model';
 import { NotificationResponse } from '../../../dto/response/notification-response.model';
 import { MessageRequest } from '../../../dto/request/message-request.model';
+import { MessageResponses } from '../../../dto/response/messages-response.model';
 
 @Component({
   selector: 'app-messager',
@@ -90,9 +91,9 @@ export class MessagerComponent {
     
     this.messageService.getAllMessages(chatId, this.page, this.size)
       .subscribe({
-        next: (response: ApiResponse<MessageResponse[]>) => {
+        next: (response: ApiResponse<MessageResponses>) => {
           if (response.code === 1000 && response.result) {
-            this.messages = response.result ?? [];
+            this.messages = response.result.message_responses ?? [];
           }
         },
         error: (err) => {
