@@ -104,4 +104,21 @@ export class OrderInfoComponent {
     const modalRef = this.modalService.open(OrderDetailComponent, {size: 'lg', animation: true});
     modalRef.componentInstance.order = order;
   }
+
+  downloadOrderPdf(orderId: number) {
+    this.orderService.exportFilePdf(orderId).subscribe({
+      next: (response: Blob) => {
+        const url = window.URL.createObjectURL(response);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.href = url;
+        a.download = `order-${orderId}.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
 }

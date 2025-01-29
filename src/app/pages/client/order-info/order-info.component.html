@@ -1,16 +1,5 @@
 <app-header></app-header>
 <div class="container py-5">
-  <div class="text-end mb-4">
-    <button class="btn btn-info me-3">
-      <ng-icon name="bootstrapFileBarGraph"></ng-icon>
-      Thống kê
-    </button>
-    <button class="btn btn-secondary">
-      <ng-icon name="bootstrapFilter"></ng-icon>
-      Export
-    </button>
-  </div>
-
   <!-- Filters -->
    <div class="order-filters">
     <div class="filters">
@@ -67,6 +56,10 @@
             <td class="action-item">
               <button class="btn text-secondary" (click)="openDetailModal(order)">Chi tiết</button>
               <button class="btn btn-outline-success btn-sm">Mua lại</button>
+              <button class="btn btn-light border d-flex align-items-center gap-2" (click)="downloadOrderPdf(order.id)">
+                <ng-icon name="bootstrapFilter"></ng-icon>
+                <span>Xuất</span>
+              </button>
             </td>
           </tr>
         </tbody>

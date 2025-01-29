@@ -3,7 +3,7 @@ import { environment } from "../../environments/environment";
 import { OrderRequest } from "../dto/request/order-request.model";
 import { Observable } from "rxjs";
 import { ApiResponse } from "../dto/response/api-response.model";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { OrderHistoryResponse } from "../dto/response/order-history-response.model";
 import { OrderFilterRequest } from "../dto/request/order-filter-request.model";
 import { PaymentInfoResponse } from "../dto/response/paymentinfo-reponse.model";
@@ -38,5 +38,15 @@ export class OrderService {
         }            
 
         return this.http.get<ApiResponse<OrderHistoryResponse>>(`${this.ORDER_API}`, {params});
+    }
+
+    exportFilePdf(orderId: number) {
+        const url = `${this.ORDER_API}/${orderId}/export-pdf`;
+        return this.http.get(url, {
+            responseType: 'blob',
+            headers: new HttpHeaders({
+                'Content-Type': 'application/pdf',
+            }),
+        });
     }
 }
