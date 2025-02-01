@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Chart, registerables} from 'chart.js';
+import {  Chart, registerables} from 'chart.js';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapFileBarGraph, bootstrapFilter } from '@ng-icons/bootstrap-icons';
@@ -14,6 +14,8 @@ import { OrderResponse } from '../../../dto/response/order-response.model';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { OrderFilterRequest } from '../../../dto/request/order-filter-request.model';
+import { environment } from '../../../../environments/environment';
+import * as CryptoJS from 'crypto-js';
 
 Chart.register(...registerables);
 @Component({
@@ -103,6 +105,11 @@ export class OrderInfoComponent {
   openDetailModal(order: OrderResponse) {
     const modalRef = this.modalService.open(OrderDetailComponent, {size: 'lg', animation: true});
     modalRef.componentInstance.order = order;
+  }
+
+  encryptOrderId(orderId: number): string {
+    let encryptedId = CryptoJS.HmacSHA1(orderId.toString(), environment.privateKey).toString();
+    return encryptedId.length <= 10 ? encryptedId : encryptedId.substring(0, 10) + '...';
   }
 
   downloadOrderPdf(orderId: number) {

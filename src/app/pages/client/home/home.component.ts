@@ -13,6 +13,7 @@ import { CartService } from '../../../services/cart.service';
 import { CartRequest } from '../../../dto/request/cart-request.model';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { EncoderService } from '../../../services/encoder.service';
 
 @Component({
   selector: 'app-home',
@@ -48,6 +49,7 @@ export class HomeComponent {
     private categoryService: CategoryService,
     private productService: ProductService,
     private cartService: CartService,
+    private encodeSerive: EncoderService,
     private router: Router,
     private currencyPipe: CurrencyPipe) {}
 
@@ -120,7 +122,15 @@ export class HomeComponent {
   }
 
   goToProductDetail(productId: number): void {
-    this.router.navigate(['/product', productId]);
+    const encodeId = this.encodeSerive.encode(productId);
+    const slug = this.convertToSlug(this.products.find(p => p.id === productId)?.name ?? '');
+    this.router.navigate(['/product', encodeId, slug]);
+  }
+
+  private convertToSlug(name: string): string {
+    return name.toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
   }
 
   addCart(productId: number) {

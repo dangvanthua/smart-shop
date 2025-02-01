@@ -12,6 +12,7 @@ import { CartService } from '../../../services/cart.service';
 import { CartRequest } from '../../../dto/request/cart-request.model';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { EncoderService } from '../../../services/encoder.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -40,15 +41,24 @@ export class ProductDetailComponent {
     private productService: ProductService,
     private cartService: CartService,
     private currencyPipe: CurrencyPipe,
+    private encoderService: EncoderService,
     private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.productId = +params.get('id')!;
-      this.fetchProductDetail(this.productId);
-
-    })
+      const encodedId = params.get('id');
+      if (encodedId) {
+        this.productId = this.encoderService.decode(encodedId);
+        
+        if (isNaN(this.productId)) {
+          this.router.navigate(['/404']);
+          return;
+        }
+        
+        this.fetchProductDetail(this.productId);
+      }
+    });
   }
 
   fetchProductDetail(productId: number) {
