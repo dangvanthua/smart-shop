@@ -51,4 +51,17 @@ export class TokenService {
             return null;
         }
     }
+
+    getRoleFromToken(): string | null {
+        const token = this.getToken();
+        if(!token) return null;
+
+        try {
+            const decodeToken = this.jwtHelperService.decodeToken(token);
+            return decodeToken?.scope ?? null;
+        }catch (error) {
+            console.log('Error decoding token: ', error);
+            return null;
+        }
+    }
 }
