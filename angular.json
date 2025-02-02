@@ -32,6 +32,12 @@
                 "glob": "**/*",
                 "input": "public"
               },
+              {
+                
+                "glob": "**/*.svg",
+                "input": "src/assets/ae-icons",
+                "output": "/assets/ae-icons/"
+              },
               "src/assets"
             ],
             "styles": [

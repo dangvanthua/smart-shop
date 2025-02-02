@@ -12,7 +12,7 @@
                 <a class="text-muted" href="#">Sửa Hồ Sơ</a>
             </div>
             <nav class="nav flex-column">
-                <a class="nav-link active">
+                <a class="nav-link active" routerLink="/account/profile/info" routerLinkActive="active">
                     <div class="d-flex justify-content-between align-items-center gap-3">
                         <div class="d-flex align-items-center gap-2">
                             <ng-icon name="bootstrapPerson"></ng-icon>
@@ -51,7 +51,7 @@
                     <span>Kho Voucher</span>
                 </a>
                 @if (isSeller()) {
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" routerLink="/account/profile/seller" routerLinkActive="active">
                         <ng-icon name="bootstrapBagCheck"></ng-icon>
                         <span>Bán hàng</span>
                     </a>
@@ -59,7 +59,7 @@
             </nav>
         </div>
         <div class="col-md-9">
-            <app-info-person [userDetail]="userDetail"></app-info-person>
+            <router-outlet/>
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapBagCheck, bootstrapBank, bootstrapBell, bootstrapCartCheck, bootstrapChevronRight, bootstrapPass, bootstrapPerson, bootstrapPersonFillExclamation, bootstrapPersonFillGear, bootstrapPostcard, bootstrapTicket, bootstrapWindowDock } from '@ng-icons/bootstrap-icons';
 import { InfoPersonComponent } from "./info-person/info-person.component";
 import { TokenService } from '../../../services/token.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,7 +17,7 @@ import { TokenService } from '../../../services/token.service';
     NgIconComponent,
     HeaderComponent,
     FooterComponent,
-    InfoPersonComponent
+    RouterModule
 ],
   viewProviders: provideIcons({
     bootstrapPerson,

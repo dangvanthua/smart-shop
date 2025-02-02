@@ -14,6 +14,8 @@ import { RegisterComponent } from './pages/client/register/register.component';
 import { OrderInfoComponent } from './pages/client/order-info/order-info.component';
 import { BlogComponent } from './pages/client/blog/blog.component';
 import { ProductComponent } from './pages/client/product/product.component';
+import { InfoPersonComponent } from './pages/client/user-profile/info-person/info-person.component';
+import { SellerComponent } from './pages/client/user-profile/seller/seller.component';
 
 export const routes: Routes = [
     { 
@@ -74,7 +76,19 @@ export const routes: Routes = [
             { 
                 path: 'profile', 
                 component: UserProfileComponent, 
-                data: { breadcrumb: 'Profile' } 
+                data: { breadcrumb: 'Profile' },
+                children: [
+                    {
+                        path: 'info', 
+                        component: InfoPersonComponent,
+                        data: { breadcrumb: 'Info' }
+                    },
+                    {
+                        path: 'seller',
+                        component: SellerComponent,
+                        data: { breadcrumb: 'Seller' }
+                    }
+                ]
             }
         ]
     },
