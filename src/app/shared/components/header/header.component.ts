@@ -21,6 +21,7 @@ import { UserService } from '../../../services/user.service';
 import { TokenService } from '../../../services/token.service';
 import { ProductService } from '../../../services/product.service';
 import { ApiResponse } from '../../../dto/response/api-response.model';
+import { EncoderService } from '../../../services/encoder.service';
 
 @Component({
   selector: 'app-header',
@@ -58,6 +59,7 @@ export class HeaderComponent {
     private userService: UserService,
     private tokenService: TokenService,
     private productService: ProductService,
+    private encodeSerive: EncoderService
   ) {}
 
   ngOnInit(): void {
@@ -93,8 +95,17 @@ export class HeaderComponent {
 
 
   goToProductDetail(productId: number): void {
-    this.router.navigate(['/product', productId]);
+    const encodeId = this.encodeSerive.encode(productId);
+    const slug = this.convertToSlug(this.filteredProducts.find(p => p.id === productId)?.name ?? '');
+    this.router.navigate(['/product', encodeId, slug]);
   }
+
+  private convertToSlug(name: string): string {
+    return name.toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
+  }
+
 
   loadUserInfo() {
     if(this.tokenService.isLoggedIn()) {

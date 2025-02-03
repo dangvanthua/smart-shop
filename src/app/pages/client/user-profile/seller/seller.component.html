@@ -1,31 +1,100 @@
 <div class="container">
-    <div class="text-center">
+    <div class="text-center bg-light text-dark bg-lightborder p-2">
         <h4 class="fs-4">Tạo sản phẩm mới</h4>
     </div>
-    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-3 mt-3">
-      <div class="form-group">
-        <label>Tên sản phẩm</label>
-        <input type="text" class="form-control mt-2" formControlName="name" placeholder="Nhập tên sản phẩm">
+    <div class="row">
+      <div class="col-lg-8 col-md-6 col-sm-12">
+        <form [formGroup]="productForm" (ngSubmit)="onCreateProduct()" class="d-flex flex-column gap-3 mt-3">
+          <div class="form-group">
+            <label class="fw-bold">Tên sản phẩm</label>
+            <input type="text" class="form-control mt-2" formControlName="name" placeholder="Nhập tên sản phẩm">
+          </div>
+        
+          <div class="form-group">
+            <label class="fw-bold">Mô tả</label>
+            <angular-editor formControlName="description" [config]="editorConfig" class="mt-2"></angular-editor>
+          </div>
+        
+          <div class="form-group">
+            <label class="fw-bold">Giá tiền</label>
+            <div class="input-group mt-2">
+              <input type="text" 
+                class="form-control" 
+                placeholder="Nhập giá tiền"
+                formControlName="price">
+              <span class="input-group-text">₫</span> 
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label class="fw-bold">Số lượng</label>
+            <input type="number" class="form-control mt-2" formControlName="quantity">
+          </div>
+        
+          <div class="form-group">
+            <label class="fw-bold">Danh mục</label>
+            <select class="form-select custom-input mt-2" formControlName="category">
+              @for (category of categories; track $index) {
+                <option [value]="category.id">
+                  {{ category.name }}
+                </option>
+                @for (subCategory of category.sub_categories; track $index) {
+                  <option [value]="subCategory.id">
+                    {{ subCategory.name }}
+                  </option>
+                }
+              }
+            </select>
+          </div>
+        
+          <button type="submit" class="btn btn-primary mt-2">Tạo sản phẩm</button>
+        </form>
+        
       </div>
-      <div class="form-group">
-        <label>Mô tả</label>
-        <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
-      </div>
-      <div class="form-group">
-        <label>Giá</label>
-        <input type="number" class="form-control mt-2" formControlName="price">
-      </div>
-      <div class="form-group">
-        <label>Số lượng</label>
-        <input type="number" class="form-control mt-2" formControlName="quantity">
-      </div>
-      <div class="form-group">
-        <label>Danh mục</label>
-        <select class="form-control mt-2" formControlName="categoryId">
-          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary mt-2">Tạo sản phẩm</button>
-    </form>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="d-flex flex-column gap-4 mt-5" *ngIf="product">
+          <!-- Ảnh sản phẩm chính -->
+          <div class="card shadow-sm border-0">
+            <div class="card-header text-dark bg-light border text-center">
+              <h5 class="fs-5 mb-0">Ảnh sản phẩm</h5>
+            </div>
+            <div class="card-body text-center d-flex flex-column gap-2">
+              <!-- Hiển thị ảnh: nếu có ảnh preview mới thì hiển thị nó, nếu không thì hiển thị ảnh hiện có từ product -->
+              <img [src]="previewMainImage || 'assets/images/default-image.jpg'" alt="product" class="img-fluid rounded border p-2 bg-light" style="max-height: 180px;">
+              <!-- Input chọn ảnh -->
+              <label class="custom-file-upload mt-3">
+                <input type="file" (change)="onMainImageSelected($event)" />
+                Chọn ảnh sản phẩm
+              </label>
+              <!-- Nút upload chỉ hiển thị khi người dùng đã chọn ảnh mới -->
+              <button *ngIf="selectedMainImage" class="btn btn-success mt-2" (click)="uploadMainImage()">Upload ảnh sản phẩm</button>
+            </div>
+          </div>
+        
+          <!-- Ảnh phụ -->
+          <div class="card shadow-sm border-0">
+            <div class="card-header text-dark bg-light border">
+              <h5 class="fs-5 mb-0">Ảnh phụ</h5>
+            </div>
+            <div class="card-body text-center d-flex flex-column gap-2">
+              <!-- Hiển thị preview cho các ảnh phụ đã chọn -->
+              <div class="d-flex flex-wrap justify-content-center gap-2 mt-3" *ngIf="subImagePreviews.length > 0">
+                <div *ngFor="let img of subImagePreviews; let i = index" class="preview-item">
+                  <img [src]="img" alt="Preview Image {{ i + 1 }}" class="img-fluid rounded border p-1">
+                </div>
+              </div>
+            
+              <!-- Input file cho ảnh phụ với thuộc tính multiple -->
+              <label class="custom-file-upload mt-3">
+                <input type="file" (change)="onSubImagesSelected($event)" multiple />
+                Chọn ảnh phụ
+              </label>
+            
+              <!-- Nút upload hiển thị khi có ảnh được chọn -->
+              <button *ngIf="selectedSubImages.length > 0" class="btn btn-success mt-2" (click)="uploadSubImages()">Upload ảnh phụ</button>
+            </div>            
+          </div>          
+        </div>        
+      </div>      
   </div>
-  
+</div>

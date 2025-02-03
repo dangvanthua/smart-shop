@@ -87,65 +87,6 @@
         </div>
     </section>
 
-    <!-- <section class="favourite-list container my-5">
-        <div class="row">
-            <div class="col-12 mb-4 home-title">
-                <h2 class="section-title">Khám phá theo loại</h2>
-            </div>
-        </div>
-    
-        <ul class="nav nav-tabs justify-content-center mb-4" id="categoryTabs" role="tablist">
-            <li class="nav-item" role="presentation" *ngFor="let category of categories?.slice(0, 5); let i = index">
-                <button class="nav-link" [class.active]="i === selectedCategoryIndex" 
-                        [id]="'category' + i + '-tab'" 
-                        [attr.data-bs-target]="'#category' + i" 
-                        type="button" 
-                        role="tab" 
-                        [attr.aria-controls]="'category' + i" 
-                        [attr.aria-selected]="i === selectedCategoryIndex"
-                        (click)="selectCategory(i, category)">
-                    {{ category.name }}
-                </button>
-            </li>
-        </ul>
-    
-        <div class="tab-content" id="categoryTabsContent">
-            <div *ngFor="let category of categories?.slice(0, 5); let i = index" 
-                 class="tab-pane fade" 
-                 [class.show]="i === selectedCategoryIndex" 
-                 [class.active]="i === selectedCategoryIndex"
-                 [id]="'category' + i" 
-                 role="tabpanel" 
-                 [attr.aria-labelledby]="'category' + i + '-tab'">
-                <div class="row">
-                    <div *ngFor="let product of productCategories" class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                        <div class="card">
-                            <img [src]="product.thumbnail" class="hot-image" 
-                            alt="Product hot image" (click)="goToProductDetail(product.id)">
-                            <div class="card-body">
-                                <h4 class="product-name" (click)="goToProductDetail(product.id)">{{ product.name }}</h4>
-                                <div class="d-flex align-items-baseline justify-content-between">
-                                    <p class="product-price">{{ formatCurrency(product.price) }}</p>
-                                    <div class="product-icon-cart" (click)="addCart(product.id)">
-                                        <ng-icon class="cart-icon" name="bootstrapCart"></ng-icon> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-12 text-center">
-                @if(pageCategory !== (totalProductCategoryPages - 1)) {
-                    <button class="btn-load" (click)="loadMoreCategoryProduct()">Xem thêm</button>
-                }
-            </div>
-        </div>
-    </section> -->
-    
     <section class="products-hot container my-5">
         <div class="row">
             <div class="col-12 mb-4 home-title">
@@ -159,7 +100,7 @@
                         <img [src]="product.thumbnail" class="hot-image"
                             alt="Product hot image" (click)="goToProductDetail(product.id)">
                         <div class="card-body">
-                            <h4 class="product-name" (click)="goToProductDetail(product.id)">{{product.name}}</h4>
+                            <h4 class="product-name" (click)="goToProductDetail(product.id)">{{product.name.substring(0, 30)}}</h4>
                             <div class="d-flex align-items-baseline justify-content-between">
                                 <p class="product-price">{{formatCurrency(product.price)}}</p>
                                 <div class="product-icon-cart" (click)="addCart(product.id)">

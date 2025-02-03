@@ -6,6 +6,7 @@ import { ApiResponse } from "../dto/response/api-response.model";
 import { ProductListResponse } from "../dto/response/products-response.model";
 import { ProductDetailResponse } from "../dto/response/product-detail.model";
 import { ProductResponse } from "../dto/response/product-response.model";
+import { ProductRequest } from "../dto/request/product-request.model";
 
 @Injectable({
     providedIn: 'root'
@@ -43,4 +44,15 @@ export class ProductService {
     searchProductByKeyword(keyword: string): Observable<ApiResponse<ProductResponse[]>> {
         return this.http.get<ApiResponse<ProductResponse[]>>(`${this.PRODUCT_API}/search?q=${keyword}`);
     }
+
+    createProduct(product: ProductRequest): Observable<ApiResponse<ProductResponse>> {
+        return this.http.post<ApiResponse<ProductResponse>>(`${this.PRODUCT_API}`, product);
+    }
+
+    uploadProductImages(productId: number, formData: FormData): Observable<ApiResponse<void>> {
+        return this.http.post<ApiResponse<void>>(
+          `${this.PRODUCT_API}/${productId}/images`,
+          formData
+        );
+      }
 }
