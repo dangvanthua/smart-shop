@@ -47,8 +47,10 @@ export class SellerComponent {
 
   selectedMainImage: File[] = [];
   previewMainImage: string | ArrayBuffer | null = null;
+  isUploadingThumbnail: boolean = false;
   selectedSubImages: File[] = [];
   subImagePreviews: string[] = [];
+  isUploadingGallery: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -121,6 +123,7 @@ export class SellerComponent {
       return;
     }
 
+    this.isUploadingThumbnail = true;
     const formData = new FormData();
     formData.append('files', this.selectedMainImage[0]);
     formData.append('thumbnail', 'true');
@@ -130,16 +133,17 @@ export class SellerComponent {
         next: (reponse: ApiResponse<void>) => {
           if(reponse.code === 1000) {
             console.log("Upload thumbnail image success");
+            this.isUploadingThumbnail = false;
           }
         },
         error: (err) => {
           console.log(err);
+          this.isUploadingThumbnail = false;
         }
       })
     }
   }
 
-  // Xử lý khi chọn ảnh phụ
   onSubImagesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if(input.files) {
@@ -162,13 +166,13 @@ export class SellerComponent {
     }
   }
 
-  // Hàm upload ảnh phụ
   uploadSubImages(): void {
     if (this.selectedSubImages.length === 0) {
       return;
     }
     
     if(this.product?.id != null && this.product.id > 0) {
+      this.isUploadingGallery = true;
       const formData = new FormData();
       formData.append('thumbnail', 'false')
       this.selectedSubImages.forEach(file => {
@@ -178,10 +182,12 @@ export class SellerComponent {
         next: (response: ApiResponse<void>) => {
           if(response.code === 1000) {
             console.log("Upload gallery image success");
+            this.isUploadingGallery = false;
           }
         },
         error: (err) => {
           console.log(err);
+          this.isUploadingGallery = false;
         }
       })
     }

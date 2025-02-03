@@ -59,15 +59,23 @@
               <h5 class="fs-5 mb-0">Ảnh sản phẩm</h5>
             </div>
             <div class="card-body text-center d-flex flex-column gap-2">
-              <!-- Hiển thị ảnh: nếu có ảnh preview mới thì hiển thị nó, nếu không thì hiển thị ảnh hiện có từ product -->
               <img [src]="previewMainImage || 'assets/images/default-image.jpg'" alt="product" class="img-fluid rounded border p-2 bg-light" style="max-height: 180px;">
-              <!-- Input chọn ảnh -->
               <label class="custom-file-upload mt-3">
                 <input type="file" (change)="onMainImageSelected($event)" />
                 Chọn ảnh sản phẩm
               </label>
-              <!-- Nút upload chỉ hiển thị khi người dùng đã chọn ảnh mới -->
-              <button *ngIf="selectedMainImage" class="btn btn-success mt-2" (click)="uploadMainImage()">Upload ảnh sản phẩm</button>
+                <button 
+                *ngIf="selectedMainImage" 
+                class="btn btn-success mt-2" 
+                (click)="uploadMainImage()"
+                [disabled]="isUploadingThumbnail">
+                <ng-container *ngIf="!isUploadingThumbnail; else loadingTemplateThumbnail">
+                  Upload ảnh sản phẩm chính
+                </ng-container>
+                <ng-template #loadingTemplateThumbnail>
+                  <span class="spinner-border spinner-border-sm"></span> Đang upload...
+                </ng-template>
+              </button>
             </div>
           </div>
         
@@ -90,8 +98,18 @@
                 Chọn ảnh phụ
               </label>
             
-              <!-- Nút upload hiển thị khi có ảnh được chọn -->
-              <button *ngIf="selectedSubImages.length > 0" class="btn btn-success mt-2" (click)="uploadSubImages()">Upload ảnh phụ</button>
+              <button 
+                *ngIf="selectedSubImages.length > 0" 
+                class="btn btn-success mt-2" 
+                (click)="uploadSubImages()"
+                [disabled]="isUploadingGallery">
+                <ng-container *ngIf="!isUploadingGallery; else loadingTemplateGallery">
+                  Upload ảnh phụ
+                </ng-container>
+                <ng-template #loadingTemplateGallery>
+                  <span class="spinner-border spinner-border-sm"></span> Đang upload...
+                </ng-template>
+            </button>
             </div>            
           </div>          
         </div>        
