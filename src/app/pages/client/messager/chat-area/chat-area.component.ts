@@ -44,7 +44,7 @@ export class ChatAreaComponent {
     this.scrollToBottom();
   }
 
-  private scrollToBottom(): void {
+  scrollToBottom(): void {
     if(this.scrollableDiv) {
       const div = this.scrollableDiv.nativeElement;
       div.scrollTop = div.scrollHeight;

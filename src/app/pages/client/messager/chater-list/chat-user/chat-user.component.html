@@ -1,7 +1,7 @@
 <div class="section-chat-user">
-    @if (contact != null && chat == null) {
+    @if (contact && contact != null) {
       <div class="chat-contacts">
-        <img [src]="contact.avatar" [alt]="contact.fullname" class="user-img">
+        <img [src]="contact.avatar == null ? '/assets/images/user_avatar.jpg' : contact.avatar" [alt]="contact.fullname" class="user-img">
         <div class="user-item">
           <h3 class="user-name">{{ contact.fullname }}</h3>
         </div>

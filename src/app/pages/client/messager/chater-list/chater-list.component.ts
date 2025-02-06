@@ -57,7 +57,7 @@ export class ChaterListComponent {
             id: response.result,
             name: contact.fullname,
             sender_id: this.tokenService.getUserIdFromToken(),
-            receiver_id: contact.id
+            receiver_id: contact.id,
           };
           this.chats().unshift(chat);
           this.searchNewContact = false;

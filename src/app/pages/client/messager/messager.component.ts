@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { ChaterListComponent } from "./chater-list/chater-list.component";
 import { ChatAreaComponent } from "./chat-area/chat-area.component";
 import SockJS from 'sockjs-client'; 
@@ -51,7 +51,6 @@ export class MessagerComponent {
   ngOnInit(): void {
     this.userId = this.tokenService.getUserIdFromToken();
     this.initWebSocket();
-    // xu ly thong tin chat
     this.chatService.getAllChats(this.page, this.size).subscribe({
       next: (response: ApiResponse<ChatResponse[]>) => {
         if(response.code === 1000 && response.result) {
@@ -68,6 +67,7 @@ export class MessagerComponent {
     this.selectedChat = chat;
     this.chats.forEach(c => c.id === this.selectedChat?.id ? c.unread_count = 0 : c);
     this.messages = [];
+    this.page = 0;
     if(this.selectedChat.id) {
       this.loadMessages(this.selectedChat.id);
       this.messageService.setMessageToSeen(this.selectedChat.id).subscribe({
@@ -123,7 +123,6 @@ export class MessagerComponent {
   private handleNotification(notification: NotificationResponse): void {
     if (!notification) return;
   
-    // Nếu là cuộc trò chuyện đang mở
     if (this.selectedChat && this.selectedChat.id === notification.chat_id) {
       switch (notification.type) {
         case 'MESSAGE':
@@ -150,7 +149,6 @@ export class MessagerComponent {
           break;
       }
     } else {
-      // Nếu là cuộc trò chuyện khác
       const destChat = this.chats.find(c => c.id === notification.chat_id);
       if (destChat && notification.type !== 'SEEN') {
         if (notification.type === 'MESSAGE') {
@@ -199,19 +197,16 @@ export class MessagerComponent {
               created_at: new Date().toString(),
             };
   
-            // Nếu đang ở cuộc trò chuyện hiện tại, thêm tin nhắn
             if (this.selectedChat) {
               this.selectedChat.last_message = newMessage;
               this.messages.push(message);
             }
   
-            // Xử lý cập nhật danh sách chats
             const chatToUpdate = this.chats.find(c => c.id === this.selectedChat?.id);
             if (chatToUpdate) {
               chatToUpdate.last_message = newMessage;
               chatToUpdate.last_message_time = new Date().toString();
   
-              // Nếu cuộc trò chuyện không phải đang được mở, tăng unread_count
               if (!this.selectedChat || chatToUpdate.id !== this.selectedChat.id) {
                 chatToUpdate.unread_count = (chatToUpdate.unread_count || 0) + 1;
               }
