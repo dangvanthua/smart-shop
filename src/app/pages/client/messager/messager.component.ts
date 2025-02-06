@@ -102,6 +102,25 @@ export class MessagerComponent {
     });
   }
 
+  onLoadOlderMessage(): void {
+    if(this.selectedChat?.id) {
+      this.page += 1;
+      
+      this.messageService.getAllMessages(this.selectedChat.id, this.page, this.size)
+      .subscribe({
+        next: (response: ApiResponse<MessageResponses>) => {
+          if (response.code === 1000 && response.result) {
+            const olderMessages = response.result.message_responses;
+            this.messages = [...olderMessages, ...this.messages];
+          }
+        },
+        error: (err) => {
+          console.error('Error loading messages:', err);
+        }
+    });
+    }
+  }
+
   private initWebSocket(): void {
     if(this.userId) {
       let ws = new SockJS('http://localhost:8080/api/v1/ws');

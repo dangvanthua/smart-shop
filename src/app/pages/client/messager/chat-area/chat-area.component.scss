@@ -81,16 +81,17 @@
       text-align: right;
       margin-bottom: 0;
     }
-
-    .sent {
-      background-color: #d1ffd6;
-      align-self: flex-end;
-    }
-
-    .received {
-      background-color: #e6e6e6;
-      align-self: flex-start;
-    }
+    
+  }
+  
+  .message.sent {
+    background-color: #d1ffd6;
+    align-self: flex-end;
+  }
+  
+  .message.received {
+    background-color: #e6e6e6;
+    align-self: flex-start;
   }
   
   .message-time {

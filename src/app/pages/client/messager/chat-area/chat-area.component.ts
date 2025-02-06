@@ -27,9 +27,12 @@ export class ChatAreaComponent {
   size: number = 12;
   userId?: number | null;
   messageContent: string = '';
+  isScrollLoading: boolean = false;
+  isLoadedOlderMessage: boolean = false;
   @Input() messages: Array<MessageResponse> = [];
   @Input() selectedChat?: ChatResponse | null;
   @Output() messageSent = new EventEmitter<string>();
+  @Output() loadOlderMessage = new EventEmitter<void>();
   @ViewChild('scrollableDiv') scrollableDiv!: ElementRef<HTMLDivElement>;
 
   constructor(
@@ -41,13 +44,29 @@ export class ChatAreaComponent {
   }
 
   ngAfterViewChecked(): void {
-    this.scrollToBottom();
+    setTimeout(() => {
+      if(!this.isScrollLoading) {
+        this.scrollToBottom();
+      }
+    }, 1500);
   }
 
   scrollToBottom(): void {
     if(this.scrollableDiv) {
       const div = this.scrollableDiv.nativeElement;
       div.scrollTop = div.scrollHeight;
+    }
+  }
+
+  onScroll(): void {
+    if(this.scrollableDiv) {
+      const div = this.scrollableDiv.nativeElement;
+      this.isScrollLoading = true;
+      const threshold = 50;
+      if(div.scrollTop < threshold && !this.isLoadedOlderMessage) {
+        this.loadOlderMessage.emit();
+        this.isLoadedOlderMessage = true;
+      }
     }
   }
   

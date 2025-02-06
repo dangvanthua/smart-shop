@@ -5,7 +5,7 @@
             <h3 class="header-user">{{ selectedChat.name }}</h3>
         </div>
     
-        <div class="erea-message" #scrollableDiv>
+        <div class="erea-message" #scrollableDiv (scroll)="onScroll()">
             <div *ngFor="let message of messages" 
                  class="message" 
                  [ngClass]="{'sent': message.sender_id === userId, 'received': message.sender_id !== userId}">
