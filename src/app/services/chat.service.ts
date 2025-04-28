@@ -20,12 +20,7 @@ export class ChatService {
         return this.http.post<ApiResponse<number>>(`${this.CHAT_API}`, chatReq);
     }
 
-    getAllChats(page: number, size: number): Observable<ApiResponse<ChatResponse[]>> {
-        
-        const params = new HttpParams()
-            .set("page", page)
-            .set("size", size);
-
-        return this.http.get<ApiResponse<ChatResponse[]>>(`${this.CHAT_API}`, {params})
+    getAllChats(): Observable<ApiResponse<ChatResponse[]>> {
+        return this.http.get<ApiResponse<ChatResponse[]>>(`${this.CHAT_API}`)
     }
 }

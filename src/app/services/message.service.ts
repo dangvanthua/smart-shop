@@ -20,17 +20,10 @@ export class MessageService {
         return this.http.post<ApiResponse<void>>(this.MESSAGE_API, messageRequest);
     }
 
-    getAllMessages(
-        chatId: number, 
-        page: number, 
-        size: number): Observable<ApiResponse<MessageResponses>> {
-
-        const params = new HttpParams()
-            .set("page", page)
-            .set("size", size);
+    getAllMessages(chatId: number): Observable<ApiResponse<MessageResponses>> {
 
         return this.http.get<ApiResponse<MessageResponses>>(
-            `${this.MESSAGE_API}/chat/${chatId}`, {params});
+            `${this.MESSAGE_API}/chat/${chatId}`);
     }
 
     setMessageToSeen(chatId: number): Observable<ApiResponse<void>> {
