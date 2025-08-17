@@ -34,8 +34,6 @@ import { MessageResponses } from '../../../dto/response/messages-response.model'
 export class MessagerComponent {
   @Output() closeMessenger = new EventEmitter<void>();
   selectedChat: ChatResponse | null = null;
-  page: number = 0;
-  size: number = 12;
   chats: Array<ChatResponse> = [];
   messages: Array<MessageResponse> = [];
   userId?: number | null;
@@ -51,7 +49,7 @@ export class MessagerComponent {
   ngOnInit(): void {
     this.userId = this.tokenService.getUserIdFromToken();
     this.initWebSocket();
-    this.chatService.getAllChats(this.page, this.size).subscribe({
+    this.chatService.getAllChats().subscribe({
       next: (response: ApiResponse<ChatResponse[]>) => {
         if(response.code === 1000 && response.result) {
           this.chats = response.result;
@@ -67,7 +65,6 @@ export class MessagerComponent {
     this.selectedChat = chat;
     this.chats.forEach(c => c.id === this.selectedChat?.id ? c.unread_count = 0 : c);
     this.messages = [];
-    this.page = 0;
     if(this.selectedChat.id) {
       this.loadMessages(this.selectedChat.id);
       this.messageService.setMessageToSeen(this.selectedChat.id).subscribe({
@@ -89,7 +86,7 @@ export class MessagerComponent {
       return;
     }
     
-    this.messageService.getAllMessages(chatId, this.page, this.size)
+    this.messageService.getAllMessages(chatId)
       .subscribe({
         next: (response: ApiResponse<MessageResponses>) => {
           if (response.code === 1000 && response.result) {
@@ -100,25 +97,6 @@ export class MessagerComponent {
           console.error('Error loading messages:', err);
         }
     });
-  }
-
-  onLoadOlderMessage(): void {
-    if(this.selectedChat?.id) {
-      this.page += 1;
-      
-      this.messageService.getAllMessages(this.selectedChat.id, this.page, this.size)
-      .subscribe({
-        next: (response: ApiResponse<MessageResponses>) => {
-          if (response.code === 1000 && response.result) {
-            const olderMessages = response.result.message_responses;
-            this.messages = [...olderMessages, ...this.messages];
-          }
-        },
-        error: (err) => {
-          console.error('Error loading messages:', err);
-        }
-    });
-    }
   }
 
   private initWebSocket(): void {

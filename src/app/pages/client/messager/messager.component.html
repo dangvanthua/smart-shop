@@ -28,8 +28,7 @@
             <app-chat-area 
             [selectedChat]="selectedChat?.id ? selectedChat : null" 
             [messages]="messages" 
-            (messageSent)="onMessageSent($event)"
-            (loadOlderMessage)="onLoadOlderMessage()">
+            (messageSent)="onMessageSent($event)">
             </app-chat-area>
         </div>
     </div>

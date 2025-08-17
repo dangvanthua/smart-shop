@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ChatInputComponent } from "./chat-input/chat-input.component";
 import { ChatResponse } from '../../../../dto/response/chat-response.model';
 import { TokenService } from '../../../../services/token.service';
@@ -27,12 +27,9 @@ export class ChatAreaComponent {
   size: number = 12;
   userId?: number | null;
   messageContent: string = '';
-  isScrollLoading: boolean = false;
-  isLoadedOlderMessage: boolean = false;
   @Input() messages: Array<MessageResponse> = [];
   @Input() selectedChat?: ChatResponse | null;
   @Output() messageSent = new EventEmitter<string>();
-  @Output() loadOlderMessage = new EventEmitter<void>();
   @ViewChild('scrollableDiv') scrollableDiv!: ElementRef<HTMLDivElement>;
 
   constructor(
@@ -44,30 +41,12 @@ export class ChatAreaComponent {
   }
 
   ngAfterViewChecked(): void {
-    setTimeout(() => {
-      if(!this.isScrollLoading) {
-        this.scrollToBottom();
-      }
-    }, 1500);
+    this.scrollToBottom();
   }
 
   scrollToBottom(): void {
-    if(this.scrollableDiv) {
-      const div = this.scrollableDiv.nativeElement;
-      div.scrollTop = div.scrollHeight;
-    }
-  }
-
-  onScroll(): void {
-    if(this.scrollableDiv) {
-      const div = this.scrollableDiv.nativeElement;
-      this.isScrollLoading = true;
-      const threshold = 50;
-      if(div.scrollTop < threshold && !this.isLoadedOlderMessage) {
-        this.loadOlderMessage.emit();
-        this.isLoadedOlderMessage = true;
-      }
-    }
+    const div = this.scrollableDiv.nativeElement;
+    div.scrollTop = div.scrollHeight;
   }
   
   onMessageSent(message: string): void {
